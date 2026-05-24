@@ -43,25 +43,23 @@ const comingSoon = [
   </section>
 
 
-  <!-- Live tool -->
+  <!-- Live tools -->
   <section class="py-4 px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-4xl">
-      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-6">Available now</p>
+    <div class="mx-auto max-w-4xl space-y-6">
+      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest">Available now</p>
 
+      <!-- ── Tool 1: Pharmacy Inventory Tracker v2.1 ── -->
       <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/25 shadow-[0_0_40px_-6px_rgba(6,182,212,0.20)] overflow-hidden">
         <div class="p-8">
           <div class="flex flex-col sm:flex-row gap-6 items-start">
 
-            <!-- Thumbnail placeholder -->
             <div class="flex-shrink-0 w-full sm:w-52 h-36 rounded-xl bg-gradient-to-br from-cyan-900/40 to-teal-900/20 border border-cyan-500/20 flex items-center justify-center">
-              <!-- TODO: replace with real tool screenshot/thumbnail -->
               <div class="text-center text-cyan-500/40">
                 <svg class="w-10 h-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 <p class="text-xs">Screenshot coming soon</p>
               </div>
             </div>
 
-            <!-- Details -->
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2">
                 <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-500/25 text-cyan-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
@@ -74,27 +72,113 @@ const comingSoon = [
                 forecasts run-out dates before the next resupply, and highlights overdue orders.
                 Includes the full User Guide.
               </p>
-
-              <!-- Download gate -->
               <DownloadGate
                 productName="Pharmacy Inventory Tracker v2.1"
                 formEndpoint={DOWNLOADS_FORM}
                 files={[
-                  { label: 'Pharmacy Inventory v2.1 (.xlsx)', href: '/downloads/FieldHealth_Pharmacy_Inventory_v2.1.xlsx',              icon: 'xlsx' },
-                  { label: 'User Guide (.pdf)',                href: '/downloads/FieldHealth_Pharmacy_Inventory_v2.1_User_Guide.pdf',   icon: 'pdf'  },
+                  { label: 'Pharmacy Inventory v2.1 (.xlsx)', href: '/downloads/FieldHealth_Pharmacy_Inventory_v2.1.xlsx',            icon: 'xlsx' },
+                  { label: 'User Guide (.pdf)',                href: '/downloads/FieldHealth_Pharmacy_Inventory_v2.1_User_Guide.pdf', icon: 'pdf'  },
                 ]}
               />
             </div>
           </div>
         </div>
-
-        <!-- Meta footer -->
         <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
           <span>📦 Works offline · No macros required</span>
           <span>🌍 Designed for low-bandwidth environments</span>
           <span>📝 Tested in Mamfe health district, Cameroon</span>
         </div>
       </div>
+
+      <!-- ── Tool 2: RH Data Quality Performance Review Tool v1.1 ── -->
+      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-amber-500/20 shadow-[0_0_40px_-6px_rgba(245,158,11,0.12)] overflow-hidden">
+        <div class="p-8">
+          <div class="flex flex-col sm:flex-row gap-6 items-start">
+
+            <div class="flex-shrink-0 w-full sm:w-52 h-36 rounded-xl bg-gradient-to-br from-amber-900/40 to-orange-900/20 border border-amber-500/20 flex items-center justify-center">
+              <div class="text-center text-amber-500/40">
+                <svg class="w-10 h-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                <p class="text-xs">Screenshot coming soon</p>
+              </div>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/25 text-amber-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
+                <span class="text-white/30 text-xs">v1.1 · Excel + PDF guide</span>
+              </div>
+              <h2 class="font-display font-bold text-2xl text-white mb-2">RH Data Quality Performance Review Tool v1.1</h2>
+              <p class="text-white/60 text-sm leading-relaxed mb-6">
+                Systematic data quality and performance review tool for district HR officers.
+                Flags completeness and accuracy gaps across facility-level health records,
+                scores each facility against national benchmarks, and generates a consolidated
+                summary report ready for district review meetings.
+              </p>
+              <DownloadGate
+                productName="RH Data Quality Performance Review Tool v1.1"
+                formEndpoint={DOWNLOADS_FORM}
+                files={[
+                  { label: 'RH Performance Review v1.1 (.xlsx)', href: '/downloads/RH_Data_Quality_Performance_Review_Tool_p_v1.1.xlsx',    icon: 'xlsx' },
+                  { label: 'User Guide (.pdf)',                    href: '/downloads/RH_Data_Quality_Performance_Review_Tool_User_Guide_v1.pdf', icon: 'pdf'  },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
+          <span>📊 Works offline · No macros required</span>
+          <span>🏥 Facility-level scoring against national benchmarks</span>
+          <span>📋 District review–ready summary output</span>
+        </div>
+      </div>
+
+      <!-- ── Tool 3: MINSANTE v2 Gestion Financière ── -->
+      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-violet-500/20 shadow-[0_0_40px_-6px_rgba(139,92,246,0.12)] overflow-hidden">
+        <div class="p-8">
+          <div class="flex flex-col sm:flex-row gap-6 items-start">
+
+            <div class="flex-shrink-0 w-full sm:w-52 h-36 rounded-xl bg-gradient-to-br from-violet-900/40 to-purple-900/20 border border-violet-500/20 flex items-center justify-center">
+              <div class="text-center text-violet-500/40">
+                <svg class="w-10 h-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                </svg>
+                <p class="text-xs">Screenshot coming soon</p>
+              </div>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/25 text-violet-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
+                <span class="text-white/30 text-xs">v2 · Web (HTML) · Bilingual FR / EN</span>
+              </div>
+              <h2 class="font-display font-bold text-2xl text-white mb-2">MINSANTE v2 — Gestion Financière</h2>
+              <p class="text-white/60 text-sm leading-relaxed mb-6">
+                Web-based financial management dashboard built to MINSANTE specifications.
+                Tracks budget allocations, actual expenditures, and variance analysis at facility
+                and district level. Fully bilingual (French / English). Opens directly in any
+                browser — no Excel, no installation required.
+              </p>
+              <DownloadGate
+                productName="MINSANTE v2 Gestion Financière"
+                formEndpoint={DOWNLOADS_FORM}
+                files={[
+                  { label: 'MINSANTE Gestion Financière v2 (.html)', href: '/downloads/MINSANTE_v2_GestionFinanciere%20(1).html', icon: 'html' },
+                  { label: 'Guide Utilisateur FR (.pdf)',             href: '/downloads/Guide_Utilisateur_FR_v2.pdf',              icon: 'pdf'  },
+                  { label: 'User Guide EN (.pdf)',                    href: '/downloads/UserGuide_EN_v2.pdf',                      icon: 'pdf'  },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
+          <span>🌐 Opens in browser · No installation required</span>
+          <span>🇫🇷🇬🇧 Bilingual FR / EN</span>
+          <span>📋 Built to MINSANTE specifications</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
