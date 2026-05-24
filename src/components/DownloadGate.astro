@@ -204,23 +204,53 @@ const roles = [
     </div>
 
     <div class="space-y-3">
-      {files.map((file) => (
-        <a
-          href={file.href}
-          download
-          class="flex items-center gap-3 p-4 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/[0.08] transition-colors group focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400"
-        >
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500/15 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
-            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+      {files.map((file) => {
+        // Colour + icon vary by file type so users can tell downloads apart at a glance
+        const isXlsx = file.icon === 'xlsx';
+        const isPdf  = file.icon === 'pdf';
+
+        const iconBg    = isXlsx ? 'from-emerald-500/20 to-teal-500/10 border-emerald-500/25'
+                        : isPdf  ? 'from-rose-500/20   to-orange-500/10 border-rose-500/25'
+                                 : 'from-cyan-500/15   to-teal-500/10   border-cyan-500/20';
+
+        const iconColor = isXlsx ? 'text-emerald-400'
+                        : isPdf  ? 'text-rose-400'
+                                 : 'text-cyan-400';
+
+        return (
+          <a
+            href={file.href}
+            download
+            class="flex items-center gap-3 p-4 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/[0.08] transition-colors group focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400"
+          >
+            <div class={`w-9 h-9 rounded-lg bg-gradient-to-br ${iconBg} border flex items-center justify-center flex-shrink-0`} aria-hidden="true">
+              {isXlsx ? (
+                /* spreadsheet grid icon */
+                <svg class={`w-4 h-4 ${iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+                </svg>
+              ) : isPdf ? (
+                /* document icon with lines */
+                <svg class={`w-4 h-4 ${iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              ) : (
+                /* generic download arrow fallback */
+                <svg class={`w-4 h-4 ${iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+              )}
+            </div>
+            <span class="text-white/80 group-hover:text-white text-sm font-medium transition-colors">{file.label}</span>
+            <svg class="w-4 h-4 text-white/30 ml-auto group-hover:text-white/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
             </svg>
-          </div>
-          <span class="text-white/80 group-hover:text-white text-sm font-medium transition-colors">{file.label}</span>
-          <svg class="w-4 h-4 text-white/30 ml-auto group-hover:text-white/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-          </svg>
-        </a>
-      ))}
+          </a>
+        );
+      })}
     </div>
 
     <button
