@@ -1,0 +1,75 @@
+---
+const year = new Date().getFullYear();
+
+const footerLinks = {
+  'Tools': [
+    { href: '/free-library', label: 'Free Library' },
+    { href: '/pro-library',  label: 'Pro Tools'    },
+    { href: '/picks',        label: 'Picks'         },
+  ],
+  'Organisation': [
+    { href: '/about',   label: 'About'   },
+    { href: '/blog',    label: 'Blog'    },
+    { href: '/contact', label: 'Contact' },
+  ],
+  'Legal': [
+    { href: '/privacy',              label: 'Privacy Policy'       },
+    { href: '/terms',                label: 'Terms of Use'         },
+    { href: '/affiliate-disclosure', label: 'Affiliate Disclosure' },
+    { href: '/cookies',              label: 'Cookie Policy'        },
+  ],
+};
+---
+
+<footer class="relative border-t border-white/[0.07] mt-20">
+  <!-- Subtle gradient fade -->
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+
+      <!-- Brand column -->
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-2 mb-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 rounded-lg" aria-label="FieldHealth Africa home">
+          <img src="/images/logo.png" alt="" width="28" height="28" class="h-7 w-auto" onerror="this.style.display='none'" aria-hidden="true" />
+          <span class="font-display font-bold text-white text-base">
+            <span class="text-teal-400">Field</span>Health Africa
+          </span>
+        </a>
+        <p class="text-white/50 text-sm leading-relaxed max-w-[220px]">
+          From data to decisions, in the field.
+        </p>
+        <p class="text-white/35 text-xs mt-4 leading-relaxed">
+          Built by a practising District Medical Officer in Mamfe, Cameroon.
+        </p>
+      </div>
+
+      <!-- Link columns -->
+      {Object.entries(footerLinks).map(([heading, links]) => (
+        <div>
+          <h3 class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-4">{heading}</h3>
+          <ul class="space-y-2.5" role="list">
+            {links.map(({ href, label }) => (
+              <li>
+                <a href={href} class="text-white/60 hover:text-white text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 rounded">
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/35">
+      <p>© {year} FieldHealth Africa. All rights reserved.</p>
+      <p>
+        Some links on this site are affiliate links.{' '}
+        <a href="/affiliate-disclosure" class="underline underline-offset-2 hover:text-white/60 transition-colors">
+          See disclosure.
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

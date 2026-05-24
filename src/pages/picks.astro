@@ -1,0 +1,97 @@
+﻿---
+import Base from '../layouts/Base.astro';
+import AuroraBackground from '../components/AuroraBackground.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
+import { affiliates } from '../data/affiliates';
+
+const grouped = {
+  'For Healthcare Workers':       affiliates.filter(a => a.category === 'healthcare-workers'),
+  'For Data and Analysis':        affiliates.filter(a => a.category === 'data-and-analysis'),
+  'For Building and Publishing':  affiliates.filter(a => a.category === 'building-and-publishing'),
+};
+
+// Descriptions for each pick — add real copy when ready
+const descriptions: Record<string, string> = {
+  kobo:     'KoboToolbox is the standard for humanitarian and health data collection. Free for NGOs, works offline, and exports to Excel or SPSS. I use it for every field survey — from PIRI assessments to outbreak line listings.',
+  notion:   'My knowledge management system for running a district health office. We use it for SOP documentation, meeting notes, project tracking, and staff onboarding. The free tier covers most use cases.',
+  tableau:  'The dashboard tool I use for district health indicator visualisation. Connects directly to Excel or Google Sheets. Expensive, but the output quality justifies it for presentations to funders and regional health authorities.',
+  datacamp: 'Where I completed most of my Python and data science training. Structured tracks, real-world exercises, and a certificate programme that holds up professionally. Highly recommended for health workers moving into data roles.',
+  substack: 'The platform I use for FieldHealth Africa\'s newsletter. Zero tech overhead, direct relationship with readers, and the best interface for long-form field notes. Worth it if you are building an audience around health expertise.',
+  clickup:  'Project management for health programme planning. We use it to track multi-district campaigns, vaccination rollouts, and infrastructure repair schedules. The free tier is generous.',
+};
+---
+
+<Base
+  title="Picks"
+  description="Tools I actually use — curated recommendations for healthcare workers, data analysts, and builders. Affiliate links disclosed."
+>
+
+  <!-- Hero -->
+  <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <AuroraBackground variant="b" />
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <div class="inline-flex items-center gap-2.5 mb-8">
+        <div class="w-8 h-px bg-indigo-400/60" aria-hidden="true"></div>
+        <span class="text-indigo-300/80 text-xs font-semibold uppercase tracking-widest">Picks</span>
+      </div>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
+        Tools I actually use.
+      </h1>
+      <p class="text-white/65 text-lg leading-relaxed">
+        No sponsored placements. No tools I haven't personally used.
+        Every recommendation below has been tested in operational conditions — often in Mamfe, often with unreliable power and slow internet.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Disclosure -->
+  <section class="px-4 sm:px-6 lg:px-8 pb-4">
+    <div class="mx-auto max-w-4xl">
+      <AffiliateDisclosure />
+    </div>
+  </section>
+
+
+  <!-- Grouped recommendations -->
+  {Object.entries(grouped).map(([groupName, picks]) => (
+    <section class="py-12 px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl">
+        <h2 data-reveal class="font-display font-bold text-xl text-white mb-6">{groupName}</h2>
+        <div class="space-y-4">
+          {picks.map((pick) => (
+            <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-indigo-500/15 p-6 sm:p-8">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                <h3 class="font-display font-bold text-xl text-white">{pick.label}</h3>
+                <!-- Cloaked affiliate link via /recommends/<slug> CF Function -->
+                <a
+                  href={`/recommends/${pick.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  class="inline-flex items-center gap-1.5 px-5 py-2 rounded-full border border-indigo-500/30 text-indigo-300 hover:border-indigo-400/50 hover:bg-indigo-500/[0.08] text-sm font-medium transition-all duration-200 flex-shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400"
+                >
+                  Visit site
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+
+              <!-- Description: 100–200 words per pick -->
+              <p class="text-white/60 text-sm leading-relaxed mb-4">
+                {descriptions[pick.slug] ?? (
+                  /* TODO: add description for this pick */
+                  <span class="text-white/30 italic">TODO — add 100–200 word description for {pick.label}.</span>
+                )}
+              </p>
+
+              <!-- Per-card disclosure -->
+              <AffiliateDisclosure compact={true} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+</Base>
+
+

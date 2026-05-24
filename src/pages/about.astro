@@ -1,0 +1,160 @@
+﻿---
+import Base from '../layouts/Base.astro';
+import AuroraBackground from '../components/AuroraBackground.astro';
+import NewsletterBand from '../components/NewsletterBand.astro';
+---
+
+<Base
+  title="About"
+  description="FieldHealth Africa is built in the field, for the field — by Dr. Nzozone Henry Fomukong, District Medical Officer, field epidemiologist, and data scientist based in Mamfe, Cameroon."
+>
+
+  <!-- Page hero -->
+  <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <AuroraBackground variant="b" />
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <div class="inline-flex items-center gap-2.5 mb-8">
+        <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
+        <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">Our story</span>
+      </div>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
+        Built in the field,<br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-emerald-300">for the field.</span>
+      </h1>
+      <p class="text-white/65 text-lg leading-relaxed">
+        Every tool on this site was built because a real problem needed solving — in a district hospital, during an outbreak, with unreliable power and no bandwidth to spare.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Founder section -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl">
+      <div data-reveal class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/20 p-8 sm:p-10">
+        <div class="flex flex-col sm:flex-row gap-8 items-start">
+
+          <!-- Photo -->
+          <div class="flex-shrink-0 w-36 h-36 sm:w-44 sm:h-44 rounded-2xl bg-gradient-to-br from-cyan-900/50 to-teal-900/30 border border-cyan-500/20 overflow-hidden">
+            <img
+              src="/images/founder.jpeg"
+              alt="Dr. Nzozone Henry Fomukong"
+              width="176" height="176"
+              class="w-full h-full object-cover"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
+
+          <!-- Intro -->
+          <div class="flex-1">
+            <p class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-2">Founder</p>
+            <h2 data-reveal class="font-display font-bold text-2xl sm:text-3xl text-white mb-1">Dr. Nzozone Henry Fomukong</h2>
+            <p class="text-white/45 text-sm mb-5">MD · Field Epidemiologist · District Medical Officer, Mamfe · Data Scientist</p>
+            <p class="text-white/65 text-sm leading-relaxed">
+              I am a medical doctor, field epidemiologist, and the District Medical Officer of Mamfe, one of Cameroon's most operationally complex districts — a crisis-affected setting where health data decisions have real, immediate consequences.
+              I hold a Data Science &amp; Machine Learning diploma from IDSS and have authored seven peer-reviewed publications.
+              My technical toolkit includes Python, DHIS2, KoboToolbox, Tableau, Power BI, Excel, and Claude API.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Origin story -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl space-y-6">
+      <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">Why I built this</h2>
+
+      <!-- TODO: Replace with Mamfe origin story (300–400 words).
+           Cover: arriving in Mamfe, the operational reality, the data gap you kept hitting,
+           the moment you decided to start building tools, the first tool, the reaction
+           from the district. Personal, specific, credible. -->
+      <div class="rounded-xl border border-dashed border-white/15 p-6 text-white/40 text-sm italic">
+        TODO — Mamfe origin story (300–400 words): describe arriving in Mamfe, the operational reality of running a district health system in a crisis-affected setting, the data gap you kept hitting, the moment you decided to start building your own tools, and how other practitioners responded when you shared the first one. Personal, specific, and grounded in real events.
+      </div>
+
+      <!-- Credential highlights (real facts) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+        {[
+          { icon: '🎓', label: 'Medical Degree', detail: 'Medical Doctor (MD)' },
+          { icon: '🔬', label: 'Field Epidemiology', detail: 'Trained field epidemiologist' },
+          { icon: '📊', label: 'Data Science', detail: 'Diploma, IDSS (MIT affiliate)' },
+          { icon: '📄', label: 'Publications', detail: '7 peer-reviewed papers' },
+          { icon: '🏥', label: 'Konye Hospital', detail: 'Reopened after 4-year closure' },
+          { icon: '💉', label: 'Vaccination', detail: 'Coverage raised 29% → 44%' },
+        ].map(({ icon, label, detail }) => (
+          <div class="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.07]">
+            <span class="text-xl" aria-hidden="true">{icon}</span>
+            <div>
+              <p class="text-white/80 text-sm font-medium">{label}</p>
+              <p class="text-white/45 text-xs mt-0.5">{detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Tools / stack -->
+      <div class="pt-2">
+        <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-3">Technical stack</p>
+        <div class="flex flex-wrap gap-2">
+          {['Python', 'DHIS2', 'KoboToolbox', 'Tableau', 'Power BI', 'Excel', 'Claude API', 'PIRI methodology'].map((tool) => (
+            <span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/60 text-xs font-medium">{tool}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Two-library model -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl">
+      <h2 data-reveal class="font-display font-bold text-2xl sm:text-3xl text-white mb-6">The two-library model</h2>
+
+      <!-- TODO: Expand this section (150–200 words) explaining WHY two libraries instead of one.
+           Core argument (from business plan): the practitioners who need tools most have the
+           least personal budget. Free Library builds audience + credibility. Pro Library
+           serves consultants/NGOs with professional budgets. Same expertise, two markets,
+           complementary economics. -->
+      <div class="rounded-xl border border-dashed border-white/15 p-6 text-white/40 text-sm italic mb-6">
+        TODO — Explain the two-library model in 150–200 words. Why free for practitioners and paid for consultants? How do they complement each other economically?
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="rounded-2xl bg-white/[0.04] border border-white/[0.13] ring-1 ring-cyan-500/20 p-6">
+          <p class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-2">Free Library</p>
+          <h3 class="font-display font-bold text-lg text-white mb-2">For African practitioners</h3>
+          <p class="text-white/55 text-sm leading-relaxed">DMOs, pharmacists, facility managers, M&E officers. Tools built for the district — free, always.</p>
+          <a href="/free-library" class="inline-flex items-center gap-1 text-cyan-400 text-sm font-medium mt-4 hover:text-cyan-300 transition-colors">Browse tools →</a>
+        </div>
+        <div class="rounded-2xl bg-white/[0.04] border border-white/[0.13] ring-1 ring-teal-400/20 p-6">
+          <p class="text-teal-400 text-xs font-semibold uppercase tracking-widest mb-2">Pro Library</p>
+          <h3 class="font-display font-bold text-lg text-white mb-2">For global professionals</h3>
+          <p class="text-white/55 text-sm leading-relaxed">NGO M&E teams, global health consultants, researchers. Premium tools with professional-grade deliverables.</p>
+          <a href="/pro-library" class="inline-flex items-center gap-1 text-teal-400 text-sm font-medium mt-4 hover:text-teal-300 transition-colors">Explore Pro tools →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTAs -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl flex flex-col sm:flex-row gap-4">
+      <a href="/free-library" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(6,182,212,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2">
+        Browse the Free Library
+      </a>
+      <a href="[SUBSTACK_SUBSCRIBE_URL]" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-white/20 text-white font-semibold text-sm hover:border-white/35 hover:bg-white/[0.05] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2">
+        Subscribe to the newsletter
+      </a>
+    </div>
+  </section>
+
+  <NewsletterBand />
+
+</Base>
+
+

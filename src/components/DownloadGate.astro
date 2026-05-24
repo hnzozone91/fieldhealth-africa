@@ -1,0 +1,294 @@
+---
+/**
+ * DownloadGate.astro — email-gated download flow.
+ *
+ * Renders a "Download (free)" button that opens an accessible <dialog>
+ * with a Formspree form. On success, swaps to a thank-you state
+ * showing the real download links.
+ *
+ * Props:
+ *   productName   — e.g. "Pharmacy Inventory v2.1"
+ *   formEndpoint  — Formspree endpoint URL (paste real value; placeholder shown)
+ *   files         — array of {label, href} download objects
+ *   buttonLabel?  — override the trigger button text
+ */
+interface Props {
+  productName: string;
+  formEndpoint: string;
+  files: { label: string; href: string; icon?: string }[];
+  buttonLabel?: string;
+}
+
+const {
+  productName,
+  formEndpoint,
+  files,
+  buttonLabel = 'Download (free)',
+} = Astro.props;
+
+// Unique id for aria linkage (supports multiple gates on one page)
+const id = `gate-${productName.replace(/\s+/g, '-').toLowerCase()}`;
+
+const roles = [
+  'District Medical Officer (DMO)',
+  'District Pharmacist',
+  'Facility In-Charge',
+  'M&E Officer',
+  'Nurse / Midwife',
+  'Community Health Worker',
+  'NGO / INGO Staff',
+  'Researcher',
+  'Consultant',
+  'Student',
+  'Other',
+];
+---
+
+<!-- Trigger button -->
+<button
+  type="button"
+  data-gate-open={id}
+  class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(6,182,212,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+  aria-haspopup="dialog"
+>
+  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+  </svg>
+  {buttonLabel}
+</button>
+
+<!-- Accessible dialog -->
+<dialog
+  id={id}
+  class="fixed inset-0 m-auto w-full max-w-md bg-[#0f0f14] border border-white/10 rounded-2xl shadow-2xl p-0 backdrop:bg-black/60 backdrop:backdrop-blur-sm open:flex open:flex-col"
+  aria-labelledby={`${id}-title`}
+>
+  <!-- Form state -->
+  <div id={`${id}-form-state`} class="p-8">
+    <div class="flex items-start justify-between mb-6">
+      <div>
+        <h2 id={`${id}-title`} class="font-display font-bold text-xl text-white">
+          Get {productName}
+        </h2>
+        <p class="text-white/50 text-sm mt-1">Free — just tell us a little about yourself.</p>
+      </div>
+      <button
+        type="button"
+        data-gate-close={id}
+        class="text-white/40 hover:text-white/70 transition-colors p-1 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400"
+        aria-label="Close"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <form
+      id={`${id}-form`}
+      action={formEndpoint}
+      method="POST"
+      novalidate
+      class="space-y-4"
+    >
+      <!-- Hidden fields for Formspree context -->
+      <input type="hidden" name="_subject" value={`Free download: ${productName}`} />
+      <input type="hidden" name="product" value={productName} />
+      <!-- Honeypot anti-spam -->
+      <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
+      <div class="grid grid-cols-2 gap-3">
+        <!-- First name (required) -->
+        <div>
+          <label for={`${id}-fname`} class="block text-white/70 text-xs font-medium mb-1.5">
+            First name <span class="text-cyan-400" aria-hidden="true">*</span>
+          </label>
+          <input
+            id={`${id}-fname`}
+            name="firstName"
+            type="text"
+            required
+            autocomplete="given-name"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition"
+            placeholder="Henry"
+          />
+        </div>
+        <!-- Email (required) -->
+        <div>
+          <label for={`${id}-email`} class="block text-white/70 text-xs font-medium mb-1.5">
+            Email <span class="text-cyan-400" aria-hidden="true">*</span>
+          </label>
+          <input
+            id={`${id}-email`}
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition"
+            placeholder="you@example.com"
+          />
+        </div>
+      </div>
+
+      <!-- Role (optional) -->
+      <div>
+        <label for={`${id}-role`} class="block text-white/70 text-xs font-medium mb-1.5">
+          Your role <span class="text-white/30 font-normal">(optional)</span>
+        </label>
+        <select
+          id={`${id}-role`}
+          name="role"
+          class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white/80 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition appearance-none"
+        >
+          <option value="" class="bg-[#0f0f14]">Select a role…</option>
+          {roles.map((r) => <option value={r} class="bg-[#0f0f14]">{r}</option>)}
+        </select>
+      </div>
+
+      <!-- Country (optional) -->
+      <div>
+        <label for={`${id}-country`} class="block text-white/70 text-xs font-medium mb-1.5">
+          Country <span class="text-white/30 font-normal">(optional)</span>
+        </label>
+        <input
+          id={`${id}-country`}
+          name="country"
+          type="text"
+          autocomplete="country-name"
+          class="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition"
+          placeholder="e.g. Cameroon"
+        />
+      </div>
+
+      <!-- Consent (required) -->
+      <label class="flex items-start gap-3 cursor-pointer group">
+        <input
+          name="consent"
+          type="checkbox"
+          required
+          class="mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-white/20 bg-white/[0.05] text-cyan-500 focus:ring-cyan-500/40 focus:ring-offset-0 cursor-pointer"
+        />
+        <span class="text-white/60 text-xs leading-relaxed group-hover:text-white/70 transition-colors">
+          I want to receive new FieldHealth Africa tool releases and field notes. <span class="text-white/35">(Unsubscribe any time.)</span>
+        </span>
+      </label>
+
+      <!-- Error message -->
+      <p id={`${id}-error`} class="text-red-400 text-xs hidden" role="alert"></p>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        id={`${id}-submit`}
+        class="w-full py-3 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(6,182,212,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Get download links →
+      </button>
+
+      <p class="text-white/30 text-[11px] text-center">
+        No spam. Your details help us understand who uses our tools.
+      </p>
+    </form>
+  </div>
+
+  <!-- Thank-you state (hidden until form succeeds) -->
+  <div id={`${id}-thanks`} class="p-8 hidden">
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto mb-4" aria-hidden="true">
+        <svg class="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h2 class="font-display font-bold text-xl text-white mb-2">You're all set!</h2>
+      <p class="text-white/55 text-sm">Your downloads are ready. Check your inbox too — we'll send a copy of the links.</p>
+    </div>
+
+    <div class="space-y-3">
+      {files.map((file) => (
+        <a
+          href={file.href}
+          download
+          class="flex items-center gap-3 p-4 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/[0.08] transition-colors group focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400"
+        >
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500/15 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+          </div>
+          <span class="text-white/80 group-hover:text-white text-sm font-medium transition-colors">{file.label}</span>
+          <svg class="w-4 h-4 text-white/30 ml-auto group-hover:text-white/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      ))}
+    </div>
+
+    <button
+      type="button"
+      data-gate-close={id}
+      class="w-full mt-5 py-2.5 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/25 text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400"
+    >
+      Close
+    </button>
+  </div>
+</dialog>
+
+<script define:vars={{ id, formEndpoint }}>
+  const dialog  = document.getElementById(id);
+  const form    = document.getElementById(`${id}-form`);
+  const submit  = document.getElementById(`${id}-submit`);
+  const errEl   = document.getElementById(`${id}-error`);
+  const thanks  = document.getElementById(`${id}-thanks`);
+  const formState = document.getElementById(`${id}-form-state`);
+
+  // Open
+  document.querySelectorAll(`[data-gate-open="${id}"]`).forEach((btn) => {
+    btn.addEventListener('click', () => dialog.showModal());
+  });
+
+  // Close
+  document.querySelectorAll(`[data-gate-close="${id}"]`).forEach((btn) => {
+    btn.addEventListener('click', () => dialog.close());
+  });
+
+  // Click outside backdrop to close
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  // Form submission
+  if (form && formEndpoint && !formEndpoint.startsWith('[')) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submit.disabled = true;
+      submit.textContent = 'Sending…';
+      errEl.classList.add('hidden');
+
+      try {
+        const res = await fetch(formEndpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          formState.classList.add('hidden');
+          thanks.classList.remove('hidden');
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch {
+        errEl.textContent = 'Something went wrong. Please try again or email hello@fieldhealthafrica.org.';
+        errEl.classList.remove('hidden');
+        submit.disabled = false;
+        submit.textContent = 'Get download links →';
+      }
+    });
+  } else if (form) {
+    // Formspree endpoint not yet set — show dev warning
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errEl.textContent = '[DEV] Formspree endpoint not configured yet. Set formEndpoint prop.';
+      errEl.classList.remove('hidden');
+    });
+  }
+</script>

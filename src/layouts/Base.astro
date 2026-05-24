@@ -1,0 +1,203 @@
+---
+/**
+ * Base.astro — root layout shared by every page.
+ *
+ * Props:
+ *   title          — <title> content (page-specific prefix, site name appended)
+ *   description    — meta description
+ *   ogImage?       — absolute URL for OG image (defaults to /images/og-default.png)
+ *   noIndex?       — adds noindex tag on pages that shouldn't be indexed
+ */
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Google Analytics 4 — set GA4_MEASUREMENT_ID in Cloudflare Pages env vars.
+// Paste your real ID (G-XXXXXXXXXX) there; nothing changes in code.
+const GA4_ID = import.meta.env.GA4_MEASUREMENT_ID ?? '';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/og-default.svg',
+  noIndex = false,
+} = Astro.props;
+
+const siteName = 'FieldHealth Africa';
+const fullTitle = `${title} | ${siteName}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://fieldhealthafrica.org');
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary meta -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  {noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, canonicalURL)} />
+  <meta property="og:url" content={canonicalURL} />
+
+  <!-- Twitter/X card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, canonicalURL)} />
+
+  <!-- Favicon (swap with real SVG/ico at GATE 2) -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Self-hosted fonts (installed via @fontsource) -->
+  <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- GA4 — loads only when measurement ID is set -->
+  {GA4_ID && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+      <script define:vars={{ GA4_ID }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', GA4_ID);
+      </script>
+    </>
+  )}
+</head>
+
+<body class="bg-[#0f0f14] text-white antialiased min-h-screen flex flex-col">
+  <Header />
+  <main id="main-content" class="flex-1 pt-24">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style is:global>
+  /* Self-hosted font faces — @fontsource copies woff2 to node_modules;
+     post-install script (see README) copies relevant woff2 to public/fonts/.
+     Until then, system fallbacks apply automatically. */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/fonts/inter-latin-600-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/space-grotesk-latin-700-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+
+  /* Smooth focus for keyboard nav */
+  :focus-visible {
+    outline: 2px solid #2dd4bf;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ── Scroll-reveal system ──────────────────────────────────────────
+     Elements with [data-reveal] start invisible and slide up.
+     The JS observer below adds .revealed when they enter the viewport.
+     Reduced-motion: block skipped entirely — elements visible from paint.
+  ──────────────────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity  0.70s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.70s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Stagger delays — add data-reveal-delay="100|200|300|400|500" */
+    [data-reveal][data-reveal-delay="100"] { transition-delay: 0.10s; }
+    [data-reveal][data-reveal-delay="150"] { transition-delay: 0.15s; }
+    [data-reveal][data-reveal-delay="200"] { transition-delay: 0.20s; }
+    [data-reveal][data-reveal-delay="300"] { transition-delay: 0.30s; }
+    [data-reveal][data-reveal-delay="400"] { transition-delay: 0.40s; }
+    [data-reveal][data-reveal-delay="500"] { transition-delay: 0.50s; }
+  }
+
+  /* Respect reduced motion — disables ALL animations globally */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<!-- Scroll-reveal observer — runs after DOM is ready, no dependencies -->
+<script>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.07, rootMargin: '0px 0px -52px 0px' }
+    );
+
+    // Observe all [data-reveal] elements, including those added after load
+    const observe = () =>
+      document.querySelectorAll('[data-reveal]:not(.revealed)').forEach((el) =>
+        observer.observe(el)
+      );
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', observe);
+    } else {
+      observe();
+    }
+  })();
+</script>

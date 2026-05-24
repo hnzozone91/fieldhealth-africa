@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm *)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\GLC\\\\Documents\\\\fieldhealth-africa\"; Start-Process powershell -ArgumentList \"-NoExit\", \"-Command\", \"npm run dev\" -WindowStyle Normal; Start-Sleep -Seconds 5; Write-Host \"Dev server launched\")",
+      "PowerShell(git *)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\GLC\\\\Documents\\\\fieldhealth-africa\\\\dist\" -Recurse | Where-Object { -not $_.PSIsContainer } | Measure-Object Length -Sum | ForEach-Object { [math]::Round\\($_.Sum/1KB,1\\) })",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\GLC\\\\Documents\\\\fieldhealth-africa\\\\dist\\\\_astro\" | Select-Object Name, @{n='KB';e={[math]::Round\\($_.Length/1KB,1\\)}} | Sort-Object KB -Descending)"
+    ]
+  }
+}

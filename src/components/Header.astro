@@ -1,0 +1,149 @@
+---
+/**
+ * Header.astro — shared glass navigation header.
+ * Sticky, frosted glass, collapses to hamburger on mobile.
+ */
+const navLinks = [
+  { href: '/free-library', label: 'Free Library' },
+  { href: '/pro-library',  label: 'Pro Tools'    },
+  { href: '/picks',        label: 'Picks'         },
+  { href: '/blog',         label: 'Blog'          },
+  { href: '/about',        label: 'About'         },
+  { href: '/contact',      label: 'Contact'       },
+];
+
+const { pathname } = Astro.url;
+---
+
+<header class="fixed top-0 inset-x-0 z-50">
+  <!-- Glass bar -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mt-3 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.3)]">
+      <nav class="flex items-center justify-between h-16 px-5">
+
+        <!-- Wordmark / Logo -->
+        <a href="/" class="flex items-center gap-3 flex-shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded-lg" aria-label="FieldHealth Africa home">
+          <!-- Logo image — swap src when real asset arrives -->
+          <img
+            src="/images/logo.png"
+            alt="FieldHealth Africa"
+            width="36"
+            height="36"
+            class="h-9 w-auto"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          />
+          <!-- SVG text fallback (shows if logo.png missing) -->
+          <span class="hidden items-center gap-1 font-display font-bold text-white text-lg leading-none" id="wordmark-fallback">
+            <span class="text-teal-400">Field</span><span>Health</span>
+            <span class="text-white/50 font-normal text-sm ml-1">Africa</span>
+          </span>
+          <script>
+            const img = document.querySelector('header img[alt="FieldHealth Africa"]');
+            if (img) img.addEventListener('error', () => {
+              document.getElementById('wordmark-fallback').style.display = 'flex';
+            });
+          </script>
+        </a>
+
+        <!-- Desktop nav -->
+        <ul class="hidden md:flex items-center gap-1" role="list">
+          {navLinks.map(({ href, label }) => {
+            const active = pathname === href || pathname.startsWith(href + '/');
+            return (
+              <li>
+                <a
+                  href={href}
+                  class={[
+                    'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200',
+                    active
+                      ? 'bg-teal-500/20 text-teal-300'
+                      : 'text-white/70 hover:text-white hover:bg-white/[0.06]',
+                    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2',
+                  ].join(' ')}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <!-- CTA -->
+        <a
+          href="/free-library"
+          class="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 flex-shrink-0"
+        >
+          Free Library
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/[0.06] transition-colors"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Mobile menu panel -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden mx-4 mt-1 rounded-2xl bg-[#0b1117]/95 backdrop-blur-lg border border-white/10 shadow-xl overflow-hidden"
+    role="dialog"
+    aria-label="Navigation menu"
+  >
+    <ul class="flex flex-col py-3 px-4 gap-1" role="list">
+      {navLinks.map(({ href, label }) => {
+        const active = pathname === href || pathname.startsWith(href + '/');
+        return (
+          <li>
+            <a
+              href={href}
+              class={[
+                'block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                active ? 'bg-teal-500/20 text-teal-300' : 'text-white/80 hover:text-white hover:bg-white/[0.06]',
+              ].join(' ')}
+              aria-current={active ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        );
+      })}
+      <li class="pt-2 border-t border-white/10 mt-1">
+        <a
+          href="/free-library"
+          class="block px-4 py-2.5 rounded-xl bg-teal-500 text-black font-semibold text-sm text-center hover:bg-teal-400 transition-colors"
+        >
+          Browse Free Library
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!btn.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>

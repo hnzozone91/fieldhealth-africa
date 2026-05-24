@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page Not Found"
+  description="The page you were looking for doesn't exist."
+  noIndex={true}
+>
+  <div class="min-h-[80vh] flex items-center justify-center px-4 py-20 text-center">
+    <div class="max-w-md">
+      <p class="font-display font-bold text-8xl text-white/10 mb-6" aria-hidden="true">404</p>
+      <h1 class="font-display font-bold text-3xl text-white mb-4">Page not found</h1>
+      <p class="text-white/55 text-base leading-relaxed mb-8">
+        The page you were looking for doesn't exist — it may have moved, or the link might be broken.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(6,182,212,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
+        >
+          Go home
+        </a>
+        <a
+          href="/free-library"
+          class="inline-flex items-center justify-center px-6 py-3 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/25 text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400"
+        >
+          Browse Free Library
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>

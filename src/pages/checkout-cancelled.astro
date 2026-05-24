@@ -1,0 +1,47 @@
+﻿---
+/**
+ * /checkout-cancelled
+ * Paystack callback target when user cancels the payment.
+ * Also configure this as the cancel URL in your Paystack Payment Link dashboard.
+ */
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Payment Cancelled"
+  description="Payment was cancelled — no charge was made."
+  noIndex={true}
+>
+  <div class="min-h-[80vh] flex items-center justify-center px-4 py-20">
+    <div class="max-w-lg w-full text-center">
+      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-white/10 p-10">
+
+        <div class="w-16 h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+          <svg class="w-8 h-8 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </div>
+
+        <h1 class="font-display font-bold text-3xl text-white mb-3">Payment cancelled</h1>
+        <p class="text-white/60 text-base leading-relaxed mb-8">
+          No charge was made. Your payment was cancelled before it was processed.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/pro-library" class="flex-1 inline-flex items-center justify-center py-3 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
+            Back to Pro Library
+          </a>
+          <a href="/contact" class="flex-1 inline-flex items-center justify-center py-3 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/25 text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
+            Contact us
+          </a>
+        </div>
+
+        <p class="text-white/30 text-xs mt-6">
+          Had a problem with payment? Email{' '}
+          <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400/70 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>
+

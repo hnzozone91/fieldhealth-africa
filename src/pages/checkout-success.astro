@@ -1,0 +1,72 @@
+﻿---
+/**
+ * /checkout-success
+ * Paystack callback target for successful payments.
+ *
+ * Set this as your Paystack Payment Link success/callback URL:
+ *   https://fieldhealthafrica.org/checkout-success
+ *
+ * Paystack appends ?reference=TXN_REF to this URL.
+ * The verify-payment CF Function stub (functions/api/verify-payment.ts)
+ * is the upgrade path for server-side verification + auto-download.
+ */
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Payment Successful"
+  description="Thank you for your purchase — your download instructions are on their way."
+  noIndex={true}
+>
+  <div class="min-h-[80vh] flex items-center justify-center px-4 py-20">
+    <div class="max-w-lg w-full text-center">
+      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-teal-500/25 shadow-[0_0_48px_-8px_rgba(20,184,166,0.25)] p-10">
+
+        <!-- Success icon -->
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500/20 to-emerald-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+          <svg class="w-8 h-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+
+        <h1 class="font-display font-bold text-3xl text-white mb-3">Payment received!</h1>
+        <p class="text-white/65 text-base leading-relaxed mb-8">
+          Thank you for purchasing from FieldHealth Africa.
+          <strong class="text-white">Check your email</strong> — your download link and receipt will arrive within a few minutes.
+        </p>
+
+        <div class="rounded-xl bg-white/[0.04] border border-white/[0.07] p-5 text-left mb-8">
+          <p class="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">What happens next</p>
+          <ol class="space-y-2.5">
+            {[
+              'Check the email you used at checkout for a receipt from Paystack.',
+              'A separate email from hello@fieldhealthafrica.org will follow within a few minutes with your download link.',
+              'Download and open the tool. If you run into anything, reply to that email.',
+            ].map((step, i) => (
+              <li class="flex items-start gap-3 text-sm text-white/60">
+                <span class="w-5 h-5 rounded-full bg-teal-500/20 border border-teal-500/30 text-teal-300 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <p class="text-white/35 text-xs mb-6">
+          No email after 10 minutes? Check spam or contact{' '}
+          <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400/80 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a>.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/pro-library" class="flex-1 inline-flex items-center justify-center py-2.5 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/25 text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
+            Back to Pro Library
+          </a>
+          <a href="/" class="flex-1 inline-flex items-center justify-center py-2.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-black font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(20,184,166,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-300">
+            Home
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</Base>
+

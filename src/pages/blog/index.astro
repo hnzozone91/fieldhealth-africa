@@ -1,0 +1,63 @@
+﻿---
+import Base from '../../layouts/Base.astro';
+import AuroraBackground from '../../components/AuroraBackground.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Base
+  title="Blog"
+  description="Field notes, tool walkthroughs, and dispatches from the district — by Dr. Nzozone Henry Fomukong, DMO, Mamfe."
+>
+
+  <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <AuroraBackground variant="b" />
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <div class="inline-flex items-center gap-2.5 mb-8">
+        <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
+        <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">Blog</span>
+      </div>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl text-white mb-4">Field notes &amp; dispatches</h1>
+      <p class="text-white/60 text-lg leading-relaxed">Tool walkthroughs, methodology notes, and writing from the district.</p>
+    </div>
+  </section>
+
+  <section class="py-8 px-4 sm:px-6 lg:px-8 pb-24">
+    <div class="mx-auto max-w-3xl space-y-4">
+      {posts.map((post) => (
+        <a
+          href={`/blog/${post.id}`}
+          class="group block rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-white/[0.06] p-6 transition-all duration-300 hover:bg-white/[0.07] hover:scale-[1.01] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
+                {post.data.tags.map((tag) => (
+                  <span class="px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-white/50 text-[10px] font-semibold uppercase tracking-wider">{tag}</span>
+                ))}
+                {post.data.hasAffiliateLinks && (
+                  <span class="px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400/70 text-[10px] font-semibold uppercase tracking-wider">Affiliate links</span>
+                )}
+              </div>
+              <h2 class="font-display font-bold text-xl text-white group-hover:text-cyan-100 transition-colors mb-1.5">{post.data.title}</h2>
+              <p class="text-white/55 text-sm leading-relaxed">{post.data.description}</p>
+            </div>
+            <svg class="w-5 h-5 text-white/20 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </div>
+          <p class="text-white/30 text-xs mt-4">{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        </a>
+      ))}
+
+      {posts.length === 0 && (
+        <div class="text-center py-20 text-white/30">
+          <p class="text-lg">No posts yet.</p>
+          <p class="text-sm mt-2">First post coming soon.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+</Base>
+

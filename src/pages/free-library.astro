@@ -1,0 +1,128 @@
+﻿---
+import Base from '../layouts/Base.astro';
+import AuroraBackground from '../components/AuroraBackground.astro';
+import DownloadGate from '../components/DownloadGate.astro';
+import NewsletterBand from '../components/NewsletterBand.astro';
+
+// TODO: replace with real Formspree endpoint once created.
+// Create a new form at formspree.io for "FieldHealth Free Downloads"
+// and paste the endpoint URL (https://formspree.io/f/XXXXXXXX) here.
+const DOWNLOADS_FORM = '[FORMSPREE_DOWNLOADS_ENDPOINT]';
+
+const comingSoon = [
+  { title: 'Health Indicator Calculator Lite',   desc: 'Instant district-level health indicator computation — mortality rates, coverage, ratios — with automated interpretation flags.' },
+  { title: 'Outbreak Investigation Checklist',   desc: 'Field-tested outbreak response checklist covering line listing, case definitions, hypothesis generation, and reporting templates.' },
+  { title: 'Antenatal Care Tracker',             desc: 'Monthly ANC attendance and drop-off tracking dashboard with facility-level comparisons and trend analysis.' },
+  { title: 'DHIS2 Data Quality Auditor',         desc: 'Automated completeness and consistency checks for DHIS2 exports — flags duplicates, gaps, and implausible values.' },
+  { title: 'Vaccination Coverage Calculator',    desc: 'Coverage and equity analysis tool for EPI campaigns, compatible with KoboToolbox exports and manual entry.' },
+  { title: 'Facility Performance Scorecard',     desc: 'Monthly scorecard comparing facilities on key indicators with traffic-light scoring and district-level roll-up.' },
+];
+---
+
+<Base
+  title="Free Library"
+  description="Practical digital health tools for African practitioners — no payment wall, no signup wall. Download free Excel dashboards, SOPs, and calculators built in the district."
+>
+
+  <!-- Hero -->
+  <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <AuroraBackground variant="b" />
+    <div class="relative z-10 mx-auto max-w-3xl">
+      <div class="inline-flex items-center gap-2.5 mb-8">
+        <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
+        <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">Free Library</span>
+      </div>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
+        Practical tools,<br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-emerald-300">no payment, no signup wall.</span>
+      </h1>
+      <p class="text-white/65 text-lg leading-relaxed">
+        Every tool here was built to solve a real problem in a real district. Download, adapt, use. If it helps — tell a colleague.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Live tool -->
+  <section class="py-4 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl">
+      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-6">Available now</p>
+
+      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/25 shadow-[0_0_40px_-6px_rgba(6,182,212,0.20)] overflow-hidden">
+        <div class="p-8">
+          <div class="flex flex-col sm:flex-row gap-6 items-start">
+
+            <!-- Thumbnail placeholder -->
+            <div class="flex-shrink-0 w-full sm:w-52 h-36 rounded-xl bg-gradient-to-br from-cyan-900/40 to-teal-900/20 border border-cyan-500/20 flex items-center justify-center">
+              <!-- TODO: replace with real tool screenshot/thumbnail -->
+              <div class="text-center text-cyan-500/40">
+                <svg class="w-10 h-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <p class="text-xs">Screenshot coming soon</p>
+              </div>
+            </div>
+
+            <!-- Details -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-500/25 text-cyan-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
+                <span class="text-white/30 text-xs">v2.1 · Excel (.xlsx)</span>
+              </div>
+              <h2 class="font-display font-bold text-2xl text-white mb-2">Pharmacy Inventory Tracker v2.1</h2>
+              <p class="text-white/60 text-sm leading-relaxed mb-6">
+                Built and refined over 18 months of actual use in the Mamfe health district.
+                Tracks stock levels across multiple drugs, flags items below safety stock,
+                forecasts run-out dates before the next resupply, and highlights overdue orders.
+                Includes the full User Guide.
+              </p>
+
+              <!-- Download gate -->
+              <DownloadGate
+                productName="Pharmacy Inventory Tracker v2.1"
+                formEndpoint={DOWNLOADS_FORM}
+                files={[
+                  { label: 'Pharmacy Inventory v2.1 (.xlsx)', href: '/downloads/FieldHealth_Pharmacy_Inventory_v2.1.xlsx' },
+                  { label: 'User Guide (.docx)',               href: '/downloads/FieldHealth_Pharmacy_Inventory_v2.1_User_Guide.docx' },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Meta footer -->
+        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
+          <span>📦 Works offline · No macros required</span>
+          <span>🌍 Designed for low-bandwidth environments</span>
+          <span>📝 Tested in Mamfe health district, Cameroon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Coming soon cards -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl">
+      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-6">Coming soon</p>
+      <div data-reveal class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {comingSoon.map(({ title, desc }) => (
+          <div class="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 opacity-60 relative overflow-hidden">
+            <!-- Diagonal stripe overlay -->
+            <div class="absolute inset-0 opacity-[0.025]" style="background-image: repeating-linear-gradient(45deg, white, white 1px, transparent 1px, transparent 8px);" aria-hidden="true"></div>
+            <div class="relative">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-white/10 text-white/40 text-[10px] font-bold uppercase tracking-wider">Coming soon</span>
+              </div>
+              <h3 class="font-display font-bold text-base text-white/70 mb-1.5">{title}</h3>
+              <p class="text-white/40 text-xs leading-relaxed">{desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <NewsletterBand />
+
+</Base>
+
+

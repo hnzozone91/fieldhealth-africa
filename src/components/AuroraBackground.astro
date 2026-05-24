@@ -1,0 +1,172 @@
+---
+/**
+ * AuroraBackground.astro
+ *
+ * Animated mesh-gradient aurora.
+ * - Three organic blobs with independent, differentiated motion paths
+ * - Base gradient layer slowly shifts position (mesh-drift keyframe)
+ * - Subtle hue-rotate on the base (colour cycling through palette)
+ * - Scroll parallax: set parallax={true} on hero sections only
+ * - Reduced-motion: all animation and parallax disabled via media query
+ * - Performance: transforms + opacity only (GPU), one blur per blob, no stacking
+ */
+interface Props {
+  variant?: 'a' | 'b';
+  parallax?: boolean;
+}
+const { variant = 'b', parallax = false } = Astro.props;
+const rootId = parallax ? 'aurora-parallax-root' : undefined;
+---
+
+<div class="aurora-root" id={rootId} data-variant={variant} aria-hidden="true">
+  <div class="aurora-base"></div>
+  <div class="aurora-blob blob-1"></div>
+  <div class="aurora-blob blob-2"></div>
+  <div class="aurora-blob blob-3"></div>
+</div>
+
+<style>
+  .aurora-root {
+    position: absolute;
+    inset: -15% -5%;        /* bleed beyond edges so parallax doesn't clip */
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ─── Direction B base (used on all pages) ───────────────────────── */
+  [data-variant='b'] .aurora-base {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 70% at 15% 20%, rgba(6,182,212,0.42) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 60% at 88% 70%, rgba(99,102,241,0.34) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 45% at 55% 85%, rgba(52,211,153,0.26) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 35% at 80% 15%, rgba(6,182,212,0.18) 0%, transparent 65%);
+    background-size: 180% 180%, 160% 160%, 140% 140%, 120% 120%;
+    background-position: 0% 50%, 100% 50%, 50% 0%, 80% 20%;
+    animation: mesh-drift 28s ease-in-out infinite, hue-cycle 40s ease-in-out infinite;
+  }
+
+  /* ─── Direction A base ───────────────────────────────────────────── */
+  [data-variant='a'] .aurora-base {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 85% 65% at 20% 30%, rgba(13,148,136,0.38) 0%, transparent 65%),
+      radial-gradient(ellipse 65% 55% at 82% 68%, rgba(16,185,129,0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(59,130,246,0.15) 0%, transparent 65%);
+    background-size: 180% 180%, 160% 160%, 140% 140%;
+    background-position: 0% 50%, 100% 50%, 50% 0%;
+    animation: mesh-drift 28s ease-in-out infinite;
+  }
+
+  /* ─── Shared blob geometry ─────────────────────────────────────────── */
+  .aurora-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(72px);
+    will-change: transform;
+  }
+
+  /* Blob 1 — large, upper-left, primary colour */
+  .blob-1 {
+    width: min(680px, 95vw);
+    height: min(600px, 85vw);
+    top: -12%;
+    left: -8%;
+  }
+  [data-variant='b'] .blob-1 { background: radial-gradient(circle at 40% 40%, rgba(6,182,212,0.45) 0%, transparent 70%); }
+  [data-variant='a'] .blob-1 { background: radial-gradient(circle at 40% 40%, rgba(13,148,136,0.45) 0%, transparent 70%); }
+
+  /* Blob 2 — medium, lower-right, secondary colour */
+  .blob-2 {
+    width: min(540px, 78vw);
+    height: min(480px, 70vw);
+    bottom: -10%;
+    right: -6%;
+  }
+  [data-variant='b'] .blob-2 { background: radial-gradient(circle at 60% 60%, rgba(99,102,241,0.38) 0%, transparent 70%); }
+  [data-variant='a'] .blob-2 { background: radial-gradient(circle at 60% 60%, rgba(16,185,129,0.35) 0%, transparent 70%); }
+
+  /* Blob 3 — small accent, mid-centre */
+  .blob-3 {
+    width: min(380px, 60vw);
+    height: min(320px, 52vw);
+    top: 35%;
+    left: 42%;
+    transform: translate(-50%, -50%);
+  }
+  [data-variant='b'] .blob-3 { background: radial-gradient(circle at 50% 50%, rgba(52,211,153,0.28) 0%, transparent 70%); }
+  [data-variant='a'] .blob-3 { background: radial-gradient(circle at 50% 50%, rgba(59,130,246,0.22) 0%, transparent 70%); }
+
+  /* ─── Animations (all wrapped in motion-safe) ──────────────────────── */
+
+  /* Mesh-drift: shifts the multi-layer gradient positions for a rippling effect */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes mesh-drift {
+      0%   { background-position: 0% 50%,  100% 50%, 50%  0%,  80%  20%; }
+      20%  { background-position: 30% 70%, 70%  30%, 20%  70%, 60%  40%; }
+      40%  { background-position: 80% 30%, 20%  70%, 75%  50%, 30%  60%; }
+      60%  { background-position: 50% 80%, 50%  20%, 30%  80%, 70%  10%; }
+      80%  { background-position: 20% 40%, 80%  60%, 60%  20%, 50%  70%; }
+      100% { background-position: 0% 50%,  100% 50%, 50%  0%,  80%  20%; }
+    }
+
+    /* Hue-cycle: gently rotates hue ±20° for a colour-breathing effect */
+    @keyframes hue-cycle {
+      0%,100% { filter: hue-rotate(0deg)   saturate(1.0); }
+      25%     { filter: hue-rotate(18deg)  saturate(1.15); }
+      50%     { filter: hue-rotate(-12deg) saturate(0.9); }
+      75%     { filter: hue-rotate(8deg)   saturate(1.1); }
+    }
+
+    /* Blob 1 — drifts slowly across a wide path */
+    @keyframes blob-drift-1 {
+      0%,100% { transform: translate(0px,   0px)   scale(1.00); }
+      20%     { transform: translate(55px, -40px)  scale(1.08); }
+      40%     { transform: translate(-30px, 55px)  scale(0.93); }
+      60%     { transform: translate(40px,  30px)  scale(1.05); }
+      80%     { transform: translate(-50px,-25px)  scale(0.97); }
+    }
+
+    /* Blob 2 — counter-cycles, creating interference patterns */
+    @keyframes blob-drift-2 {
+      0%,100% { transform: translate(0px,   0px)   scale(1.00); }
+      25%     { transform: translate(-60px, 35px)  scale(1.07); }
+      50%     { transform: translate(35px, -55px)  scale(0.91); }
+      75%     { transform: translate(-25px, 25px)  scale(1.04); }
+    }
+
+    /* Blob 3 — small, faster, creates focal sparkle */
+    @keyframes blob-drift-3 {
+      0%,100% { transform: translate(-50%,-50%) scale(1.0); }
+      33%     { transform: translate(-50%,-50%) translate(40px,-30px) scale(1.15); }
+      66%     { transform: translate(-50%,-50%) translate(-35px,40px) scale(0.85); }
+    }
+
+    .blob-1 { animation: blob-drift-1 18s ease-in-out infinite; }
+    .blob-2 { animation: blob-drift-2 24s ease-in-out infinite; }
+    .blob-3 { animation: blob-drift-3 14s ease-in-out infinite; }
+  }
+</style>
+
+<!-- Parallax scroll handler (injected only when parallax={true}) -->
+<script define:vars={{ parallax }}>
+  if (parallax) {
+    const root = document.getElementById('aurora-parallax-root');
+    if (root && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let raf = null;
+      const onScroll = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const y = window.scrollY;
+          // aurora drifts at 38% of scroll speed — feels like deep background
+          root.style.transform = `translateY(${y * 0.38}px)`;
+          raf = null;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  }
+</script>

@@ -1,0 +1,90 @@
+---
+/**
+ * GlassCard.astro — frosted-glass card, upgraded glassmorphism.
+ *
+ * Key visual elements:
+ *   • backdrop-blur-[18px] — strong enough to be clearly "frosted", not so heavy
+ *     it costs mobile frames (single layer, never nested)
+ *   • bg-gradient fill — subtle top-to-bottom gradient makes the glass feel thick
+ *   • inset 0 1px 0 rgba(255,255,255,0.12) — top-edge highlight simulates light
+ *     hitting the rim of the glass (the most "real glass" single trick)
+ *   • outer neon glow per colour variant
+ *   • hover intensifies glow + lifts card
+ *
+ * Props:
+ *   href?    — wraps in <a>
+ *   glow?    — 'teal' | 'emerald' | 'indigo' | 'cyan' | 'none'
+ *   padding? — tailwind padding class, default 'p-6'
+ *   class?   — extra classes
+ */
+interface Props {
+  href?: string;
+  glow?: 'teal' | 'emerald' | 'indigo' | 'cyan' | 'none';
+  padding?: string;
+  class?: string;
+}
+
+const {
+  href,
+  glow = 'none',
+  padding = 'p-6',
+  class: extraClass = '',
+} = Astro.props;
+
+// Shadow tokens: outer-depth + inner-top-highlight + neon-edge per variant
+const shadows: Record<string, { base: string; hover: string }> = {
+  cyan: {
+    base:  'shadow-[0_4px_28px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(6,182,212,0.18),0_0_32px_-6px_rgba(6,182,212,0.30)]',
+    hover: 'hover:shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_0_1px_rgba(6,182,212,0.30),0_0_48px_-4px_rgba(6,182,212,0.50)]',
+  },
+  teal: {
+    base:  'shadow-[0_4px_28px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(20,184,166,0.18),0_0_32px_-6px_rgba(20,184,166,0.30)]',
+    hover: 'hover:shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_0_1px_rgba(20,184,166,0.30),0_0_48px_-4px_rgba(20,184,166,0.50)]',
+  },
+  emerald: {
+    base:  'shadow-[0_4px_28px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(16,185,129,0.18),0_0_32px_-6px_rgba(16,185,129,0.28)]',
+    hover: 'hover:shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_0_1px_rgba(16,185,129,0.30),0_0_48px_-4px_rgba(16,185,129,0.48)]',
+  },
+  indigo: {
+    base:  'shadow-[0_4px_28px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(99,102,241,0.18),0_0_32px_-6px_rgba(99,102,241,0.28)]',
+    hover: 'hover:shadow-[0_8px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_0_1px_rgba(99,102,241,0.30),0_0_48px_-4px_rgba(99,102,241,0.48)]',
+  },
+  none: {
+    base:  'shadow-[0_4px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.09)]',
+    hover: 'hover:shadow-[0_8px_36px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.14)]',
+  },
+};
+
+const s = shadows[glow];
+
+const baseClass = [
+  'rounded-2xl',
+  'bg-gradient-to-br from-white/[0.08] to-white/[0.03]',
+  '[backdrop-filter:blur(18px)]',
+  'border border-white/[0.12]',
+  s.base,
+  padding,
+  extraClass,
+].join(' ');
+
+const linkClass = [
+  baseClass,
+  'block',
+  'transition-all duration-300',
+  s.hover,
+  'hover:from-white/[0.11] hover:to-white/[0.05]',
+  'hover:scale-[1.018]',
+  'hover:border-white/[0.18]',
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2',
+].join(' ');
+---
+
+{href ? (
+  <a href={href} class={linkClass}>
+    <slot />
+  </a>
+) : (
+  <div class={baseClass}>
+    <slot />
+  </div>
+)}
