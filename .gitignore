@@ -33,5 +33,9 @@ brief.md
 "Untitled design.png"
 founder.jpeg
 
+# public/downloads is the site's download folder — ALL files there must be tracked
+# (negation overrides the *.pdf / *.docx rules above)
+!public/downloads/**
+
 # Tool source files (sold products — not for public repo)
 TOOL PRODUCTION PROJECT FOR DHA/

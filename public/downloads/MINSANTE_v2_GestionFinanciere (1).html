@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Outil de Gestion Financière — MINSANTE Cameroun</title>
+<style>
+:root{--g:#006633;--gl:#008844;--gp:#e8f5ee;--r:#cc0000;--rl:#fff5f5;--b:#1a3a6b;--bl:#eef2ff;--sand:#f5f0e8;--cream:#faf8f4;--bd:#d4cfc4;--sh:0 1px 4px rgba(0,0,0,.10);--shl:0 4px 16px rgba(0,0,0,.14);}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;font-size:13px;background:var(--sand);color:#1a1a1a;min-height:100vh}
+#hdr{background:linear-gradient(135deg,var(--g),#004422);color:#fff;padding:8px 20px;display:flex;align-items:center;gap:14px;border-bottom:4px solid #c8a800;position:sticky;top:0;z-index:1000;box-shadow:var(--shl)}
+#hdr img{height:60px;border-radius:4px;border:2px solid rgba(255,255,255,.25);background:#fff;padding:2px;flex-shrink:0}
+.ht{flex:1}.ht h1{font-size:14px;font-weight:700;line-height:1.35}.ht .sub{font-size:10px;opacity:.78;margin-top:2px}.ht .rep{font-size:9px;opacity:.55;border-top:1px solid rgba(255,255,255,.15);padding-top:3px;margin-top:3px}
+.hm{text-align:right;font-size:11px;line-height:1.8}.hm strong{display:block;font-size:13px;color:#ffd700}
+#abar{background:#fff;border-bottom:2px solid var(--bd);padding:5px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{padding:5px 14px;border:none;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.bs{background:var(--g);color:#fff}.bl{background:var(--b);color:#fff}.bp{background:#555;color:#fff}.bd2{background:var(--r);color:#fff}
+.bpri{background:var(--r);color:#fff;padding:7px 18px;font-size:13px;border:none;border-radius:4px;cursor:pointer;font-weight:700}
+.bsec{background:var(--b);color:#fff;padding:7px 16px;font-size:12px;border:none;border-radius:4px;cursor:pointer;font-weight:600}
+#cfd{font-size:11px;color:var(--g);font-weight:700;margin-left:auto}
+#nav{background:var(--b);display:flex;flex-wrap:wrap;padding:0 8px;gap:1px;border-bottom:3px solid var(--r)}
+.tb{background:transparent;color:rgba(255,255,255,.7);border:none;padding:9px 13px;cursor:pointer;font-size:11px;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-3px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.tb:hover{color:#fff;background:rgba(255,255,255,.08)}.tb.active{color:#fff;border-bottom-color:var(--r);background:rgba(255,255,255,.1)}
+.ts{display:none;padding:20px;max-width:1280px;margin:0 auto}.ts.active{display:block}
+.card{background:#fff;border-radius:6px;box-shadow:var(--sh);margin-bottom:18px;border:1px solid var(--bd)}
+.ch{background:linear-gradient(90deg,var(--g),var(--gl));color:#fff;padding:9px 16px;font-weight:700;font-size:12px;display:flex;align-items:center;gap:8px;border-radius:6px 6px 0 0;text-transform:uppercase;letter-spacing:.3px}
+.ch.blue{background:linear-gradient(90deg,var(--b),#1e4a8a)}.ch.red{background:linear-gradient(90deg,var(--r),#e02020)}.ch.gold{background:linear-gradient(90deg,#7a5c00,#b8860b)}
+.cb{padding:16px}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.fgrp{display:flex;flex-direction:column;gap:4px}
+.fgrp label{font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.6px}
+.inp{border:1px solid var(--bd);border-radius:4px;padding:7px 10px;font-size:13px;color:#1a1a1a;background:#fff;width:100%;transition:border .15s}
+.inp:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(0,102,51,.08)}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.svctabs{display:flex;flex-wrap:nowrap;overflow-x:auto;border-bottom:2px solid var(--bd);margin-bottom:16px;scrollbar-width:thin}
+.svctab{padding:8px 14px;cursor:pointer;font-size:11px;font-weight:700;color:#777;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.svctab:hover{color:var(--b)}.svctab.active{color:var(--r);border-bottom-color:var(--r);background:#fff}
+.svctab .cnt{background:var(--r);color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:700;min-width:20px;text-align:center}.svctab .cnt.zero{background:#ccc}
+.svcpanel{display:none}.svcpanel.active{display:block}
+.dt{width:100%;border-collapse:collapse;font-size:12px}
+.dt th{background:var(--b);color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.dt td{padding:6px 10px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.dt tr:last-child td{border-bottom:none}.dt tr:hover td{background:#f8f6f2}
+.dt tr.tr2 td{font-weight:700;background:var(--gp);border-top:2px solid var(--g)}
+.dt tr.ar td{background:var(--rl);color:var(--r)}.dt tr.ok td{background:#f0fff4}.dt tr.warn td{background:#fefce8}
+.cp{background:linear-gradient(135deg,#f8fffe,#f0fff8);border:2px solid var(--g);border-radius:6px;padding:16px;margin-top:16px}
+.cp h3{color:var(--g);font-size:12px;margin-bottom:12px;border-bottom:1px solid #c8e6c9;padding-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.cs{margin-bottom:10px;padding:10px 12px;background:#fff;border-radius:5px;border-left:4px solid var(--g);box-shadow:var(--sh)}
+.cs.sb{border-left-color:var(--b)}.cs.sg{border-left-color:#b8860b}
+.cs h4{font-size:10px;color:#777;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid #f0f0f0}.cr:last-child{border-bottom:none}
+.cl{font-size:12px;color:#444}.cv{font-weight:700;color:var(--g);font-size:13px;font-family:'Courier New',monospace}
+.cv.blue{color:var(--b)}.cv.gold{color:#7a5c00}
+.cr.grand{border-top:2px solid var(--g);padding-top:6px;margin-top:4px}
+.al{padding:10px 14px;border-radius:5px;margin-bottom:10px;font-size:12px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.al-r{background:#fff5f5;border:1px solid #fecaca;color:#9b1c1c}.al-g{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+.al-y{background:#fefce8;border:1px solid #fde68a;color:#78350f}.al-b{background:var(--bl);border:1px solid #bfdbfe;color:#1e3a8a}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.bg{background:#dcfce7;color:#166534}.br2{background:#fee2e2;color:#991b1b}.by{background:#fef9c3;color:#854d0e}.bgr{background:#f1f5f9;color:#475569}.bbl{background:#dbeafe;color:#1e40af}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:18px}
+.dc{background:#fff;border-radius:6px;padding:14px 16px;box-shadow:var(--sh);border:1px solid var(--bd);border-top:4px solid var(--g)}
+.dc.red{border-top-color:var(--r)}.dc.blue{border-top-color:var(--b)}.dc.gold{border-top-color:#b8860b}
+.dc .dl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.dc .dv{font-size:18px;font-weight:700;color:var(--g);font-family:'Courier New',monospace}
+.dc.red .dv{color:var(--r)}.dc.blue .dv{color:var(--b)}.dc.gold .dv{color:#7a5c00}
+.dc .ds{font-size:10px;color:#aaa;margin-top:3px}
+.barchart{display:flex;align-items:flex-end;gap:5px;height:140px;padding:4px;overflow-x:auto}
+.bitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:44px}
+.bfill{width:100%;border-radius:3px 3px 0 0;min-height:2px}
+.blabel{font-size:9px;text-align:center;color:#666;word-break:break-word;line-height:1.2}
+.bval{font-size:9px;font-weight:700}
+#setup{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:9999}
+.sbox{background:#fff;border-radius:10px;width:96%;max-width:740px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.4);border-top:6px solid var(--g)}
+.sh2{background:linear-gradient(135deg,var(--g),#004422);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:14px}
+.sh2 img{height:56px;border:2px solid rgba(255,255,255,.2);border-radius:4px;background:#fff;padding:2px;flex-shrink:0}
+.sh2 h2{font-size:15px;line-height:1.4;font-weight:700}.sh2 p{font-size:10px;opacity:.75;margin-top:3px}
+.sb2{padding:22px}
+.sf{padding:14px 22px;background:var(--sand);border-top:1px solid var(--bd);border-radius:0 0 10px 10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ms{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;padding:8px 12px;background:#fff;border-radius:5px;border:1px solid var(--bd)}
+.ms label{font-weight:700;font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.4px}.ms .inp{width:auto}
+.proc{display:inline-block;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700}
+.pd{background:#dcfce7;color:#166534}.pq{background:#fef9c3;color:#854d0e}.pt{background:#fee2e2;color:#991b1b}
+.ln{font-size:10px;color:#888;font-style:italic;margin-top:8px;padding:6px 8px;background:#f9f9f7;border-left:3px solid var(--bd);border-radius:0 3px 3px 0}
+.trirow{display:grid;grid-template-columns:2fr 130px 130px 120px 90px;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--bd);font-size:12px}
+.trirow.th{background:var(--b);color:#fff;font-weight:700;font-size:10px;border-radius:4px;text-transform:uppercase;border:none}
+.trirow.tok{background:#f0fdf4}.trirow.tal{background:#fff5f5}
+.trisub{padding:6px 10px 10px 12px;font-size:11px;color:#9b1c1c;border-left:4px solid var(--r);margin-bottom:4px;background:#fff5f5;line-height:1.5}
+.sigblock{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;margin-top:30px;padding-top:20px;border-top:2px solid var(--bd)}
+.sigitem{text-align:center;font-size:12px}.sigline{border-top:1px solid #333;margin-top:40px;padding-top:5px;font-size:11px;color:#555}
+.rcov{text-align:center;padding:32px 24px;border:3px solid var(--g);border-radius:8px;margin-bottom:22px;background:linear-gradient(135deg,#f8fff8,#fff)}
+.rcov img{height:88px;margin-bottom:12px}.rcov h1{font-size:19px;color:var(--g);font-weight:700}.rcov h2{font-size:14px;color:#333;margin:6px 0}.rtag{font-size:12px;color:#555;margin:3px 0}
+.rsec{margin-bottom:22px;page-break-inside:avoid}.rsec h3{font-size:13px;color:var(--g);border-bottom:2px solid var(--g);padding-bottom:5px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px}
+.decdots{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.decbox{padding:12px;border-radius:5px;border:1px solid var(--bd)}.decbox.ok2{background:#f0fdf4;border-color:#bbf7d0}.decbox.bad{background:#fff5f5;border-color:#fecaca}
+.decbox .dt2{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.4px}.decbox .dv2{font-size:16px;font-weight:700;margin:4px 0;font-family:'Courier New',monospace}
+@media print{#setup,#abar,#nav,.no-print,.ms{display:none!important}.ts{display:block!important;padding:5px 0}.card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid}body{background:#fff;font-size:11px}#hdr{position:static;background:#006633!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{margin:12mm;size:A4}}
+.tr2{text-align:right}.tc{text-align:center}.tw{white-space:nowrap}
+.red{color:var(--r)}.grn{color:var(--g)}.blu{color:var(--b)}.gld{color:#7a5c00}
+.fw7{font-weight:700}.mt8{margin-top:8px}.mt14{margin-top:14px}.mb8{margin-bottom:8px}.mb14{margin-bottom:14px}
+.flex{display:flex}.gap8{gap:8px}.wrap{flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="setup">
+<div class="sbox">
+  <div class="sh2">
+    <img src="data:image/jpeg;base64,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" alt="MINSANTE">
+    <div><h2>MINSANTE — République du Cameroun<br>Outil de Gestion Financière des Recettes Propres</h2>
+    <p>Financial Management Tool — Internally Generated Funds | Catégories 3, 4 et 5</p></div>
+  </div>
+  <div class="sb2">
+    <p class="mb14" style="color:#555;font-size:12px"><strong>Bienvenue.</strong> Configurez votre formation sanitaire avant de commencer.</p>
+    <div class="fg">
+      <div class="fgrp"><label>Nom de la Formation Sanitaire *</label><input class="inp" type="text" id="s-fn" placeholder="Ex: Hôpital de District de Mamfe"></div>
+      <div class="fgrp"><label>Catégorie *</label><select class="inp" id="s-cat"><option value="">-- Sélectionner --</option><option value="3">Catégorie 3</option><option value="4">Catégorie 4</option><option value="5">Catégorie 5</option></select></div>
+      <div class="fgrp"><label>District de Santé *</label><input class="inp" type="text" id="s-dist" placeholder="Ex: Mamfe"></div>
+      <div class="fgrp"><label>Région *</label><select class="inp" id="s-reg"><option value="">-- Sélectionner --</option><option>Centre</option><option>Littoral</option><option>Ouest</option><option>Nord-Ouest</option><option>Sud-Ouest</option><option>Est</option><option>Adamaoua</option><option>Nord</option><option>Extrême-Nord</option><option>Sud</option></select></div>
+      <div class="fgrp"><label>Exercice Financier *</label><input class="inp" type="number" id="s-yr" value="2025" min="2020" max="2040"></div>
+      <div class="fgrp"><label>Régisseur de Recettes</label><input class="inp" type="text" id="s-reg2" placeholder="Nom complet"></div>
+      <div class="fgrp"><label>Directeur</label><input class="inp" type="text" id="s-dir" placeholder="Nom complet"></div>
+      <div class="fgrp"><label>Code FOSA</label><input class="inp" type="text" id="s-code" placeholder="Ex: SW-MMF-HD-001"></div>
+    </div>
+    <div class="ln mt8">Réf: Décret 2016/6447/PM | Décret 2018/366 | RGCP Art.68 &amp; 71 | Circulaire MINSANTE</div>
+  </div>
+  <div class="sf">
+    <span style="font-size:11px;color:#888">* Champs obligatoires</span>
+    <div class="flex gap8">
+      <button class="btn bl" onclick="loadFile()">📂 Charger Données</button>
+      <button class="bpri" onclick="doSetup()">✅ Confirmer &amp; Commencer</button>
+    </div>
+  </div>
+</div>
+</div>
+<div id="hdr">
+  <img src="data:image/jpeg;base64,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" alt="MINSANTE">
+  <div class="ht">
+    <h1>MINSANTE — République du Cameroun &nbsp;|&nbsp; Outil de Gestion Financière des Recettes Propres</h1>
+    <div class="sub">Financial Management Tool — Internally Generated Funds | Catégories 3–5</div>
+    <div class="rep">Paix — Travail — Patrie &nbsp;|&nbsp; Peace — Work — Fatherland</div>
+  </div>
+  <div class="hm"><strong id="hf">--</strong><span id="hcat">--</span> | <span id="hdist">--</span> | <span id="hreg">--</span><br>Exercice: <span id="hyr">--</span></div>
+</div>
+<div id="abar" class="no-print">
+  <span style="font-size:10px;color:#999;margin-right:3px">Données:</span>
+  <button class="btn bs" onclick="saveData()">💾 Sauvegarder</button>
+  <button class="btn bl" onclick="loadFile()">📂 Charger</button>
+  <button class="btn bp" onclick="window.print()">🖨️ Imprimer</button>
+  <button class="btn bd2" onclick="resetSetup()">⚙️ Modifier FOSA</button>
+  <span id="cfd"></span>
+</div>
+<div id="nav" class="no-print">
+  <button class="tb active" onclick="showTab('t-dash')">📊 Dashboard</button>
+  <button class="tb" onclick="showTab('t-reg')">📋 Registres</button>
+  <button class="tb" onclick="showTab('t-jour')">📒 Journal de Caisse</button>
+  <button class="tb" onclick="showTab('t-tres')">🏦 Versements Trésor</button>
+  <button class="tb" onclick="showTab('t-sol')">🤝 Solidarité</button>
+  <button class="tb" onclick="showTab('t-phar')">💊 Pharmacie</button>
+  <button class="tb" onclick="showTab('t-dep')">🧾 Dépenses CR</button>
+  <button class="tb" onclick="showTab('t-qp')">👥 Quotes-Parts</button>
+  <button class="tb" onclick="showTab('t-tri')">🔍 Triangulation</button>
+  <button class="tb" onclick="showTab('t-rep')">📄 Rapport</button>
+</div>
+<div id="t-dash" class="ts active">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="dm" onchange="renderDash()"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="dy" onchange="renderDash()"></select>
+  </div>
+  <div id="d-alerts" class="mb8"></div>
+  <div class="dg">
+    <div class="dc"><div class="dl">Recettes Totales Brutes</div><div class="dv" id="dc-tot">0 FCFA</div><div class="ds">Total Gross Revenue</div></div>
+    <div class="dc blue"><div class="dl">RA Nette (Trésor)</div><div class="dv" id="dc-ra">0 FCFA</div><div class="ds">Net RA — Treasury</div></div>
+    <div class="dc"><div class="dl">QP Nettes (Personnel)</div><div class="dv" id="dc-qp">0 FCFA</div><div class="ds">Net Staff Motivation</div></div>
+    <div class="dc gold"><div class="dl">Fonds Solidarité BISEC</div><div class="dv" id="dc-sol">0 FCFA</div><div class="ds">Solidarity Fund</div></div>
+    <div class="dc red"><div class="dl">Compte Pharmacie</div><div class="dv" id="dc-ph">0 FCFA</div><div class="ds">Pharmacy CR</div></div>
+    <div class="dc"><div class="dl">Dépenses Effectuées</div><div class="dv" id="dc-ex">0 FCFA</div><div class="ds">Expenditures</div></div>
+  </div>
+  <div class="card"><div class="ch">📊 Recettes par Service — Mois Sélectionné</div><div class="cb"><div class="barchart" id="svc-chart"></div></div></div>
+  <div class="card"><div class="ch blue">📅 Statut Versements Décadaires</div><div class="cb" id="d-dec"></div></div>
+  <div class="card"><div class="ch">📈 Tendance Mensuelle Annuelle</div><div class="cb"><div class="barchart" id="trend-chart"></div></div></div>
+</div>
+<div id="t-reg" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="rv-mo" onchange="renderRegMonthSummary()"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="rv-yr" onchange="renderRegMonthSummary()"></select>
+    <label>Jour:</label><input class="inp" type="number" id="rv-day" min="1" max="31" value="1" style="width:60px">
+    <button class="bpri" onclick="loadRegDay()">Charger Jour</button>
+    <button class="btn bs" onclick="saveRegDay()">💾 Sauvegarder Jour</button>
+  </div>
+  <div class="card">
+    <div class="ch">📋 Patient Registers — Saisie Journalière par Service | Daily Summary</div>
+    <div class="cb">
+      <div style="font-size:11px;color:#777;margin-bottom:12px">Totaux journaliers par service depuis les registres physiques. Chaque onglet = un service. Saisir le résumé du jour, pas les patients individuels.</div>
+      <div class="svctabs" id="svc-tabs"></div>
+      <div id="svc-panels"></div>
+      <div class="cp mt14" id="day-calc">
+        <h3>⚙️ Résultats du Jour — Calcul Automatique</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="cs"><h4>Recouvrement des Coûts</h4>
+            <div class="cr"><span class="cl">CR Lab (50%)</span><span class="cv" id="c-crlab">0</span></div>
+            <div class="cr"><span class="cl">CR Echo (50%)</span><span class="cv" id="c-crecho">0</span></div>
+            <div class="cr"><span class="cl">CR Ambulance (50%)</span><span class="cv" id="c-cramb">0</span></div>
+            <div class="cr"><span class="cl">CR Pharmacie (50%)</span><span class="cv gold" id="c-crph">0</span></div>
+          </div>
+          <div class="cs sb"><h4>Total &amp; Base</h4>
+            <div class="cr"><span class="cl fw7">Total Brut</span><span class="cv blue" id="c-tot">0</span></div>
+            <div class="cr"><span class="cl">Base QP/RA</span><span class="cv" id="c-base">0</span></div>
+            <div class="cr"><span class="cl">QP Brutes (30%)</span><span class="cv blue" id="c-gqp">0</span></div>
+            <div class="cr"><span class="cl">RA Brutes (70%)</span><span class="cv blue" id="c-gra">0</span></div>
+          </div>
+          <div class="cs sg"><h4>Solidarité BISEC</h4>
+            <div class="cr"><span class="cl">10% RA</span><span class="cv gold" id="c-sra">0</span></div>
+            <div class="cr"><span class="cl">10% QP</span><span class="cv gold" id="c-sqp">0</span></div>
+            <div class="cr grand"><span class="cl fw7">Total Solidarité</span><span class="cv gold" id="c-tsol">0</span></div>
+          </div>
+          <div class="cs"><h4>Comptes Nets</h4>
+            <div class="cr"><span class="cl fw7">QP Net</span><span class="cv" id="c-netqp">0</span></div>
+            <div class="cr"><span class="cl fw7">RA Nette → Trésor</span><span class="cv blue" id="c-netra">0</span></div>
+            <div class="cr"><span class="cl fw7">CR Pharmacie → Banque</span><span class="cv gold" id="c-netph">0</span></div>
+          </div>
+        </div>
+        <div class="ln">Réf: Décret 2016/6447/PM | RGCP Art.68 | Circulaire MINSANTE</div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt14">
+    <div class="ch blue">📋 Récapitulatif Mensuel &amp; Décadaire | Monthly &amp; Decadal Summary</div>
+    <div class="cb">
+      <div class="decdots" id="dec-summary-boxes"></div>
+      <div id="month-svc-table"></div>
+      <div class="cp mt14" id="month-calc-panel"></div>
+    </div>
+  </div>
+</div>
+<div id="t-jour" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="jou-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="jou-yr"></select>
+    <button class="bpri" onclick="renderJournal()">Charger</button>
+  </div>
+  <div class="card">
+    <div class="ch">📒 Journal de Caisse — Bureau du Régisseur | Cash Book</div>
+    <div class="cb">
+      <div class="al al-b mb8"><span>ℹ️</span><span>Recettes versées au Trésor toutes les <strong>10 jours (par décade)</strong>. Journal signé quotidiennement. Réf: <strong>RGCP Art.68</strong>.</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+        <div class="dc"><div class="dl">Total Encaissé (Journal)</div><div class="dv grn" id="j-total-enc">0 FCFA</div></div>
+        <div class="dc red"><div class="dl">Total Paiements</div><div class="dv" id="j-total-pay">0 FCFA</div></div>
+        <div class="dc gold"><div class="dl">Solde Caisse</div><div class="dv" id="j-solde">0 FCFA</div></div>
+      </div>
+      <div id="jour-discrepancy" class="mb8"></div>
+      <div class="card mt8" style="border:1px solid var(--bd)">
+        <div class="ch" style="font-size:11px">➕ Enregistrer une Écriture | Record Cash Journal Entry</div>
+        <div class="cb">
+          <div class="fg" style="grid-template-columns:1fr 1fr 1fr 1fr">
+            <div class="fgrp"><label>Date</label><input class="inp" type="date" id="jf-date"></div>
+            <div class="fgrp"><label>Type d'Opération</label>
+              <select class="inp" id="jf-type">
+                <option value="receipt">Encaissement (Recette)</option>
+                <option value="payment">Paiement / Dépense</option>
+                <option value="correction">Correction / Ajustement</option>
+                <option value="transfer">Versement Trésor</option>
+              </select>
+            </div>
+            <div class="fgrp"><label>Ligne de Service</label>
+              <select class="inp" id="jf-svc" onchange="toggleJFree()">
+                <option value="">-- Sélectionner --</option>
+                <option value="0">Consultations</option><option value="1">Certificats Médicaux</option>
+                <option value="2">Certs Médico-Légaux</option><option value="3">Hospitalisation/Lit</option>
+                <option value="4">Accouchements/CPN</option><option value="5">Laboratoire</option>
+                <option value="6">Échographie/Imagerie</option><option value="7">Chirurgie Mineure</option>
+                <option value="8">Chirurgie Majeure</option><option value="9">Morgue</option>
+                <option value="10">Ambulance</option><option value="11">Pharmacie</option>
+                <option value="free">Autre (saisie libre)</option>
+              </select>
+            </div>
+            <div class="fgrp" id="jf-free-grp" style="display:none"><label>Description Libre</label><input class="inp" type="text" id="jf-free" placeholder="Décrire..."></div>
+          </div>
+          <div class="fg mt8" style="grid-template-columns:2fr 1fr 1fr 1fr">
+            <div class="fgrp"><label>Description / Nature</label><input class="inp" type="text" id="jf-desc" placeholder="Nature de l'opération..."></div>
+            <div class="fgrp"><label>Réf. Document</label><input class="inp" type="text" id="jf-ref" placeholder="N° reçu, bon..."></div>
+            <div class="fgrp"><label>Montant (FCFA)</label><input class="inp" type="number" id="jf-amt" min="0" value="0"></div>
+            <div class="fgrp"><label>Signataire</label><input class="inp" type="text" id="jf-sig" placeholder="Nom et titre"></div>
+          </div>
+          <div class="flex gap8 mt8">
+            <button class="bpri" onclick="addJournalEntry()">✅ Ajouter Écriture</button>
+            <button class="btn bp" onclick="clearJournalForm()">✕ Effacer</button>
+          </div>
+        </div>
+      </div>
+      <div id="journal-table" class="mt14"></div>
+      <div class="card mt14" style="border:1px solid var(--bd)">
+        <div class="ch blue" style="font-size:11px">🔍 Comparaison Journal vs Registres par Service</div>
+        <div class="cb" id="jour-comparison"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="t-tres" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="tr-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="tr-yr"></select>
+    <button class="bpri" onclick="renderTreasury()">Charger</button>
+  </div>
+  <div class="card">
+    <div class="ch blue">🏦 Versements Décadaires au Trésor | Decade Treasury Deposits</div>
+    <div class="cb">
+      <div class="ln mb8"><strong>RGCP Art.68:</strong> RA Nette Attendue = somme des RA nettes des jours de la décade (pas total mois ÷ 3).</div>
+      <div id="tres-table"></div>
+    </div>
+  </div>
+  <div class="card"><div class="ch blue">📊 Récapitulatif Annuel</div><div class="cb" id="tres-annual"></div></div>
+</div>
+<div id="t-sol" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="sol-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="sol-yr"></select>
+    <button class="bpri" onclick="renderSolidarity()">Charger</button>
+  </div>
+  <div class="card"><div class="ch gold">🤝 Fonds de Solidarité — Banque BISEC</div><div class="cb" id="sol-body"></div></div>
+  <div class="card"><div class="ch gold">📊 Récapitulatif Annuel Solidarité</div><div class="cb" id="sol-annual"></div></div>
+</div>
+<div id="t-phar" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="ph-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="ph-yr"></select>
+    <button class="bpri" onclick="renderPharmacy()">Charger</button>
+  </div>
+  <div class="card"><div class="ch red">💊 Compte Pharmacie — Dépôts</div><div class="cb" id="ph-body"></div></div>
+  <div class="card"><div class="ch red">📊 Récapitulatif Annuel Pharmacie</div><div class="cb" id="ph-annual"></div></div>
+</div>
+<div id="t-dep" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="ex-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="ex-yr"></select>
+    <button class="bpri" onclick="renderExpend()">Charger</button>
+    <button class="btn bs" onclick="saveExpend()">💾 Sauvegarder</button>
+  </div>
+  <div class="card">
+    <div class="ch red">🧾 Registre des Dépenses — Cost Recovery</div>
+    <div class="cb">
+      <div class="flex gap8 mb8 no-print"><button class="bpri" onclick="addExpRow()">➕ Ajouter Dépense</button></div>
+      <div id="exp-table"></div>
+      <div class="flex gap8 mt8 wrap" style="font-weight:700;font-size:13px;padding:10px;background:var(--sand);border-radius:5px">
+        <span>CR Disponible: <span class="grn" id="ex-avail">0 FCFA</span></span>
+        <span style="margin-left:20px">Total Dépensé: <span class="red" id="ex-spent">0 FCFA</span></span>
+        <span style="margin-left:20px">Solde: <span id="ex-bal">0 FCFA</span></span>
+      </div>
+      <div class="ln mt8"><strong>Décret 2018/366:</strong> &lt;500K = Direct | 500K–5M = 3 devis | &gt;5M = Appel d'offres. <strong>RGCP Art.71:</strong> Pièces justificatives obligatoires.</div>
+    </div>
+  </div>
+</div>
+<div id="t-qp" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="qp-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="qp-yr"></select>
+    <button class="bpri" onclick="renderQP()">Charger</button>
+  </div>
+  <div class="card"><div class="ch">👥 Paiement Quotes-Parts — Motivation du Personnel</div><div class="cb" id="qp-body"></div></div>
+  <div class="card"><div class="ch">📊 Récapitulatif Annuel QP</div><div class="cb" id="qp-annual"></div></div>
+</div>
+<div id="t-tri" class="ts">
+  <div class="ms no-print">
+    <label>Mois:</label><select class="inp" id="ti-mo"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="ti-yr"></select>
+    <button class="bpri" onclick="renderTri()">▶ Lancer Triangulation</button>
+  </div>
+  <div class="card"><div class="ch">🔍 Moteur de Triangulation — Vérification Croisée</div><div class="cb" id="tri-results"></div></div>
+</div>
+<div id="t-rep" class="ts">
+  <div class="ms no-print">
+    <label>Type:</label>
+    <select class="inp" id="rep-type" onchange="toggleRepRange()">
+      <option value="month">Mensuel</option>
+      <option value="range">Plage de mois</option>
+      <option value="year">Annuel complet</option>
+    </select>
+    <label>Mois Début:</label><select class="inp" id="rep-mo1"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label id="lbl-mo2">Mois Fin:</label><select class="inp" id="rep-mo2"><option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option><option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option><option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option><option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option></select>
+    <label>Année:</label><select class="inp" id="rep-yr"></select>
+    <button class="bpri" onclick="renderReport()">📄 Générer</button>
+    <button class="btn bp" onclick="window.print()">🖨️ Imprimer</button>
+  </div>
+  <div id="report-content"></div>
+</div>
+<input type="file" id="file-input" style="display:none" accept=".json" onchange="loadFileData(event)"><script>
+const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const SVCS=[
+  {name:'Consultations',en:'Consultations',icon:'🩺'},
+  {name:'Certificats Médicaux',en:'Medical Certs',icon:'📄'},
+  {name:'Certs Médico-Légaux',en:'Medicolegal Certs',icon:'⚖️'},
+  {name:'Hospitalisation/Lit',en:'Hospitalisation',icon:'🛏️'},
+  {name:'Accouchements/CPN',en:'Delivery & ANC',icon:'👶'},
+  {name:'Laboratoire',en:'Laboratory',icon:'🔬'},
+  {name:'Échographie/Imagerie',en:'Ultrasound/Imaging',icon:'📡'},
+  {name:'Chirurgie Mineure',en:'Minor Surgery',icon:'🔧'},
+  {name:'Chirurgie Majeure',en:'Major Surgery',icon:'🏥'},
+  {name:'Morgue',en:'Mortuary',icon:'🕊️'},
+  {name:'Ambulance',en:'Ambulance',icon:'🚑'},
+  {name:'Pharmacie',en:'Pharmacy',icon:'💊'}
+];
+
+let D={facility:{name:'',cat:'',district:'',region:'',year:new Date().getFullYear(),registrar:'',director:'',code:''},
+  revenue:{},journal:{},treasury:{},solidarity:{},pharmacy:{},expenditure:{},qp:{}};
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n||0).toLocaleString('fr-FR')+' FCFA';
+const fmtN=n=>Math.round(n||0).toLocaleString('fr-FR');
+const mkey=(y,m)=>`${y}-${m}`;
+const dkey=(y,m,d)=>`${y}-${m}-${d}`;
+const getY=id=>parseInt($(id).value)||D.facility.year||new Date().getFullYear();
+const getM=id=>parseInt($(id).value)||0;
+
+function getRevDay(y,m,d){
+  const k=dkey(y,m,d);
+  if(!D.revenue[k])D.revenue[k]=SVCS.map(()=>({amount:0,patients:0,rcptFrom:'',rcptTo:''}));
+  return D.revenue[k];
+}
+function getMonthRevTotals(y,m){
+  const days=new Date(y,m+1,0).getDate(),totals=SVCS.map(()=>0);
+  for(let d=1;d<=days;d++){const rd=D.revenue[dkey(y,m,d)];if(rd)rd.forEach((v,i)=>totals[i]+=(v.amount||0));}
+  return totals;
+}
+function getDecadeRevTotals(y,m,dec){
+  const tD=new Date(y,m+1,0).getDate();
+  const ranges=[[1,10],[11,20],[21,tD]];
+  const[s,e]=ranges[dec-1];
+  const totals=SVCS.map(()=>0);
+  for(let d=s;d<=e;d++){const rd=D.revenue[dkey(y,m,d)];if(rd)rd.forEach((v,i)=>totals[i]+=(v.amount||0));}
+  return totals;
+}
+function calcFromArr(rv){
+  const crLab=rv[5]*.5,crEcho=rv[6]*.5,crAmb=rv[10]*.5,crPharma=rv[11]*.5;
+  const total=rv.reduce((a,b)=>a+b,0);
+  const base=total-crLab-crEcho-crAmb-rv[11];
+  const grossQP=base*.30,grossRA=base*.70;
+  const solidRA=grossRA*.10,solidQP=grossQP*.10;
+  return{crLab,crEcho,crAmb,crPharma,total,base,grossQP,grossRA,solidRA,solidQP,
+    totalSolid:solidRA+solidQP,netQP:grossQP-solidQP,netRA:grossRA-solidRA,netPharma:crPharma};
+}
+function populateYears(){
+  const yr=D.facility.year||new Date().getFullYear();
+  ['dy','rv-yr','jou-yr','tr-yr','sol-yr','ph-yr','ex-yr','qp-yr','ti-yr','rep-yr'].forEach(id=>{
+    const el=$(id);if(!el)return;el.innerHTML='';
+    for(let y=yr-2;y<=yr+2;y++)el.innerHTML+=`<option value="${y}"${y===yr?' selected':''}>${y}</option>`;
+  });
+}
+function doSetup(){
+  const n=$('s-fn').value.trim(),c=$('s-cat').value,di=$('s-dist').value.trim(),re=$('s-reg').value;
+  if(!n||!c||!di||!re){alert('Veuillez remplir tous les champs obligatoires (*).');return}
+  D.facility={name:n,cat:c,district:di,region:re,year:parseInt($('s-yr').value)||2025,
+    registrar:$('s-reg2').value.trim(),director:$('s-dir').value.trim(),code:$('s-code').value.trim()};
+  $('setup').style.display='none';updateHeader();populateYears();buildSvcTabs();
+  $('dm').value=new Date().getMonth();renderDash();
+}
+function resetSetup(){$('setup').style.display='flex';}
+function updateHeader(){
+  const f=D.facility;
+  $('hf').textContent=f.name||'--';$('hcat').textContent=f.cat?'Cat.'+f.cat:'--';
+  $('hdist').textContent=f.district||'--';$('hreg').textContent=f.region||'--';
+  $('hyr').textContent=f.year||'--';
+  $('cfd').textContent=f.name?`${f.name} | Cat.${f.cat} | ${f.year}`:'';
+}
+function showTab(id){
+  document.querySelectorAll('.ts').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(e=>e.classList.remove('active'));
+  $(id).classList.add('active');
+  const order=['t-dash','t-reg','t-jour','t-tres','t-sol','t-phar','t-dep','t-qp','t-tri','t-rep'];
+  const idx=order.indexOf(id);if(idx>=0)document.querySelectorAll('.tb')[idx].classList.add('active');
+  const r={'t-dash':renderDash,'t-jour':renderJournal,'t-tres':renderTreasury,'t-sol':renderSolidarity,
+    't-phar':renderPharmacy,'t-dep':renderExpend,'t-qp':renderQP,'t-tri':renderTri,
+    't-reg':()=>{buildSvcTabs();loadRegDay();}};
+  if(r[id])r[id]();
+}
+
+// ── REGISTERS ──
+function buildSvcTabs(){
+  const te=$('svc-tabs'),pe=$('svc-panels');if(!te||!pe)return;
+  te.innerHTML='';pe.innerHTML='';
+  SVCS.forEach((svc,i)=>{
+    const tab=document.createElement('div');
+    tab.className='svctab'+(i===0?' active':'');tab.id=`stab-${i}`;
+    tab.innerHTML=`${svc.icon} ${svc.name} <span class="cnt zero" id="scnt-${i}">0</span>`;
+    tab.onclick=()=>{
+      document.querySelectorAll('.svctab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.svcpanel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');$(`spanel-${i}`).classList.add('active');
+    };
+    te.appendChild(tab);
+    const panel=document.createElement('div');
+    panel.className='svcpanel'+(i===0?' active':'');panel.id=`spanel-${i}`;
+    panel.innerHTML=`<div class="card" style="border:1px solid var(--bd);background:var(--cream)"><div class="cb">
+      <div style="font-size:12px;color:#555;margin-bottom:12px;font-weight:600">${svc.icon} <strong>${svc.name}</strong> &nbsp;/&nbsp; <em>${svc.en}</em> &nbsp;—&nbsp; Jour <span id="sdaytitle-${i}" style="color:var(--r);font-weight:700"></span></div>
+      <div class="fg" style="grid-template-columns:1fr 1fr 1fr 1fr">
+        <div class="fgrp"><label>Total Montant (FCFA)</label><input class="inp" type="number" id="sv-amt-${i}" min="0" value="0" oninput="updateDayCalc()"></div>
+        <div class="fgrp"><label>Nbre Patients / Actes</label><input class="inp" type="number" id="sv-pat-${i}" min="0" value="0"></div>
+        <div class="fgrp"><label>Reçu N° Début / Receipt From</label><input class="inp" type="text" id="sv-rf-${i}" placeholder="Ex: LAB-740"></div>
+        <div class="fgrp"><label>Reçu N° Fin / Receipt To</label><input class="inp" type="text" id="sv-rt-${i}" placeholder="Ex: LAB-752"></div>
+      </div>
+    </div></div>`;
+    pe.appendChild(panel);
+  });
+}
+function loadRegDay(){
+  const y=getY('rv-yr'),m=getM('rv-mo'),d=parseInt($('rv-day').value)||1;
+  const rd=getRevDay(y,m,d),title=`${d} ${MONTHS[m]} ${y}`;
+  SVCS.forEach((_,i)=>{const el=$(`sdaytitle-${i}`);if(el)el.textContent=title;});
+  rd.forEach((v,i)=>{
+    const a=$(`sv-amt-${i}`),p=$(`sv-pat-${i}`),rf=$(`sv-rf-${i}`),rt=$(`sv-rt-${i}`);
+    if(a)a.value=v.amount||0;if(p)p.value=v.patients||0;if(rf)rf.value=v.rcptFrom||'';if(rt)rt.value=v.rcptTo||'';
+  });
+  updateDayCalc();updateSvcTabCounts(y,m);renderRegMonthSummary();
+}
+function saveRegDay(){
+  const y=getY('rv-yr'),m=getM('rv-mo'),d=parseInt($('rv-day').value)||1;
+  D.revenue[dkey(y,m,d)]=SVCS.map((_,i)=>({
+    amount:parseFloat($(`sv-amt-${i}`)?.value)||0,patients:parseInt($(`sv-pat-${i}`)?.value)||0,
+    rcptFrom:$(`sv-rf-${i}`)?.value||'',rcptTo:$(`sv-rt-${i}`)?.value||''
+  }));
+  updateSvcTabCounts(y,m);renderRegMonthSummary();alert(`Jour ${d} ${MONTHS[m]} ${y} sauvegardé ✓`);
+}
+function updateSvcTabCounts(y,m){
+  const totals=getMonthRevTotals(y,m);
+  totals.forEach((v,i)=>{const el=$(`scnt-${i}`);if(el){el.textContent=fmtN(v);el.className=v>0?'cnt':'cnt zero';}});
+}
+function updateDayCalc(){
+  const rv=SVCS.map((_,i)=>parseFloat($(`sv-amt-${i}`)?.value)||0);
+  const R=calcFromArr(rv);
+  [['c-crlab',R.crLab],['c-crecho',R.crEcho],['c-cramb',R.crAmb],['c-crph',R.crPharma],
+   ['c-tot',R.total],['c-base',R.base],['c-gqp',R.grossQP],['c-gra',R.grossRA],
+   ['c-sra',R.solidRA],['c-sqp',R.solidQP],['c-tsol',R.totalSolid],
+   ['c-netqp',R.netQP],['c-netra',R.netRA],['c-netph',R.netPharma]
+  ].forEach(([id,v])=>{const el=$(id);if(el)el.textContent=fmt(v);});
+}
+function renderRegMonthSummary(){
+  const y=getY('rv-yr'),m=getM('rv-mo');
+  const monthTotals=getMonthRevTotals(y,m);
+  const R=calcFromArr(monthTotals);
+  const db=$('dec-summary-boxes');
+  if(db){
+    let h='';
+    [1,2,3].forEach(dec=>{
+      const dt=getDecadeRevTotals(y,m,dec),Rd=calcFromArr(dt);
+      const tD=new Date(y,m+1,0).getDate();
+      const lbs=[`1–10`,`11–20`,`21–${tD}`];
+      h+=`<div class="decbox"><div class="dt2">Décade ${dec} — ${lbs[dec-1]} ${MONTHS[m]}</div>
+        <div class="dv2" style="color:var(--g)">${fmt(Rd.total)}</div>
+        <div style="font-size:10px;color:#777">RA Nette: <strong>${fmt(Rd.netRA)}</strong></div>
+        <div style="font-size:10px;color:#777">QP Nette: <strong>${fmt(Rd.netQP)}</strong></div></div>`;
+    });
+    h+=`<div class="decbox ok2"><div class="dt2">Total — ${MONTHS[m]} ${y}</div>
+      <div class="dv2" style="color:var(--b)">${fmt(R.total)}</div>
+      <div style="font-size:10px;color:#777">RA Nette: <strong>${fmt(R.netRA)}</strong></div>
+      <div style="font-size:10px;color:#777">QP Nette: <strong>${fmt(R.netQP)}</strong></div></div>`;
+    db.innerHTML=h;
+  }
+  const tbl=$('month-svc-table');
+  if(tbl){
+    let h=`<table class="dt"><thead><tr><th>#</th><th>Service</th><th class="tr2">D1 (1–10)</th><th class="tr2">D2 (11–20)</th><th class="tr2">D3 (21–fin)</th><th class="tr2">Total Mois</th></tr></thead><tbody>`;
+    let d1t=0,d2t=0,d3t=0,moT=0;
+    SVCS.forEach((svc,i)=>{
+      const d1=getDecadeRevTotals(y,m,1)[i],d2=getDecadeRevTotals(y,m,2)[i],d3=getDecadeRevTotals(y,m,3)[i],mo=d1+d2+d3;
+      d1t+=d1;d2t+=d2;d3t+=d3;moT+=mo;
+      h+=`<tr><td>${i+1}</td><td>${svc.icon} ${svc.name}</td><td class="tr2">${d1?fmtN(d1):'-'}</td><td class="tr2">${d2?fmtN(d2):'-'}</td><td class="tr2">${d3?fmtN(d3):'-'}</td><td class="tr2 fw7">${fmt(mo)}</td></tr>`;
+    });
+    h+=`<tr class="tr2"><td colspan="2"><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(d1t)}</td><td class="tr2 fw7">${fmt(d2t)}</td><td class="tr2 fw7">${fmt(d3t)}</td><td class="tr2 fw7">${fmt(moT)}</td></tr></tbody></table>`;
+    tbl.innerHTML=h;
+  }
+  const mcp=$('month-calc-panel');if(mcp)mcp.innerHTML=buildCalcHTML(R);
+}
+function buildCalcHTML(R){
+  return `<h3>⚙️ Résultats de Calcul</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="cs"><h4>Recouvrement des Coûts</h4>
+      <div class="cr"><span class="cl">CR Lab (50%)</span><span class="cv">${fmt(R.crLab)}</span></div>
+      <div class="cr"><span class="cl">CR Echo (50%)</span><span class="cv">${fmt(R.crEcho)}</span></div>
+      <div class="cr"><span class="cl">CR Ambulance (50%)</span><span class="cv">${fmt(R.crAmb)}</span></div>
+      <div class="cr"><span class="cl">CR Pharmacie (50%)</span><span class="cv gold">${fmt(R.crPharma)}</span></div>
+    </div>
+    <div class="cs sb"><h4>Base &amp; Répartition</h4>
+      <div class="cr"><span class="cl fw7">Total Brut</span><span class="cv blue">${fmt(R.total)}</span></div>
+      <div class="cr"><span class="cl">Base QP/RA</span><span class="cv">${fmt(R.base)}</span></div>
+      <div class="cr"><span class="cl">QP Brutes (30%)</span><span class="cv blue">${fmt(R.grossQP)}</span></div>
+      <div class="cr"><span class="cl">RA Brutes (70%)</span><span class="cv blue">${fmt(R.grossRA)}</span></div>
+    </div>
+    <div class="cs sg"><h4>Solidarité BISEC</h4>
+      <div class="cr"><span class="cl">10% RA</span><span class="cv gold">${fmt(R.solidRA)}</span></div>
+      <div class="cr"><span class="cl">10% QP</span><span class="cv gold">${fmt(R.solidQP)}</span></div>
+      <div class="cr grand"><span class="cl fw7">Total Solidarité</span><span class="cv gold">${fmt(R.totalSolid)}</span></div>
+    </div>
+    <div class="cs"><h4>Comptes Nets</h4>
+      <div class="cr"><span class="cl fw7">QP Nette → Personnel</span><span class="cv">${fmt(R.netQP)}</span></div>
+      <div class="cr"><span class="cl fw7">RA Nette → Trésor</span><span class="cv blue">${fmt(R.netRA)}</span></div>
+      <div class="cr"><span class="cl fw7">CR Pharmacie → Banque</span><span class="cv gold">${fmt(R.netPharma)}</span></div>
+    </div>
+  </div><div class="ln">Réf: Décret 2016/6447/PM | RGCP Art.68 | Circulaire MINSANTE</div>`;
+}
+
+// ── CASH JOURNAL ──
+function toggleJFree(){$('jf-free-grp').style.display=$('jf-svc').value==='free'?'block':'none';}
+function renderJournal(){
+  const y=getY('jou-yr'),m=getM('jou-mo'),k=mkey(y,m);
+  if(!D.journal[k])D.journal[k]=[];
+  $('jf-date').value=`${y}-${String(m+1).padStart(2,'0')}-01`;
+  drawJournalTable(y,m);drawJournalComparison(y,m);
+}
+function addJournalEntry(){
+  const y=getY('jou-yr'),m=getM('jou-mo'),k=mkey(y,m);
+  if(!D.journal[k])D.journal[k]=[];
+  const sv=$('jf-svc').value,amt=parseFloat($('jf-amt').value)||0;
+  if(!$('jf-date').value){alert('Veuillez saisir une date.');return}
+  if(amt===0){alert('Montant ne peut pas être 0.');return}
+  D.journal[k].push({date:$('jf-date').value,type:$('jf-type').value,
+    svcIdx:sv==='free'?-1:(sv===''?-1:parseInt(sv)),svcFree:$('jf-free').value,
+    desc:$('jf-desc').value,ref:$('jf-ref').value,amount:amt,signature:$('jf-sig').value});
+  D.journal[k].sort((a,b)=>a.date.localeCompare(b.date));
+  clearJournalForm();drawJournalTable(y,m);drawJournalComparison(y,m);
+}
+function clearJournalForm(){
+  ['jf-amt','jf-desc','jf-ref','jf-sig','jf-free'].forEach(id=>{if($(id))$(id).value=id==='jf-amt'?0:'';});
+  $('jf-type').value='receipt';$('jf-svc').value='';$('jf-free-grp').style.display='none';
+}
+function deleteJE(y,m,i){
+  if(!confirm('Supprimer?'))return;
+  D.journal[mkey(y,m)].splice(i,1);drawJournalTable(y,m);drawJournalComparison(y,m);
+}
+function drawJournalTable(y,m){
+  const k=mkey(y,m),entries=D.journal[k]||[];
+  let totEnc=0,totPay=0;
+  entries.forEach(e=>{if(e.type==='receipt')totEnc+=e.amount;else if(e.type==='payment')totPay+=e.amount;});
+  const solde=totEnc-totPay;
+  $('j-total-enc').textContent=fmt(totEnc);$('j-total-pay').textContent=fmt(totPay);
+  $('j-solde').textContent=fmt(solde);$('j-solde').style.color=solde>=0?'var(--g)':'var(--r)';
+  const tL={receipt:'Encaissement',payment:'Paiement',correction:'Correction',transfer:'Virement Trésor'};
+  let h=`<table class="dt"><thead><tr><th>Date</th><th>Type</th><th>Service / Ligne</th><th>Description</th><th>Réf. Document</th><th class="tr2">Montant</th><th>Signataire</th><th class="no-print" style="width:40px"></th></tr></thead><tbody>`;
+  if(!entries.length){h+=`<tr><td colspan="8" class="tc" style="color:#aaa;padding:20px">Aucune écriture pour ${MONTHS[m]} ${y}.</td></tr>`;}
+  else{
+    entries.forEach((e,i)=>{
+      const sl=e.svcIdx>=0?SVCS[e.svcIdx].name:(e.svcFree||'Autre');
+      const isR=e.type==='receipt',isP=e.type==='payment';
+      h+=`<tr class="${isP?'warn':''}"><td class="tw">${e.date||'--'}</td>
+        <td><span class="badge ${isR?'bg':isP?'br2':'bbl'}">${tL[e.type]||e.type}</span></td>
+        <td>${sl}</td><td>${e.desc||'--'}</td><td>${e.ref||'--'}</td>
+        <td class="tr2 fw7 ${isR?'grn':isP?'red':''}">${isR?'+':isP?'-':'±'}${fmtN(e.amount)}</td>
+        <td>${e.signature||'--'}</td>
+        <td class="no-print"><button class="btn bd2" style="padding:2px 6px;font-size:10px" onclick="deleteJE(${y},${m},${i})">✕</button></td></tr>`;
+    });
+    [1,2,3].forEach(dec=>{
+      const tD=new Date(y,m+1,0).getDate(),rs=[[1,10],[11,20],[21,tD]],[ds,de]=rs[dec-1];
+      const fd=`${y}-${String(m+1).padStart(2,'0')}-${String(ds).padStart(2,'0')}`;
+      const td=`${y}-${String(m+1).padStart(2,'0')}-${String(de).padStart(2,'0')}`;
+      const dT=entries.filter(e=>e.date>=fd&&e.date<=td&&e.type==='receipt').reduce((a,e)=>a+e.amount,0);
+      if(dT>0)h+=`<tr style="background:#f0f4ff"><td colspan="5" style="font-weight:700;font-size:11px;color:var(--b)">SOLDE DÉCADE ${dec} (${ds}–${de} ${MONTHS[m]})</td><td class="tr2 fw7 blu">${fmt(dT)}</td><td colspan="2"></td></tr>`;
+    });
+  }
+  h+=`</tbody></table>`;$('journal-table').innerHTML=h;
+}
+function drawJournalComparison(y,m){
+  const k=mkey(y,m),entries=D.journal[k]||[];
+  const mT=getMonthRevTotals(y,m);
+  let h=`<table class="dt"><thead><tr><th>#</th><th>Service</th><th class="tr2">Registres Services</th><th class="tr2">Journal Caisse</th><th class="tr2">Écart</th><th class="tc">Statut</th></tr></thead><tbody>`;
+  let rGT=0,jGT=0;
+  SVCS.forEach((svc,i)=>{
+    const reg=mT[i],jour=entries.filter(e=>e.svcIdx===i&&e.type==='receipt').reduce((a,e)=>a+e.amount,0);
+    const gap=reg-jour;rGT+=reg;jGT+=jour;const ok=Math.abs(gap)<1;
+    if(reg>0||jour>0)h+=`<tr class="${ok?'ok':'ar'}">
+      <td>${i+1}</td><td>${svc.icon} ${svc.name}</td>
+      <td class="tr2">${fmt(reg)}</td><td class="tr2">${fmt(jour)}</td>
+      <td class="tr2 fw7 ${!ok?'red':''}">${ok?'✓ 0':fmt(Math.abs(gap))+(gap>0?' ↓':' ↑')}</td>
+      <td class="tc">${ok?'<span class="badge bg">✅ OK</span>':jour===0&&reg>0?'<span class="badge br2">❌ Non saisi</span>':'<span class="badge br2">⚠️ Écart</span>'}</td></tr>`;
+  });
+  const fT=entries.filter(e=>e.svcIdx===-1&&e.type==='receipt').reduce((a,e)=>a+e.amount,0);
+  if(fT>0)h+=`<tr><td>—</td><td>Autres</td><td class="tr2">—</td><td class="tr2">${fmt(fT)}</td><td class="tr2">—</td><td><span class="badge bgr">Info</span></td></tr>`;
+  const ok=Math.abs(rGT-jGT)<1;
+  h+=`<tr class="tr2"><td colspan="2"><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(rGT)}</td><td class="tr2 fw7">${fmt(jGT)}</td>
+    <td class="tr2 fw7 ${!ok?'red':''}">${ok?'✓ 0':fmt(Math.abs(rGT-jGT))}</td>
+    <td class="tc">${ok?'<span class="badge bg">✅ Conforme</span>':'<span class="badge br2">⚠️ Discordance</span>'}</td></tr></tbody></table>`;
+  const disc=$('jour-discrepancy');
+  if(!ok)disc.innerHTML=`<div class="al al-r">⚠️ Discordance: Registres (${fmt(rGT)}) ≠ Journal (${fmt(jGT)}). Écart: <strong>${fmt(Math.abs(rGT-jGT))}</strong>.</div>`;
+  else if(rGT>0)disc.innerHTML=`<div class="al al-g">✅ Registres services et journal de caisse conformes pour ${MONTHS[m]} ${y}.</div>`;
+  else disc.innerHTML='';
+  $('jour-comparison').innerHTML=h;
+}
+
+// ── TREASURY ──
+function renderTreasury(){
+  const y=getY('tr-yr'),m=getM('tr-mo'),k=mkey(y,m);
+  if(!D.treasury[k])D.treasury[k]={d1:{amount:'',quittance:'',date:'',person:'',agent:''},d2:{amount:'',quittance:'',date:'',person:'',agent:''},d3:{amount:'',quittance:'',date:'',person:'',agent:''}};
+  const T=D.treasury[k],tD=new Date(y,m+1,0).getDate();
+  const dKeys=['d1','d2','d3'],dLabs=[`1–10 ${MONTHS[m]}`,`11–20 ${MONTHS[m]}`,`21–${tD} ${MONTHS[m]}`];
+  let h=`<table class="dt"><thead><tr><th>Décade</th><th>Période</th><th class="tr2">RA Nette Attendue<br><small style="font-weight:400">(somme réelle de la décade)</small></th><th class="tr2">Montant Versé</th><th>N° Quittance</th><th>Date Versement</th><th>Personne Versant</th><th>Agent Trésor</th><th>Statut</th></tr></thead><tbody>`;
+  let totE=0,totD=0;
+  dKeys.forEach((dk,di)=>{
+    const Rd=calcFromArr(getDecadeRevTotals(y,m,di+1)),exp=Rd.netRA;
+    const dd=T[dk],dep=parseFloat(dd.amount)||0;totE+=exp;totD+=dep;
+    const ok=dep>=exp*.99&&exp>0;
+    h+=`<tr class="${dep>0?(ok?'ok':'warn'):'ar'}">
+      <td><strong>D${di+1}</strong></td><td class="tw">${dLabs[di]}</td>
+      <td class="tr2 fw7">${fmt(exp)}</td>
+      <td class="tr2"><input class="inp" type="number" value="${dd.amount||''}" min="0" placeholder="0" style="width:120px;text-align:right" onchange="D.treasury['${k}']['${dk}'].amount=this.value"></td>
+      <td><input class="inp" type="text" value="${dd.quittance||''}" placeholder="N° quittance" style="width:110px" onchange="D.treasury['${k}']['${dk}'].quittance=this.value"></td>
+      <td><input class="inp" type="date" value="${dd.date||''}" style="width:130px" onchange="D.treasury['${k}']['${dk}'].date=this.value"></td>
+      <td><input class="inp" type="text" value="${dd.person||''}" placeholder="Nom versant" style="width:120px" onchange="D.treasury['${k}']['${dk}'].person=this.value"></td>
+      <td><input class="inp" type="text" value="${dd.agent||''}" placeholder="Agent trésor" style="width:110px" onchange="D.treasury['${k}']['${dk}'].agent=this.value"></td>
+      <td class="tc">${dep>0?(ok?'<span class="badge bg">✅ OK</span>':'<span class="badge by">⚠️ Partiel</span>'):'<span class="badge br2">❌ Non versé</span>'}</td></tr>`;
+  });
+  const ok=Math.abs(totE-totD)<1;
+  h+=`<tr class="tr2"><td colspan="2"><strong>TOTAL MOIS</strong></td><td class="tr2 fw7">${fmt(totE)}</td><td class="tr2 fw7">${fmt(totD)}</td><td colspan="4"></td>
+    <td class="tc">${ok&&totE>0?'<span class="badge bg">✅</span>':totE>0?`<span class="badge br2">⚠️ Écart: ${fmt(totE-totD)}</span>`:'<span class="badge bgr">--</span>'}</td></tr></tbody></table>`;
+  $('tres-table').innerHTML=h;
+  renderTreasuryAnnual(y);
+}
+function renderTreasuryAnnual(y){
+  let h=`<table class="dt"><thead><tr><th>Mois</th><th class="tr2">RA Nette Attendue</th><th class="tr2">Total Versé</th><th class="tr2">Écart</th><th>Statut</th></tr></thead><tbody>`;
+  let te=0,td2=0;
+  MONTHS.forEach((mo,mi)=>{
+    const k=mkey(y,mi);let exp=0;
+    [1,2,3].forEach(dec=>{exp+=calcFromArr(getDecadeRevTotals(y,mi,dec)).netRA});
+    const T=D.treasury[k]||{d1:{},d2:{},d3:{}};
+    const dep=['d1','d2','d3'].reduce((a,dk)=>a+(parseFloat(T[dk]?.amount)||0),0);
+    te+=exp;td2+=dep;const gap=exp-dep;
+    h+=`<tr class="${dep>=exp*.99&&exp>0?'ok':exp>0?'ar':''}">
+      <td>${mo} ${y}</td><td class="tr2">${fmt(exp)}</td><td class="tr2">${fmt(dep)}</td>
+      <td class="tr2 ${gap>0?'red':''}">${gap>0?fmt(gap)+' ↓':gap<0?fmt(-gap)+' ↑':'✓ 0'}</td>
+      <td class="tc">${exp===0?'<span class="badge bgr">–</span>':dep>=exp*.99?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️</span>'}</td></tr>`;
+  });
+  h+=`<tr class="tr2"><td><strong>TOTAL ${y}</strong></td><td class="tr2 fw7">${fmt(te)}</td><td class="tr2 fw7">${fmt(td2)}</td><td class="tr2 fw7 ${te-td2>0?'red':''}">${fmt(Math.abs(te-td2))}</td><td></td></tr></tbody></table>`;
+  $('tres-annual').innerHTML=h;
+}
+
+// ── SOLIDARITY ──
+function renderSolidarity(){
+  const y=getY('sol-yr'),m=getM('sol-mo'),k=mkey(y,m);
+  if(!D.solidarity[k])D.solidarity[k]={amount:'',receipt:'',date:'',person:''};
+  const S=D.solidarity[k],R=calcFromArr(getMonthRevTotals(y,m)),exp=R.totalSolid,act=parseFloat(S.amount)||0;
+  $('sol-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div class="dc gold"><div class="dl">Attendu (10%RA + 10%QP)</div><div class="dv">${fmt(exp)}</div></div>
+      <div class="dc ${act>0?'':'red'}"><div class="dl">Montant Déposé</div><div class="dv">${fmt(act)}</div></div>
+    </div>
+    <table class="dt"><thead><tr><th>Mois</th><th class="tr2">Montant Déposé (FCFA)</th><th>N° Reçu BISEC</th><th>Date Dépôt</th><th>Personne Déposant</th><th>Statut</th></tr></thead>
+    <tbody><tr class="${act>0?'ok':'ar'}">
+      <td><strong>${MONTHS[m]} ${y}</strong></td>
+      <td class="tr2"><input class="inp" type="number" value="${S.amount||''}" min="0" placeholder="0" style="width:130px;text-align:right" onchange="D.solidarity['${k}'].amount=this.value;renderSolidarity()"></td>
+      <td><input class="inp" type="text" value="${S.receipt||''}" placeholder="N° reçu BISEC" style="width:130px" onchange="D.solidarity['${k}'].receipt=this.value"></td>
+      <td><input class="inp" type="date" value="${S.date||''}" style="width:135px" onchange="D.solidarity['${k}'].date=this.value"></td>
+      <td><input class="inp" type="text" value="${S.person||''}" placeholder="Nom déposant" style="width:140px" onchange="D.solidarity['${k}'].person=this.value"></td>
+      <td class="tc">${act>=exp*.99&&exp>0?'<span class="badge bg">✅ Versé</span>':act>0?'<span class="badge by">⚠️ Insuffisant</span>':'<span class="badge br2">❌ Non versé</span>'}</td>
+    </tr></tbody></table>
+    ${act>0&&Math.abs(exp-act)>1?`<div class="al al-y mt8">⚠️ Écart: <strong>${fmt(exp-act)}</strong> manquant.</div>`:''}`;
+  renderSolAnnual(y);
+}
+function renderSolAnnual(y){
+  let h=`<table class="dt"><thead><tr><th>Mois</th><th class="tr2">Attendu</th><th class="tr2">Versé</th><th class="tr2">Écart</th><th>N° Reçu</th><th>Déposant</th><th>Statut</th></tr></thead><tbody>`;
+  let te=0,ta=0;
+  MONTHS.forEach((mo,mi)=>{
+    const k=mkey(y,mi),R=calcFromArr(getMonthRevTotals(y,mi)),exp=R.totalSolid;
+    const S=D.solidarity[k]||{},act=parseFloat(S.amount)||0;
+    te+=exp;ta+=act;const gap=exp-act;
+    h+=`<tr class="${act>=exp*.99&&exp>0?'ok':exp>0?'ar':''}">
+      <td>${mo}</td><td class="tr2">${fmt(exp)}</td><td class="tr2">${fmt(act)}</td>
+      <td class="tr2 ${gap>0?'red':''}">${gap>0?fmt(gap)+' ↓':'✓'}</td>
+      <td>${S.receipt||'--'}</td><td>${S.person||'--'}</td>
+      <td class="tc">${exp===0?'--':act>=exp*.99?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️</span>'}</td></tr>`;
+  });
+  h+=`<tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(te)}</td><td class="tr2 fw7">${fmt(ta)}</td><td class="tr2 fw7 ${te-ta>0?'red':''}">${fmt(Math.abs(te-ta))}</td><td colspan="3"></td></tr></tbody></table>`;
+  $('sol-annual').innerHTML=h;
+}
+
+// ── PHARMACY ──
+function renderPharmacy(){
+  const y=getY('ph-yr'),m=getM('ph-mo'),k=mkey(y,m);
+  if(!D.pharmacy[k])D.pharmacy[k]={amount:'',receipt:'',date:''};
+  const P=D.pharmacy[k],R=calcFromArr(getMonthRevTotals(y,m)),exp=R.crPharma,act=parseFloat(P.amount)||0;
+  $('ph-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div class="dc red"><div class="dl">CR Pharmacie Attendu (50%)</div><div class="dv">${fmt(exp)}</div></div>
+      <div class="dc ${act>0?'':'red'}"><div class="dl">Montant Déposé</div><div class="dv">${fmt(act)}</div></div>
+    </div>
+    <table class="dt"><thead><tr><th>Mois</th><th class="tr2">Montant Déposé (FCFA)</th><th>N° Reçu</th><th>Date Dépôt</th><th>Statut</th></tr></thead>
+    <tbody><tr class="${act>0?'ok':'ar'}">
+      <td><strong>${MONTHS[m]} ${y}</strong></td>
+      <td class="tr2"><input class="inp" type="number" value="${P.amount||''}" min="0" placeholder="0" style="width:130px;text-align:right" onchange="D.pharmacy['${k}'].amount=this.value;renderPharmacy()"></td>
+      <td><input class="inp" type="text" value="${P.receipt||''}" placeholder="N° reçu" style="width:130px" onchange="D.pharmacy['${k}'].receipt=this.value"></td>
+      <td><input class="inp" type="date" value="${P.date||''}" style="width:135px" onchange="D.pharmacy['${k}'].date=this.value"></td>
+      <td class="tc">${act>=exp*.99&&exp>0?'<span class="badge bg">✅ Déposé</span>':act>0?'<span class="badge by">⚠️ Insuffisant</span>':'<span class="badge br2">❌ Non déposé</span>'}</td>
+    </tr></tbody></table>`;
+  renderPharAnnual(y);
+}
+function renderPharAnnual(y){
+  let h=`<table class="dt"><thead><tr><th>Mois</th><th class="tr2">CR Attendu</th><th class="tr2">Déposé</th><th class="tr2">Écart</th><th>N° Reçu</th><th>Statut</th></tr></thead><tbody>`;
+  let te=0,ta=0;
+  MONTHS.forEach((mo,mi)=>{
+    const k=mkey(y,mi),R=calcFromArr(getMonthRevTotals(y,mi)),exp=R.crPharma;
+    const P=D.pharmacy[k]||{},act=parseFloat(P.amount)||0;
+    te+=exp;ta+=act;const gap=exp-act;
+    h+=`<tr class="${act>=exp*.99&&exp>0?'ok':exp>0?'ar':''}">
+      <td>${mo}</td><td class="tr2">${fmt(exp)}</td><td class="tr2">${fmt(act)}</td>
+      <td class="tr2 ${gap>0?'red':''}">${gap>0?fmt(gap)+' ↓':'✓'}</td>
+      <td>${P.receipt||'--'}</td>
+      <td class="tc">${exp===0?'--':act>=exp*.99?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️</span>'}</td></tr>`;
+  });
+  h+=`<tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(te)}</td><td class="tr2 fw7">${fmt(ta)}</td><td class="tr2 fw7 ${te-ta>0?'red':''}">${fmt(Math.abs(te-ta))}</td><td colspan="2"></td></tr></tbody></table>`;
+  $('ph-annual').innerHTML=h;
+}
+
+// ── EXPENDITURES ──
+let expRows=[];
+function renderExpend(){
+  const y=getY('ex-yr'),m=getM('ex-mo'),k=mkey(y,m);
+  expRows=D.expenditure[k]?JSON.parse(JSON.stringify(D.expenditure[k])):[];
+  drawExpTable(y,m);
+}
+function addExpRow(){expRows.push({date:'',cat:'',supplier:'',amount:'',invoice:'',officer:''});drawExpTable(getY('ex-yr'),getM('ex-mo'));}
+function getPB(a){if(!a||a<500000)return'<span class="proc pd">Direct</span>';if(a<=5000000)return'<span class="proc pq">3 Devis</span>';return'<span class="proc pt">Appel d\'offres</span>';}
+function drawExpTable(y,m){
+  const R=calcFromArr(getMonthRevTotals(y,m)),avail=R.crLab+R.crEcho+R.crAmb;
+  const spent=expRows.reduce((a,r)=>a+(parseFloat(r.amount)||0),0),bal=avail-spent;
+  const cats=['Réactifs Labo','Médicaments','Consommables','Maintenance','Opérations','Personnel Temp.','Équipement','Autre'];
+  let h=`<table class="dt"><thead><tr><th>Date</th><th>Catégorie</th><th>Fournisseur</th><th class="tr2">Montant</th><th>N° Facture</th><th>Officier Auth.</th><th>Passation</th><th class="no-print">Act.</th></tr></thead><tbody>`;
+  if(!expRows.length)h+=`<tr><td colspan="8" class="tc" style="color:#aaa;padding:16px">Aucune dépense pour ${MONTHS[m]} ${y}.</td></tr>`;
+  else expRows.forEach((row,i)=>{
+    const amt=parseFloat(row.amount)||0;
+    h+=`<tr>
+      <td><input class="inp" type="date" value="${row.date||''}" onchange="expRows[${i}].date=this.value" style="width:118px"></td>
+      <td><select class="inp" onchange="expRows[${i}].cat=this.value"><option value="">--</option>${cats.map(c=>`<option${row.cat===c?' selected':''}>${c}</option>`).join('')}</select></td>
+      <td><input class="inp" type="text" value="${row.supplier||''}" onchange="expRows[${i}].supplier=this.value" style="width:120px"></td>
+      <td class="tr2"><input class="inp" type="number" value="${row.amount||''}" min="0" placeholder="0" style="width:110px;text-align:right" onchange="expRows[${i}].amount=this.value;drawExpTable(${y},${m})"></td>
+      <td><input class="inp" type="text" value="${row.invoice||''}" onchange="expRows[${i}].invoice=this.value" style="width:90px"></td>
+      <td><input class="inp" type="text" value="${row.officer||''}" onchange="expRows[${i}].officer=this.value" style="width:110px"></td>
+      <td class="tc">${getPB(amt)}</td>
+      <td class="no-print"><button class="btn bd2" style="padding:2px 6px;font-size:10px" onclick="expRows.splice(${i},1);drawExpTable(${y},${m})">✕</button></td></tr>`;
+  });
+  h+=`</tbody></table>`;
+  $('exp-table').innerHTML=h;
+  $('ex-avail').textContent=fmt(avail);$('ex-spent').textContent=fmt(spent);
+  const be=$('ex-bal');be.textContent=fmt(bal);be.style.color=bal>=0?'var(--g)':'var(--r)';
+}
+function saveExpend(){
+  const y=getY('ex-yr'),m=getM('ex-mo');
+  D.expenditure[mkey(y,m)]=JSON.parse(JSON.stringify(expRows));alert('Dépenses sauvegardées ✓');
+}
+
+// ── QUOTES-PARTS ──
+function renderQP(){
+  const y=getY('qp-yr'),m=getM('qp-mo'),k=mkey(y,m);
+  if(!D.qp[k])D.qp[k]={amount:'',date:'',ref:'',notes:''};
+  const Q=D.qp[k],R=calcFromArr(getMonthRevTotals(y,m)),exp=R.netQP,act=parseFloat(Q.amount)||0,gap=exp-act;
+  $('qp-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div class="dc"><div class="dl">QP Nettes Calculées</div><div class="dv">${fmt(exp)}</div><div class="ds">Montant à distribuer</div></div>
+      <div class="dc ${act>0?'':'red'}"><div class="dl">Montant Distribué Saisi</div><div class="dv">${fmt(act)}</div></div>
+    </div>
+    ${Math.abs(gap)>1&&exp>0?`<div class="al ${gap>0?'al-r':'al-g'} mb8">${gap>0?'⚠️ Écart QP: <strong>'+fmt(gap)+'</strong> non distribué.':'✅ QP entièrement distribué.'}</div>`:''}
+    <table class="dt"><thead><tr><th>Mois</th><th class="tr2">QP Calculées</th><th class="tr2">Montant Total Distribué</th><th>Date Distribution</th><th>Réf. État Paiement</th><th>Notes</th><th>Statut</th></tr></thead>
+    <tbody><tr class="${act>0?'ok':'ar'}">
+      <td><strong>${MONTHS[m]} ${y}</strong></td>
+      <td class="tr2 fw7">${fmt(exp)}</td>
+      <td class="tr2"><input class="inp" type="number" value="${Q.amount||''}" min="0" placeholder="0" style="width:130px;text-align:right" onchange="D.qp['${k}'].amount=this.value;renderQP()"></td>
+      <td><input class="inp" type="date" value="${Q.date||''}" style="width:135px" onchange="D.qp['${k}'].date=this.value"></td>
+      <td><input class="inp" type="text" value="${Q.ref||''}" placeholder="Réf. état paiement" style="width:140px" onchange="D.qp['${k}'].ref=this.value"></td>
+      <td><input class="inp" type="text" value="${Q.notes||''}" placeholder="Notes" style="width:150px" onchange="D.qp['${k}'].notes=this.value"></td>
+      <td class="tc">${act>0?(Math.abs(gap)<1?'<span class="badge bg">✅ Équilibré</span>':'<span class="badge by">⚠️ Écart</span>'):'<span class="badge br2">❌ Non distribué</span>'}</td>
+    </tr></tbody></table>`;
+  renderQPAnnual(y);
+}
+function renderQPAnnual(y){
+  let h=`<table class="dt"><thead><tr><th>Mois</th><th class="tr2">QP Calculées</th><th class="tr2">Distribuées</th><th class="tr2">Écart</th><th>Date</th><th>Réf</th><th>Statut</th></tr></thead><tbody>`;
+  let te=0,ta=0;
+  MONTHS.forEach((mo,mi)=>{
+    const k=mkey(y,mi),R=calcFromArr(getMonthRevTotals(y,mi)),exp=R.netQP;
+    const Q=D.qp[k]||{},act=parseFloat(Q.amount)||0;
+    te+=exp;ta+=act;const gap=exp-act;
+    h+=`<tr class="${Math.abs(gap)<1&&exp>0?'ok':exp>0?'ar':''}">
+      <td>${mo}</td><td class="tr2">${fmt(exp)}</td><td class="tr2">${fmt(act)}</td>
+      <td class="tr2 ${gap>0?'red':''}">${gap>0?fmt(gap)+' ↓':'✓'}</td>
+      <td>${Q.date||'--'}</td><td>${Q.ref||'--'}</td>
+      <td class="tc">${exp===0?'--':Math.abs(gap)<1?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️</span>'}</td></tr>`;
+  });
+  h+=`<tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(te)}</td><td class="tr2 fw7">${fmt(ta)}</td><td class="tr2 fw7 ${te-ta>0?'red':''}">${fmt(Math.abs(te-ta))}</td><td colspan="3"></td></tr></tbody></table>`;
+  $('qp-annual').innerHTML=h;
+}
+
+// ── TRIANGULATION ──
+function runTriChecks(y,m){
+  const k=mkey(y,m),rv=getMonthRevTotals(y,m),R=calcFromArr(rv);
+  const svcT=rv.reduce((a,b)=>a+b,0);
+  const jT=(D.journal[k]||[]).filter(e=>e.type==='receipt').reduce((a,e)=>a+e.amount,0);
+  let tE=0;[1,2,3].forEach(d=>{tE+=calcFromArr(getDecadeRevTotals(y,m,d)).netRA});
+  const T=D.treasury[k]||{d1:{},d2:{},d3:{}};
+  const tD=['d1','d2','d3'].reduce((a,dk)=>a+(parseFloat(T[dk]?.amount)||0),0);
+  const S=D.solidarity[k]||{},sD=parseFloat(S.amount)||0;
+  const P=D.pharmacy[k]||{},pD=parseFloat(P.amount)||0;
+  const Q=D.qp[k]||{},qD=parseFloat(Q.amount)||0;
+  const eS=(D.expenditure[k]||[]).reduce((a,r)=>a+(parseFloat(r.amount)||0),0);
+  const crA=R.crLab+R.crEcho+R.crAmb;
+  return[
+    {label:'1. Recettes Registres Services vs Journal de Caisse',sub:'Service register totals vs cash journal totals',exp:svcT,act:jT,elab:'Total Registres',alab:'Total Journal'},
+    {label:'2. RA Nette (décades réelles) vs Versements Trésor',sub:'Decade-based Net RA vs treasury deposits',exp:tE,act:tD,elab:'RA Nette Calculée',alab:'Versements Trésor'},
+    {label:'3. QP Nettes vs Montant Distribué Personnel',sub:'Calculated Net QP vs staff payments',exp:R.netQP,act:qD,elab:'QP Nettes',alab:'QP Distribuées'},
+    {label:'4. Fonds Solidarité vs Dépôt BISEC',sub:'Calculated solidarity fund vs BISEC deposit',exp:R.totalSolid,act:sD,elab:'Solidarité Calculée',alab:'Dépôt BISEC'},
+    {label:'5. CR Pharmacie vs Dépôt Compte Pharmacie',sub:'Pharmacy CR vs pharmacy bank deposit',exp:R.crPharma,act:pD,elab:'CR Pharmacie',alab:'Dépôt Pharmacie'},
+    {label:'6. CR Disponible (Lab+Echo+Amb) vs Dépenses',sub:'Available CR vs expenditures (must not exceed)',exp:crA,act:eS,elab:'CR Disponible',alab:'Dépenses',rev:true}
+  ];
+}
+function renderTri(){
+  const y=getY('ti-yr'),m=getM('ti-mo');
+  const checks=runTriChecks(y,m);let allOk=true;
+  let h=`<div class="trirow th"><div>Vérification / Check</div><div>Attendu (FCFA)</div><div>Réel (FCFA)</div><div>Écart (FCFA)</div><div>Statut</div></div>`;
+  checks.forEach(chk=>{
+    const gap=chk.rev?(chk.act-chk.exp):(chk.exp-chk.act);
+    const ok=Math.abs(gap)<1||(chk.rev&&gap<=0);if(!ok)allOk=false;
+    h+=`<div class="trirow ${ok?'tok':'tal'}">
+      <div><strong style="font-size:12px">${chk.label}</strong><br>
+      <span style="font-size:10px;color:#888">${chk.sub}</span><br>
+      <span style="font-size:10px">📌 ${chk.elab} → ${chk.alab}</span></div>
+      <div class="tr2 fw7">${fmt(chk.exp)}</div><div class="tr2">${fmt(chk.act)}</div>
+      <div class="tr2 fw7 ${!ok?'red':'grn'}">${ok?'✓ 0':fmt(Math.abs(gap))+(gap>0?' ↓':' ↑')}</div>
+      <div class="tc">${ok?'<span class="badge bg">✅ OK</span>':'<span class="badge br2">⚠️ Écart</span>'}</div></div>`;
+    if(!ok)h+=`<div class="trisub">⚠️ <strong>Discordance:</strong> Écart de <strong>${fmt(Math.abs(gap))}</strong> — ${chk.elab} (${fmt(chk.exp)}) ≠ ${chk.alab} (${fmt(chk.act)}). Vérifier avant soumission IGF.</div>`;
+  });
+  const v=allOk?`<div class="al al-g mb8">✅ <strong>TRIANGULATION RÉUSSIE — ${MONTHS[getM('ti-mo')]} ${y}: Toutes vérifications conformes.</strong></div>`
+    :`<div class="al al-r mb8">⚠️ <strong>DISCORDANCES DÉTECTÉES — Corriger avant soumission officielle.</strong></div>`;
+  $('tri-results').innerHTML=v+h;
+}
+
+// ── DASHBOARD ──
+function renderDash(){
+  const y=getY('dy'),m=getM('dm'),k=mkey(y,m);
+  const rv=getMonthRevTotals(y,m),R=calcFromArr(rv);
+  const eS=(D.expenditure[k]||[]).reduce((a,r)=>a+(parseFloat(r.amount)||0),0);
+  $('dc-tot').textContent=fmt(R.total);$('dc-ra').textContent=fmt(R.netRA);$('dc-qp').textContent=fmt(R.netQP);
+  $('dc-sol').textContent=fmt(R.totalSolid);$('dc-ph').textContent=fmt(R.crPharma);$('dc-ex').textContent=fmt(eS);
+  const maxS=Math.max(...rv,1);
+  $('svc-chart').innerHTML=SVCS.map((svc,i)=>{
+    const h2=Math.max(Math.round((rv[i]/maxS)*120),2);
+    return `<div class="bitem"><div class="bval" style="color:${rv[i]>0?'var(--g)':'#ccc'}">${rv[i]>0?fmtN(rv[i]):'0'}</div>
+      <div class="bfill" style="height:${h2}px;background:${rv[i]>0?'var(--g)':'#e0e0e0'}" title="${svc.name}: ${fmt(rv[i])}"></div>
+      <div class="blabel">${svc.name.substring(0,10)}</div></div>`;
+  }).join('');
+  const T=D.treasury[k]||{d1:{},d2:{},d3:{}};
+  const tD2=new Date(y,m+1,0).getDate();
+  $('d-dec').innerHTML=`<div class="decdots" style="grid-template-columns:1fr 1fr 1fr">`+
+    ['d1','d2','d3'].map((dk,i)=>{
+      const dd=T[dk]||{},dep=parseFloat(dd.amount)||0;
+      const expRA=calcFromArr(getDecadeRevTotals(y,m,i+1)).netRA;
+      const lbs=[`D1: 1–10`,`D2: 11–20`,`D3: 21–${tD2}`];
+      return `<div class="decbox ${dep>0?'ok2':'bad'}">
+        <div class="dt2">${lbs[i]} ${MONTHS[m]}</div>
+        <div class="dv2" style="color:${dep>0?'var(--g)':'var(--r)'}">${dep>0?fmt(dep):'Non versé'}</div>
+        <div style="font-size:10px;color:#666">Attendu: <strong>${fmt(expRA)}</strong></div>
+        ${dep>0?`<div style="font-size:10px;color:#555">Quit.: ${dd.quittance||'--'} | Par: ${dd.person||'--'}</div>`:''}
+        ${dep>0?'<span class="badge bg">✅ Versé</span>':'<span class="badge br2">❌ En attente</span>'}
+      </div>`;
+    }).join('')+`</div>`;
+  const allMo=MONTHS.map((_,mi)=>getMonthRevTotals(y,mi).reduce((a,b)=>a+b,0));
+  const maxM=Math.max(...allMo,1);
+  $('trend-chart').innerHTML=MONTHS.map((mo,mi)=>{
+    const h2=Math.max(Math.round((allMo[mi]/maxM)*120),2);
+    return `<div class="bitem"><div class="bval" style="color:${mi===m?'var(--b)':'var(--g)'};font-size:8px">${fmtN(allMo[mi])}</div>
+      <div class="bfill" style="height:${h2}px;background:${mi===m?'var(--b)':'var(--g)'}" title="${mo}: ${fmt(allMo[mi])}"></div>
+      <div class="blabel">${mo.substring(0,3)}</div></div>`;
+  }).join('');
+  let alerts='';
+  if(R.total===0)alerts+=`<div class="al al-y">ℹ️ Aucune recette pour ${MONTHS[m]} ${y}.</div>`;
+  let tE2=0;[1,2,3].forEach(d=>{tE2+=calcFromArr(getDecadeRevTotals(y,m,d)).netRA});
+  const tDep2=['d1','d2','d3'].reduce((a,dk)=>a+(parseFloat(T[dk]?.amount)||0),0);
+  if(tE2>0&&tDep2<tE2*.9)alerts+=`<div class="al al-r">⚠️ Versements Trésor insuffisants: <strong>${fmt(tE2-tDep2)}</strong> en attente. Réf: RGCP Art.68.</div>`;
+  const S2=D.solidarity[k]||{};
+  if(R.totalSolid>0&&!(parseFloat(S2.amount)||0))alerts+=`<div class="al al-r">⚠️ Fonds Solidarité BISEC non déposé: <strong>${fmt(R.totalSolid)}</strong>.</div>`;
+  $('d-alerts').innerHTML=alerts;
+}
+
+// ── REPORT ──
+function toggleRepRange(){
+  const t=$('rep-type').value,show=t!=='month';
+  $('lbl-mo2').style.display=show?'inline':'none';$('rep-mo2').style.display=show?'inline-block':'none';
+}
+function renderReport(){
+  const rt=$('rep-type').value,y=getY('rep-yr'),mo1=getM('rep-mo1');
+  const mo2=rt==='year'?11:rt==='month'?mo1:getM('rep-mo2');
+  const f=D.facility,mr=[];for(let i=mo1;i<=mo2;i++)mr.push(i);
+  const pL=rt==='year'?`Exercice ${y}`:mr.length===1?`${MONTHS[mo1]} ${y}`:`${MONTHS[mo1]} – ${MONTHS[mo2]} ${y}`;
+  let aggR2=SVCS.map(()=>0);
+  mr.forEach(mi=>getMonthRevTotals(y,mi).forEach((v,i)=>aggR2[i]+=v));
+  const aggR=calcFromArr(aggR2);
+  let aJT=0,aTExp=0,aTDep=0,aSExp=0,aSAct=0,aPExp=0,aPAct=0,aQExp=0,aQAct=0,aExpS=0,aCRA=0;
+  mr.forEach(mi=>{
+    const k=mkey(y,mi),R=calcFromArr(getMonthRevTotals(y,mi));
+    aJT+=(D.journal[k]||[]).filter(e=>e.type==='receipt').reduce((a,e)=>a+e.amount,0);
+    [1,2,3].forEach(d=>{aTExp+=calcFromArr(getDecadeRevTotals(y,mi,d)).netRA});
+    const T2=D.treasury[k]||{d1:{},d2:{},d3:{}};
+    aTDep+=['d1','d2','d3'].reduce((a,dk)=>a+(parseFloat(T2[dk]?.amount)||0),0);
+    aSExp+=R.totalSolid;aSAct+=parseFloat((D.solidarity[k]||{}).amount)||0;
+    aPExp+=R.crPharma;aPAct+=parseFloat((D.pharmacy[k]||{}).amount)||0;
+    aQExp+=R.netQP;aQAct+=parseFloat((D.qp[k]||{}).amount)||0;
+    aExpS+=(D.expenditure[k]||[]).reduce((a,r)=>a+(parseFloat(r.amount)||0),0);
+    aCRA+=R.crLab+R.crEcho+R.crAmb;
+  });
+  const aggSvcT=aggR2.reduce((a,b)=>a+b,0);
+  const aggChecks=[
+    {label:'1. Recettes Services vs Journal Caisse',exp:aggSvcT,act:aJT},
+    {label:'2. RA Nette vs Versements Trésor',exp:aTExp,act:aTDep},
+    {label:'3. QP Nettes vs Montant Distribué',exp:aQExp,act:aQAct},
+    {label:'4. Fonds Solidarité vs Dépôt BISEC',exp:aSExp,act:aSAct},
+    {label:'5. CR Pharmacie vs Dépôt Pharmacie',exp:aPExp,act:aPAct},
+    {label:'6. CR Disponible vs Dépenses',exp:aCRA,act:aExpS,rev:true}
+  ];
+  let allOk2=true;
+  let triH=`<table class="dt" style="margin-bottom:14px"><thead><tr><th>Vérification</th><th class="tr2">Attendu</th><th class="tr2">Réel</th><th class="tr2">Écart</th><th>Statut</th></tr></thead><tbody>`;
+  aggChecks.forEach(chk=>{
+    const gap=chk.rev?(chk.act-chk.exp):(chk.exp-chk.act);
+    const ok=Math.abs(gap)<1||(chk.rev&&gap<=0);if(!ok)allOk2=false;
+    triH+=`<tr class="${ok?'ok':'ar'}"><td>${chk.label}</td><td class="tr2">${fmt(chk.exp)}</td><td class="tr2">${fmt(chk.act)}</td>
+      <td class="tr2 fw7 ${!ok?'red':'grn'}">${ok?'✓ 0':fmt(Math.abs(gap))+(gap>0?' ↓':' ↑')}</td>
+      <td class="tc">${ok?'<span class="badge bg">✅ Conforme</span>':'<span class="badge br2">⚠️ Écart: '+fmt(Math.abs(gap))+'</span>'}</td></tr>`;
+    if(!ok)triH+=`<tr><td colspan="5" style="background:#fff5f5;padding:6px 10px;font-size:11px;color:#9b1c1c;border-left:4px solid var(--r)">⚠️ Écart de <strong>${fmt(Math.abs(gap))}</strong>. Vérifier pièces justificatives.</td></tr>`;
+  });
+  triH+=`</tbody></table>`;
+  if(mr.length>1){
+    triH+=`<h4 style="color:var(--g);margin:12px 0 8px;font-size:12px">DÉTAIL PAR MOIS</h4>`;
+    mr.forEach(mi=>{
+      const hasData=getMonthRevTotals(y,mi).reduce((a,b)=>a+b,0)>0;if(!hasData)return;
+      const cks=runTriChecks(y,mi);let mOk=true;
+      let mR='';
+      cks.forEach(chk=>{
+        const gap=chk.rev?(chk.act-chk.exp):(chk.exp-chk.act);
+        const ok=Math.abs(gap)<1||(chk.rev&&gap<=0);if(!ok)mOk=false;
+        mR+=`<tr class="${ok?'ok':'ar'}"><td>${chk.label}</td><td class="tr2">${fmt(chk.exp)}</td><td class="tr2">${fmt(chk.act)}</td>
+          <td class="tr2 fw7 ${!ok?'red':'grn'}">${ok?'✓ 0':fmt(Math.abs(gap))}</td>
+          <td class="tc">${ok?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️ '+fmt(Math.abs(gap))+'</span>'}</td></tr>`;
+      });
+      triH+=`<div style="margin-bottom:12px"><div style="font-weight:700;color:var(--b);font-size:12px;margin-bottom:4px">${MONTHS[mi]} ${y} ${mOk?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️</span>'}</div>
+        <table class="dt"><thead><tr><th>Vérification</th><th class="tr2">Attendu</th><th class="tr2">Réel</th><th class="tr2">Écart</th><th>Statut</th></tr></thead><tbody>${mR}</tbody></table></div>`;
+    });
+  }
+  const logoSrc=document.querySelector('#hdr img').src;
+  const now=new Date();
+  let tresRows2='';let trET=0,trDT=0;
+  mr.forEach(mi=>{
+    const k=mkey(y,mi);
+    [1,2,3].forEach(dec=>{
+      const Rd=calcFromArr(getDecadeRevTotals(y,mi,dec)),exp=Rd.netRA;
+      const T3=D.treasury[k]||{d1:{},d2:{},d3:{}};const dk=['d1','d2','d3'][dec-1];
+      const dd=T3[dk]||{},dep=parseFloat(dd.amount)||0;
+      trET+=exp;trDT+=dep;
+      tresRows2+=`<tr class="${dep>=exp*.99&&exp>0?'ok':exp>0?'ar':''}">
+        <td>${MONTHS[mi]} D${dec}</td><td class="tr2">${fmt(exp)}</td><td class="tr2">${fmt(dep)}</td>
+        <td>${dd.quittance||'--'}</td><td class="tw">${dd.date||'--'}</td><td>${dd.person||'--'}</td><td>${dd.agent||'--'}</td>
+        <td class="tc">${dep>0?'<span class="badge bg">✅</span>':'<span class="badge br2">❌</span>'}</td></tr>`;
+    });
+  });
+  let solRows2='',phRows2='',qpRows2='',expRows2B='',expTot=0;
+  mr.forEach(mi=>{
+    const k=mkey(y,mi),R=calcFromArr(getMonthRevTotals(y,mi));
+    const S3=D.solidarity[k]||{},sa=parseFloat(S3.amount)||0;
+    solRows2+=`<tr class="${sa>=R.totalSolid*.99&&R.totalSolid>0?'ok':R.totalSolid>0?'ar':''}">
+      <td>${MONTHS[mi]} ${y}</td><td class="tr2">${fmt(R.totalSolid)}</td><td class="tr2">${fmt(sa)}</td>
+      <td>${S3.receipt||'--'}</td><td class="tw">${S3.date||'--'}</td><td>${S3.person||'--'}</td>
+      <td class="tc">${sa>0?'<span class="badge bg">✅</span>':'<span class="badge br2">❌</span>'}</td></tr>`;
+    const P3=D.pharmacy[k]||{},pa=parseFloat(P3.amount)||0;
+    phRows2+=`<tr class="${pa>=R.crPharma*.99&&R.crPharma>0?'ok':R.crPharma>0?'ar':''}">
+      <td>${MONTHS[mi]} ${y}</td><td class="tr2">${fmt(R.crPharma)}</td><td class="tr2">${fmt(pa)}</td>
+      <td>${P3.receipt||'--'}</td><td class="tw">${P3.date||'--'}</td>
+      <td class="tc">${pa>0?'<span class="badge bg">✅</span>':'<span class="badge br2">❌</span>'}</td></tr>`;
+    const Q3=D.qp[k]||{},qa=parseFloat(Q3.amount)||0;
+    qpRows2+=`<tr class="${Math.abs(R.netQP-qa)<1&&R.netQP>0?'ok':R.netQP>0?'ar':''}">
+      <td>${MONTHS[mi]} ${y}</td><td class="tr2">${fmt(R.netQP)}</td><td class="tr2">${fmt(qa)}</td>
+      <td class="tw">${Q3.date||'--'}</td><td>${Q3.ref||'--'}</td>
+      <td class="tc">${Math.abs(R.netQP-qa)<1?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️</span>'}</td></tr>`;
+    (D.expenditure[k]||[]).forEach(row=>{
+      const amt=parseFloat(row.amount)||0;expTot+=amt;
+      expRows2B+=`<tr><td>${MONTHS[mi]}</td><td class="tw">${row.date||'--'}</td><td>${row.cat||'--'}</td><td>${row.supplier||'--'}</td><td class="tr2">${fmt(amt)}</td><td>${row.invoice||'--'}</td><td>${row.officer||'--'}</td><td class="tc">${getPB(amt)}</td></tr>`;
+    });
+  });
+  $('report-content').innerHTML=`
+  <div class="rcov"><img src="${logoSrc}" alt="MINSANTE">
+    <div style="font-size:10px;color:#888;margin-bottom:4px">RÉPUBLIQUE DU CAMEROUN — Paix — Travail — Patrie</div>
+    <h1>RAPPORT DE GESTION FINANCIÈRE DES RECETTES PROPRES</h1>
+    <h2>FINANCIAL MANAGEMENT AUDIT REPORT — INTERNALLY GENERATED FUNDS</h2>
+    <hr style="border:1px solid var(--g);margin:10px auto;width:50%">
+    <div class="rtag"><strong>${f.name||'--'}</strong> | Catégorie ${f.cat||'--'}</div>
+    <div class="rtag">District: ${f.district||'--'} | Région: ${f.region||'--'} | Code: ${f.code||'--'}</div>
+    <div class="rtag fw7" style="font-size:14px;color:var(--b);margin-top:6px">Période: ${pL}</div>
+    <div class="rtag" style="margin-top:6px;font-size:11px;color:#999">Généré le ${now.toLocaleDateString('fr-FR')} à ${now.toLocaleTimeString('fr-FR')} | Régisseur: ${f.registrar||'--'} | Directeur: ${f.director||'--'}</div>
+  </div>
+  <div class="rsec"><h3>I. Informations sur la Formation Sanitaire</h3>
+    <table class="dt"><tbody>
+      <tr><td class="fw7" style="width:40%">Nom</td><td>${f.name||'--'}</td></tr>
+      <tr><td class="fw7">Catégorie</td><td>Catégorie ${f.cat||'--'}</td></tr>
+      <tr><td class="fw7">District / Région</td><td>${f.district||'--'} / ${f.region||'--'}</td></tr>
+      <tr><td class="fw7">Période couverte</td><td>${pL}</td></tr>
+      <tr><td class="fw7">Régisseur</td><td>${f.registrar||'--'}</td></tr>
+      <tr><td class="fw7">Directeur</td><td>${f.director||'--'}</td></tr>
+      <tr><td class="fw7">Code FOSA</td><td>${f.code||'--'}</td></tr>
+    </tbody></table>
+  </div>
+  <div class="rsec"><h3>II. Recettes par Ligne de Service — Période Consolidée</h3>
+    <table class="dt"><thead><tr><th>#</th><th>Service</th><th class="tr2">Montant (FCFA)</th><th class="tr2">% du Total</th></tr></thead>
+    <tbody>${SVCS.map((svc,i)=>`<tr><td>${i+1}</td><td>${svc.icon} ${svc.name}</td><td class="tr2">${fmt(aggR2[i])}</td><td class="tr2">${aggR.total>0?(aggR2[i]/aggR.total*100).toFixed(1)+'%':'0%'}</td></tr>`).join('')}
+    <tr class="tr2"><td colspan="2"><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(aggR.total)}</td><td class="tr2">100%</td></tr></tbody></table>
+  </div>
+  <div class="rsec"><h3>III. Ventilation Complète des Calculs — Période Consolidée</h3>${buildCalcHTML(aggR)}</div>
+  <div class="rsec"><h3>IV. Versements Décadaires au Trésor</h3>
+    <p class="ln mb8">Réf: RGCP Art.68 — RA Nette = somme des recettes journalières de la décade.</p>
+    <table class="dt"><thead><tr><th>Période</th><th class="tr2">RA Attendue</th><th class="tr2">Versé</th><th>N° Quittance</th><th>Date</th><th>Versant</th><th>Agent Trésor</th><th>Statut</th></tr></thead>
+    <tbody>${tresRows2||'<tr><td colspan="8" class="tc">Aucun versement</td></tr>'}
+    <tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(trET)}</td><td class="tr2 fw7">${fmt(trDT)}</td><td colspan="4"></td>
+    <td class="tc">${trDT>=trET*.99&&trET>0?'<span class="badge bg">✅</span>':'<span class="badge br2">⚠️ '+fmt(trET-trDT)+'</span>'}</td></tr></tbody></table>
+  </div>
+  <div class="rsec"><h3>V. Paiements Quotes-Parts (Décret 2016/6447/PM)</h3>
+    <table class="dt"><thead><tr><th>Mois</th><th class="tr2">QP Calculées</th><th class="tr2">Distribuées</th><th>Date</th><th>Réf État Paiement</th><th>Statut</th></tr></thead>
+    <tbody>${qpRows2||'<tr><td colspan="6" class="tc">Aucun paiement</td></tr>'}
+    <tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(aQExp)}</td><td class="tr2 fw7">${fmt(aQAct)}</td><td colspan="3"></td></tr></tbody></table>
+  </div>
+  <div class="rsec"><h3>VI. Fonds de Solidarité — BISEC</h3>
+    <table class="dt"><thead><tr><th>Mois</th><th class="tr2">Attendu</th><th class="tr2">Versé</th><th>N° Reçu</th><th>Date</th><th>Déposant</th><th>Statut</th></tr></thead>
+    <tbody>${solRows2||'<tr><td colspan="7" class="tc">Aucun dépôt</td></tr>'}
+    <tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(aSExp)}</td><td class="tr2 fw7">${fmt(aSAct)}</td><td colspan="4"></td></tr></tbody></table>
+  </div>
+  <div class="rsec"><h3>VII. Compte Pharmacie — Dépôts CR</h3>
+    <table class="dt"><thead><tr><th>Mois</th><th class="tr2">CR Attendu</th><th class="tr2">Déposé</th><th>N° Reçu</th><th>Date</th><th>Statut</th></tr></thead>
+    <tbody>${phRows2||'<tr><td colspan="6" class="tc">Aucun dépôt</td></tr>'}
+    <tr class="tr2"><td><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(aPExp)}</td><td class="tr2 fw7">${fmt(aPAct)}</td><td colspan="3"></td></tr></tbody></table>
+  </div>
+  <div class="rsec"><h3>VII-bis. Dépenses sur Recouvrement des Coûts (Décret 2018/366 | RGCP Art.71)</h3>
+    <table class="dt"><thead><tr><th>Mois</th><th>Date</th><th>Catégorie</th><th>Fournisseur</th><th class="tr2">Montant</th><th>N° Facture</th><th>Officier</th><th>Passation</th></tr></thead>
+    <tbody>${expRows2B||'<tr><td colspan="8" class="tc">Aucune dépense</td></tr>'}
+    <tr class="tr2"><td colspan="4"><strong>TOTAL</strong></td><td class="tr2 fw7">${fmt(expTot)}</td><td colspan="3"></td></tr></tbody></table>
+  </div>
+  <div class="rsec"><h3>VIII. Résultats de Triangulation — Vérification Croisée Complète</h3>
+    <div class="al ${allOk2?'al-g':'al-r'} mb8">${allOk2?'✅ Triangulation conforme sur toute la période.':'⚠️ Discordances détectées. Voir détails ci-dessous.'}</div>
+    <h4 style="color:var(--g);margin-bottom:8px;font-size:12px">TRIANGULATION CONSOLIDÉE — ${pL}</h4>
+    ${triH}
+  </div>
+  <div class="rsec"><h3>IX. Références Légales</h3>
+    <table class="dt"><tbody>
+      <tr><td class="fw7 tw">Décret 2016/6447/PM</td><td>Quotes-Parts du personnel — attribution et paiement</td></tr>
+      <tr><td class="fw7 tw">Décret 2018/366</td><td>&lt;500K direct | 500K–5M 3 devis | &gt;5M appel d'offres</td></tr>
+      <tr><td class="fw7 tw">RGCP Art. 68</td><td>Versement décadaire obligatoire au Trésor Public contre quittance</td></tr>
+      <tr><td class="fw7 tw">RGCP Art. 71</td><td>Pièces justificatives obligatoires pour toutes dépenses</td></tr>
+      <tr><td class="fw7 tw">Circulaire MINSANTE</td><td>Rapport mensuel à la Délégation Régionale</td></tr>
+    </tbody></table>
+  </div>
+  <div class="rsec"><div class="sigblock">
+    <div class="sigitem"><div>Le Régisseur de Recettes<br><em>Revenue Registrar</em></div><div class="sigline">${f.registrar||'........................................'}<br>Signature &amp; Date</div></div>
+    <div class="sigitem"><div>Le Directeur de la FOSA<br><em>Facility Director</em></div><div class="sigline">${f.director||'........................................'}<br>Signature &amp; Cachet</div></div>
+    <div class="sigitem"><div>L'Auditeur / Inspecteur<br><em>Auditor / Inspector</em></div><div class="sigline">........................................<br>Signature &amp; Date</div></div>
+  </div>
+  <div class="ln" style="margin-top:20px;text-align:center">Outil de Gestion Financière des Recettes Propres — MINSANTE Cameroun | ${now.toLocaleDateString('fr-FR')} ${now.toLocaleTimeString('fr-FR')}</div>
+  </div>`;
+}
+
+// ── SAVE / LOAD ──
+function saveData(){
+  const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`MINSANTE_${(D.facility.name||'FOSA').replace(/\s+/g,'_')}_${D.facility.year}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+}
+function loadFile(){$('file-input').click();}
+function loadFileData(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      D=JSON.parse(ev.target.result);
+      if(D.facility?.name){
+        $('setup').style.display='none';updateHeader();populateYears();buildSvcTabs();
+        ['s-fn','s-dist','s-reg2','s-dir','s-code'].forEach(id=>{
+          const map={'s-fn':'name','s-dist':'district','s-reg2':'registrar','s-dir':'director','s-code':'code'};
+          if($(id))$(id).value=D.facility[map[id]]||'';
+        });
+        $('s-cat').value=D.facility.cat||'';$('s-reg').value=D.facility.region||'';$('s-yr').value=D.facility.year||2025;
+        $('dm').value=new Date().getMonth();renderDash();
+        alert(`✓ Données chargées: ${D.facility.name}`);
+      }
+    }catch(err){alert('Erreur de chargement: '+err);}
+  };
+  reader.readAsText(file);e.target.value='';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  populateYears();
+  const m=new Date().getMonth();
+  ['dm','rv-mo','jou-mo','tr-mo','sol-mo','ph-mo','ex-mo','qp-mo','ti-mo','rep-mo1','rep-mo2'].forEach(id=>{if($(id))$(id).value=m;});
+  buildSvcTabs();toggleRepRange();
+});
+</script>
+</body>
+</html>
