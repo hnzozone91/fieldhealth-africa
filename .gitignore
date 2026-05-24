@@ -22,3 +22,16 @@ Thumbs.db
 
 # Cloudflare
 .wrangler/
+
+# Claude Code settings
+.claude/
+
+# Internal / sensitive files
+brief.md
+*.docx
+*.pdf
+"Untitled design.png"
+founder.jpeg
+
+# Tool source files (sold products — not for public repo)
+TOOL PRODUCTION PROJECT FOR DHA/
