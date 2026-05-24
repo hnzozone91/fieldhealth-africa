@@ -18,7 +18,7 @@ const { pathname } = Astro.url;
 <header class="fixed top-0 inset-x-0 z-50">
   <!-- Glass bar -->
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div id="header-glass" class="mt-3 rounded-2xl bg-white/[0.08] [backdrop-filter:blur(24px)] border border-white/[0.18] shadow-[0_4px_24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.10),0_0_48px_-12px_rgba(6,182,212,0.22)] transition-[background-color,box-shadow] duration-500">
+    <div id="header-glass" class="mt-3 rounded-2xl bg-white/[0.10] [backdrop-filter:blur(32px)_saturate(160%)] [-webkit-backdrop-filter:blur(32px)_saturate(160%)] border border-white/[0.22] shadow-[0_4px_24px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.14),0_0_56px_-10px_rgba(6,182,212,0.32)] transition-[background-color,box-shadow,backdrop-filter] duration-500">
       <nav class="flex items-center justify-between h-16 px-5">
 
         <!-- Wordmark / Logo -->
@@ -165,11 +165,13 @@ const { pathname } = Astro.url;
 <style>
   /* Deepen glass after scrolling past hero fold */
   #header-glass.is-scrolled {
-    background: rgba(12, 12, 18, 0.80) !important;
+    background: rgba(12, 12, 18, 0.85) !important;
+    backdrop-filter: blur(44px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(44px) saturate(200%) !important;
     box-shadow:
-      0 4px 24px rgba(0,0,0,0.50),
-      inset 0 1px 0 rgba(255,255,255,0.10),
-      0 0 56px -10px rgba(6,182,212,0.28) !important;
-    border-color: rgba(255,255,255,0.20) !important;
+      0 4px 28px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 0 64px -8px rgba(6,182,212,0.32) !important;
+    border-color: rgba(255,255,255,0.22) !important;
   }
 </style>

@@ -11,6 +11,7 @@ const footerLinks = {
     { href: '/about',   label: 'About'   },
     { href: '/blog',    label: 'Blog'    },
     { href: '/contact', label: 'Contact' },
+    { href: 'https://drhenrynzozone.substack.com', label: 'Newsletter', external: true },
   ],
   'Legal': [
     { href: '/privacy',              label: 'Privacy Policy'       },
@@ -49,9 +50,13 @@ const footerLinks = {
         <div>
           <h3 class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-4">{heading}</h3>
           <ul class="space-y-2.5" role="list">
-            {links.map(({ href, label }) => (
+            {links.map(({ href, label, external }) => (
               <li>
-                <a href={href} class="text-white/60 hover:text-white text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 rounded">
+                <a
+                  href={href}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  class="text-white/60 hover:text-white text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 rounded"
+                >
                   {label}
                 </a>
               </li>

@@ -50,12 +50,21 @@ import NewsletterBand from '../components/NewsletterBand.astro';
           <div class="flex-1">
             <p class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-2">Founder</p>
             <h2 data-reveal class="font-display font-bold text-2xl sm:text-3xl text-white mb-1">Dr. Nzozone Henry Fomukong</h2>
-            <p class="text-white/45 text-sm mb-5">MD · Field Epidemiologist · District Medical Officer, Mamfe · Data Scientist</p>
-            <p class="text-white/65 text-sm leading-relaxed">
-              I am a medical doctor, field epidemiologist, and the District Medical Officer of Mamfe, one of Cameroon's most operationally complex districts — a crisis-affected setting where health data decisions have real, immediate consequences.
-              I hold a Data Science &amp; Machine Learning diploma from IDSS and have authored seven peer-reviewed publications.
-              My technical toolkit includes Python, DHIS2, KoboToolbox, Tableau, Power BI, Excel, and Claude API.
-            </p>
+            <p class="text-white/45 text-sm mb-5">MD · Field Epidemiologist · District Medical Officer, Mamfe · Data Scientist · Public Health Strategist</p>
+            <div class="space-y-3 text-white/65 text-sm leading-relaxed">
+              <p>
+                Dr. Nzozone Henry Fomukong is a Cameroonian medical doctor, field epidemiologist, public health specialist, and health systems leader currently serving as District Medical Officer in Mamfe. He is widely recognized for his work strengthening healthcare delivery in crisis-affected and hard-to-reach communities across Cameroon's South West Region.
+              </p>
+              <p>
+                His leadership became especially visible during the sociopolitical crisis, where he played a key role in restoring and coordinating health services under difficult operational conditions. In Konye, he led efforts that contributed to reopening the District Hospital after years of closure, while mobilizing support for infrastructure, equipment, and service expansion. In Mamfe, he successfully helped restore vaccination services in inaccessible areas such as Kendem and Kajifu after several years without routine immunization activities.
+              </p>
+              <p>
+                Dr. Nzozone Henry combines frontline public health leadership with strong expertise in epidemiological surveillance, outbreak response, health data systems, and digital health innovation. He works extensively with DHIS2, KoboToolbox, dashboards, AI-assisted workflows, and operational analytics to improve decision-making and accountability within district health systems.
+              </p>
+              <p>
+                In addition to his administrative and field responsibilities, he has contributed to global health research through scientific publications and presentations focused on infectious diseases, vaccine hesitancy, health systems resilience, and digital transformation in African healthcare settings.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -68,12 +77,22 @@ import NewsletterBand from '../components/NewsletterBand.astro';
     <div class="mx-auto max-w-3xl space-y-6">
       <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">Why I built this</h2>
 
-      <!-- TODO: Replace with Mamfe origin story (300–400 words).
-           Cover: arriving in Mamfe, the operational reality, the data gap you kept hitting,
-           the moment you decided to start building tools, the first tool, the reaction
-           from the district. Personal, specific, credible. -->
-      <div class="rounded-xl border border-dashed border-white/15 p-6 text-white/40 text-sm italic">
-        TODO — Mamfe origin story (300–400 words): describe arriving in Mamfe, the operational reality of running a district health system in a crisis-affected setting, the data gap you kept hitting, the moment you decided to start building your own tools, and how other practitioners responded when you shared the first one. Personal, specific, and grounded in real events.
+      <div class="space-y-4 text-white/65 text-sm leading-relaxed">
+        <p>
+          The idea behind FieldHealth Africa didn't begin in a conference hall or a startup incubator. It began in crisis.
+        </p>
+        <p>
+          When Mamfe and the surrounding districts were caught in the sociopolitical crisis, health systems didn't just weaken — they fragmented. Roads became unsafe, facilities were abandoned, supervision collapsed, and vaccination stalled. Paper-based systems that already strained under normal conditions became nearly impossible to sustain. As District Medical Officer, I was making real-time decisions in unstable settings where a single delayed report could derail an outbreak response, vaccine accountability, or staff deployment across entire health areas.
+        </p>
+        <p>
+          Konye was a turning point. The district hospital had been closed for years; reopening it in 2021 took negotiation, logistics, and improvisation with whatever resources we could mobilise. But one problem persisted across both Konye and Mamfe: the systems for managing health operations were too manual, too fragmented, and too dependent on physical presence. In hard-to-reach areas like Kendem and Kajifu, even confirming whether an activity had truly happened could become a major operational challenge.
+        </p>
+        <p>
+          At some point it stopped looking like a staffing or funding problem. It was a systems problem. African districts don't fail because health workers lack intelligence or commitment — many fail because frontline managers lack accessible operational tools built for their reality.
+        </p>
+        <p>
+          So instead of waiting for expensive enterprise software, I started building practical tools from what was available: KoboToolbox, DHIS2 exports, Excel automation, dashboards, AI-assisted workflows. Every tool here came from actual field implementation — and that's why the platform is no longer "Digital Health Africa" but FieldHealth Africa. Built from the field upward.
+        </p>
       </div>
 
       <!-- Credential highlights (real facts) -->
@@ -114,13 +133,19 @@ import NewsletterBand from '../components/NewsletterBand.astro';
     <div class="mx-auto max-w-3xl">
       <h2 data-reveal class="font-display font-bold text-2xl sm:text-3xl text-white mb-6">The two-library model</h2>
 
-      <!-- TODO: Expand this section (150–200 words) explaining WHY two libraries instead of one.
-           Core argument (from business plan): the practitioners who need tools most have the
-           least personal budget. Free Library builds audience + credibility. Pro Library
-           serves consultants/NGOs with professional budgets. Same expertise, two markets,
-           complementary economics. -->
-      <div class="rounded-xl border border-dashed border-white/15 p-6 text-white/40 text-sm italic mb-6">
-        TODO — Explain the two-library model in 150–200 words. Why free for practitioners and paid for consultants? How do they complement each other economically?
+      <div class="space-y-4 text-white/65 text-sm leading-relaxed mb-6">
+        <p>
+          FieldHealth Africa runs on two libraries because it serves two different needs.
+        </p>
+        <p>
+          The Free Library is for African health practitioners — DMOs, pharmacists, facility managers, M&amp;E officers — working inside the system every day. These tools are free, always. The people doing the hardest frontline work, often with the smallest budgets, shouldn't have to pay to do their jobs better. Free tools build trust, get battle-tested in real districts, and strengthen the systems that matter most.
+        </p>
+        <p>
+          The Pro Library is for global health professionals — NGO M&amp;E teams, international consultants, researchers — who need premium, ready-to-deploy tools and are funded to pay for them. Their purchases are what make the free tools sustainable.
+        </p>
+        <p>
+          The model is deliberately circular: paying global users underwrite free access for frontline African practitioners, while the free tools keep the whole platform grounded in real field conditions. One side funds reach; the other side keeps it honest.
+        </p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -147,7 +172,7 @@ import NewsletterBand from '../components/NewsletterBand.astro';
       <a href="/free-library" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(6,182,212,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2">
         Browse the Free Library
       </a>
-      <a href="[SUBSTACK_SUBSCRIBE_URL]" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-white/20 text-white font-semibold text-sm hover:border-white/35 hover:bg-white/[0.05] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2">
+      <a href="https://drhenrynzozone.substack.com" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-white/20 text-white font-semibold text-sm hover:border-white/35 hover:bg-white/[0.05] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2">
         Subscribe to the newsletter
       </a>
     </div>

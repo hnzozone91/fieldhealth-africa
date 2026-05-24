@@ -65,7 +65,7 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
   /* ─── Shared blob geometry ─────────────────────────────────────────── */
   .aurora-blob {
     position: absolute;
-    border-radius: 9999px;
+    border-radius: 50%;          /* default for reduced-motion / fallback */
     filter: blur(72px);
     will-change: transform;
   }
@@ -131,35 +131,83 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
       75%     { filter: hue-rotate(8deg)   saturate(1.1); }
     }
 
-    /* Blob 1 — drifts slowly, morphs shape via independent X/Y scale */
+    /* Enable will-change: border-radius alongside transform for smoother morphing */
+    .aurora-blob { will-change: transform, border-radius; }
+
+    /* Blob 1 — large, upper-left: slow drift + organic shape morph */
     @keyframes blob-drift-1 {
-      0%,100% { transform: translate(0px,   0px)   scaleX(1.00) scaleY(1.00); }
-      20%     { transform: translate(60px, -45px)  scaleX(1.13) scaleY(0.88); }
-      40%     { transform: translate(-35px, 60px)  scaleX(0.87) scaleY(1.12); }
-      60%     { transform: translate(45px,  35px)  scaleX(1.08) scaleY(0.94); }
-      80%     { transform: translate(-55px,-28px)  scaleX(0.93) scaleY(1.07); }
+      0%,100% {
+        transform: translate(0px, 0px) scaleX(1.00) scaleY(1.00);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+      20% {
+        transform: translate(60px, -45px) scaleX(1.10) scaleY(0.90);
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+      }
+      40% {
+        transform: translate(-35px, 60px) scaleX(0.90) scaleY(1.10);
+        border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+      }
+      60% {
+        transform: translate(45px, 35px) scaleX(1.06) scaleY(0.95);
+        border-radius: 67% 33% 47% 53% / 37% 20% 80% 63%;
+      }
+      80% {
+        transform: translate(-55px, -28px) scaleX(0.95) scaleY(1.05);
+        border-radius: 40% 60% 55% 45% / 60% 30% 70% 40%;
+      }
     }
 
-    /* Blob 2 — counter-cycles, opposite morph rhythm */
+    /* Blob 2 — medium, lower-right: counter-cycle + inverse morph */
     @keyframes blob-drift-2 {
-      0%,100% { transform: translate(0px,   0px)   scaleX(1.00) scaleY(1.00); }
-      25%     { transform: translate(-65px, 40px)  scaleX(0.88) scaleY(1.14); }
-      50%     { transform: translate(40px, -60px)  scaleX(1.14) scaleY(0.86); }
-      75%     { transform: translate(-30px, 30px)  scaleX(0.94) scaleY(1.06); }
+      0%,100% {
+        transform: translate(0px, 0px) scaleX(1.00) scaleY(1.00);
+        border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+      }
+      25% {
+        transform: translate(-65px, 40px) scaleX(0.90) scaleY(1.10);
+        border-radius: 70% 30% 30% 70% / 40% 70% 30% 60%;
+      }
+      50% {
+        transform: translate(40px, -60px) scaleX(1.12) scaleY(0.88);
+        border-radius: 30% 70% 70% 30% / 50% 40% 60% 50%;
+      }
+      75% {
+        transform: translate(-30px, 30px) scaleX(0.96) scaleY(1.04);
+        border-radius: 55% 45% 40% 60% / 30% 60% 40% 70%;
+      }
     }
 
-    /* Blob 3 — medium accent, mid-path morph */
+    /* Blob 3 — mid-centre accent: rotational morph feel */
     @keyframes blob-drift-3 {
-      0%,100% { transform: translate(calc(-50% + 0px),  calc(-50% + 0px))  scaleX(1.00) scaleY(1.00); }
-      33%     { transform: translate(calc(-50% + 45px), calc(-50% - 35px)) scaleX(1.20) scaleY(0.80); }
-      66%     { transform: translate(calc(-50% - 40px), calc(-50% + 45px)) scaleX(0.80) scaleY(1.20); }
+      0%,100% {
+        transform: translate(calc(-50% + 0px),  calc(-50% + 0px));
+        border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+      }
+      33% {
+        transform: translate(calc(-50% + 45px), calc(-50% - 35px));
+        border-radius: 30% 70% 60% 40% / 60% 40% 30% 70%;
+      }
+      66% {
+        transform: translate(calc(-50% - 40px), calc(-50% + 45px));
+        border-radius: 70% 30% 40% 60% / 40% 60% 70% 30%;
+      }
     }
 
-    /* Blob 4 — small sparkle, gentle drift */
+    /* Blob 4 — small sparkle, upper-right: quick organic flicker */
     @keyframes blob-drift-4 {
-      0%,100% { transform: translate(0px,  0px)   scaleX(1.00) scaleY(1.00); }
-      35%     { transform: translate(28px,-22px)  scaleX(0.82) scaleY(1.16); }
-      70%     { transform: translate(-18px,18px)  scaleX(1.14) scaleY(0.84); }
+      0%,100% {
+        transform: translate(0px, 0px);
+        border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+      }
+      35% {
+        transform: translate(28px, -22px);
+        border-radius: 70% 30% 30% 70% / 30% 70% 70% 30%;
+      }
+      70% {
+        transform: translate(-18px, 18px);
+        border-radius: 30% 70% 70% 30% / 70% 30% 30% 70%;
+      }
     }
 
     .blob-1 { animation: blob-drift-1 22s ease-in-out infinite; }
