@@ -4,8 +4,8 @@ import AuroraBackground from '../components/AuroraBackground.astro';
 import NewsletterBand from '../components/NewsletterBand.astro';
 import { products } from '../data/products';
 
-// TODO: replace with real Formspree endpoint for "Notify me" capture
-const NOTIFY_FORM = '[FORMSPREE_NOTIFY_ENDPOINT]';
+// Reuses the contact endpoint — "Pro Library Notify Me" subject keeps it distinguishable
+const NOTIFY_FORM = 'https://formspree.io/f/xbdbayjg';
 
 const inDevelopment = [
   { title: 'Malaria Burden Estimator',        desc: 'District-level malaria burden modelling using DHIS2 data, rainfall, and population denominators.' },
@@ -169,7 +169,6 @@ const inDevelopment = [
         <h2 class="font-display font-bold text-xl text-white mb-2">Notify me when more Pro tools launch</h2>
         <p class="text-white/55 text-sm mb-6">Drop your email — we'll reach out before public launch, sometimes with an early-access discount.</p>
 
-        <!-- TODO: replace action with real Formspree endpoint [FORMSPREE_NOTIFY_ENDPOINT] -->
         <form
           action={NOTIFY_FORM}
           method="POST"
