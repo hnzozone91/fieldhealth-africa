@@ -22,7 +22,16 @@ const posts = (await getCollection('blog'))
     <AuroraBackground variant="b" parallax={true} />
 
     <div id="hero-content" class="relative z-10 w-full px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto py-20">
-      <div class="max-w-3xl">
+      <div class="max-w-3xl relative">
+
+        <!-- Pulsing headline aura — purely decorative, behind all text -->
+        <div aria-hidden="true" class="absolute inset-0 -z-10 pointer-events-none overflow-visible">
+          <div class="absolute -top-[30%] -left-[8%] w-[130%] h-[160%] animate-headline-pulse"
+               style="background: radial-gradient(ellipse 65% 55% at 30% 42%, rgba(6,182,212,0.44), rgba(20,184,166,0.24) 38%, transparent 65%);
+                      filter: blur(42px);
+                      will-change: opacity, transform;">
+          </div>
+        </div>
 
         <!-- Eyebrow -->
         <div class="inline-flex items-center gap-2.5 mb-10 animate-fade-up" style="animation-delay:0.05s">
@@ -77,6 +86,18 @@ const posts = (await getCollection('blog'))
           ))}
         </div>
       </div>
+        <!-- Floating accent shapes — desktop only, CSS-only, no filter or backdrop -->
+        <div aria-hidden="true" class="absolute right-[8%] top-[60px] hidden lg:block pointer-events-none">
+          <div class="w-24 h-24 border border-cyan-400/[0.18] rounded-2xl rotate-[18deg] animate-float"
+               style="box-shadow: 0 0 28px -6px rgba(6,182,212,0.18), inset 0 0 12px rgba(6,182,212,0.05);">
+          </div>
+        </div>
+        <div aria-hidden="true" class="absolute right-[14%] top-[220px] hidden lg:block pointer-events-none">
+          <div class="w-12 h-12 border border-teal-400/[0.13] rounded-xl -rotate-[14deg] animate-float-slow"
+               style="animation-delay:2.2s">
+          </div>
+        </div>
+
     </div>
   </section>
 
@@ -91,7 +112,7 @@ const posts = (await getCollection('blog'))
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-        <a data-reveal data-reveal-delay="100" href="/free-library" class="group rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/20 shadow-[0_0_30px_-6px_rgba(6,182,212,0.18)] p-6 flex flex-col transition-all duration-300 hover:bg-white/[0.07] hover:ring-cyan-400/35 hover:shadow-[0_0_40px_-4px_rgba(6,182,212,0.28)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2">
+        <a data-reveal data-reveal-delay="100" href="/free-library" class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-cyan-500/25 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_38px_-8px_rgba(6,182,212,0.35)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:ring-cyan-400/40 hover:shadow-[0_8px_48px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_56px_-4px_rgba(6,182,212,0.56)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 group-hover:border-cyan-400/35 transition-colors" aria-hidden="true">
             <svg class="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
           </div>
@@ -100,7 +121,7 @@ const posts = (await getCollection('blog'))
           <div class="mt-5 flex items-center gap-1 text-cyan-400 text-sm font-medium">Browse free tools <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
         </a>
 
-        <a data-reveal data-reveal-delay="200" href="/pro-library" class="group relative rounded-2xl bg-gradient-to-b from-white/[0.07] to-white/[0.03] backdrop-blur-md border border-white/[0.15] ring-1 ring-teal-400/30 shadow-[0_0_36px_-4px_rgba(20,184,166,0.28)] p-6 flex flex-col transition-all duration-300 hover:ring-teal-300/45 hover:shadow-[0_0_48px_-4px_rgba(20,184,166,0.38)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2">
+        <a data-reveal data-reveal-delay="200" href="/pro-library" class="group relative rounded-2xl bg-gradient-to-b from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.18] ring-1 ring-teal-400/35 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_42px_-6px_rgba(20,184,166,0.42)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.26] hover:ring-teal-300/50 hover:shadow-[0_8px_48px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_60px_-4px_rgba(20,184,166,0.62)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2">
           <div class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-[10px] font-bold uppercase tracking-wider">Pro</div>
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500/20 to-emerald-500/10 border border-teal-500/20 flex items-center justify-center mb-5 group-hover:border-teal-400/35 transition-colors" aria-hidden="true">
             <svg class="w-6 h-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -110,7 +131,7 @@ const posts = (await getCollection('blog'))
           <div class="mt-5 flex items-center gap-1 text-teal-300 text-sm font-medium">Explore Pro tools <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
         </a>
 
-        <a data-reveal data-reveal-delay="300" href="/picks" class="group rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-indigo-500/20 shadow-[0_0_30px_-6px_rgba(99,102,241,0.18)] p-6 flex flex-col transition-all duration-300 hover:bg-white/[0.07] hover:ring-indigo-400/35 hover:shadow-[0_0_40px_-4px_rgba(99,102,241,0.28)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400 focus-visible:outline-offset-2">
+        <a data-reveal data-reveal-delay="300" href="/picks" class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-indigo-500/25 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_38px_-8px_rgba(99,102,241,0.34)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:ring-indigo-400/40 hover:shadow-[0_8px_48px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_56px_-4px_rgba(99,102,241,0.56)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400 focus-visible:outline-offset-2">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/10 border border-indigo-500/20 flex items-center justify-center mb-5 group-hover:border-indigo-400/35 transition-colors" aria-hidden="true">
             <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
           </div>
@@ -129,7 +150,7 @@ const posts = (await getCollection('blog'))
        ════════════════════════════════════════════ -->
   <section class="py-4 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
-      <div data-reveal class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/20 shadow-[0_0_30px_-6px_rgba(6,182,212,0.15)] overflow-hidden p-8">
+      <div data-reveal class="rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.18] ring-1 ring-cyan-500/28 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.13),0_0_48px_-10px_rgba(6,182,212,0.32)] overflow-hidden p-8">
         <div class="flex flex-col sm:flex-row gap-8 items-start">
 
           <!-- Photo -->
@@ -175,10 +196,11 @@ const posts = (await getCollection('blog'))
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        {posts.length > 0 ? posts.map((post) => (
+        {posts.length > 0 ? posts.map((post, i) => (
           <a
+            data-reveal data-reveal-delay={i === 0 ? undefined : i === 1 ? "100" : "200"}
             href={`/blog/${post.id}`}
-            class="group rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-white/[0.06] p-6 flex flex-col transition-all duration-300 hover:bg-white/[0.07] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
+            class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-white/[0.08] shadow-[0_4px_28px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.10)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:scale-[1.015] hover:shadow-[0_8px_40px_rgba(0,0,0,0.44),inset_0_1px_0_rgba(255,255,255,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
           >
             <span class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">{post.data.tags[0] ?? 'Field Notes'}</span>
             <h3 class="font-display font-bold text-lg text-white mb-2 leading-snug">{post.data.title}</h3>
@@ -187,11 +209,11 @@ const posts = (await getCollection('blog'))
           </a>
         )) : (
           [
-            { tag: 'Free Library', title: 'Introducing Pharmacy Inventory v2.1', excerpt: 'How a simple Excel dashboard helps district pharmacists prevent stock-outs.', date: 'May 2026', href: '/blog/pharmacy-inventory-v2' },
-            { tag: 'Field Notes',  title: 'What 8 Years as a DMO Taught Me About Data', excerpt: 'The gap between what health systems collect and what field teams need.', date: 'TODO', href: '/blog' },
-            { tag: 'Pro Tools',   title: 'Predicting Drug Stock-Outs Before They Happen', excerpt: 'Methodology behind our predictive model — inputs, outputs, limitations.', date: 'TODO', href: '/blog' },
+            { tag: 'Free Library', title: 'Introducing Pharmacy Inventory v2.1', excerpt: 'How a simple Excel dashboard helps district pharmacists prevent stock-outs.', date: 'May 2026', href: '/blog/pharmacy-inventory-v2', delay: undefined },
+            { tag: 'Field Notes',  title: 'What 8 Years as a DMO Taught Me About Data', excerpt: 'The gap between what health systems collect and what field teams need.', date: 'TODO', href: '/blog', delay: "100" },
+            { tag: 'Pro Tools',   title: 'Predicting Drug Stock-Outs Before They Happen', excerpt: 'Methodology behind our predictive model — inputs, outputs, limitations.', date: 'TODO', href: '/blog', delay: "200" },
           ].map((p) => (
-            <a href={p.href} class="group rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-white/[0.06] p-6 flex flex-col transition-all duration-300 hover:bg-white/[0.07] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2">
+            <a data-reveal data-reveal-delay={p.delay} href={p.href} class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-white/[0.08] shadow-[0_4px_28px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.10)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:scale-[1.015] hover:shadow-[0_8px_40px_rgba(0,0,0,0.44),inset_0_1px_0_rgba(255,255,255,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2">
               <span class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">{p.tag}</span>
               <h3 class="font-display font-bold text-lg text-white mb-2 leading-snug">{p.title}</h3>
               <p class="text-white/55 text-sm leading-relaxed flex-1">{p.excerpt}</p>

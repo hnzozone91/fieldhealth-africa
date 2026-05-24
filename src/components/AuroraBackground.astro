@@ -23,6 +23,7 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
   <div class="aurora-blob blob-1"></div>
   <div class="aurora-blob blob-2"></div>
   <div class="aurora-blob blob-3"></div>
+  <div class="aurora-blob blob-4"></div>
 </div>
 
 <style>
@@ -39,13 +40,13 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 90% 70% at 15% 20%, rgba(6,182,212,0.42) 0%, transparent 65%),
-      radial-gradient(ellipse 70% 60% at 88% 70%, rgba(99,102,241,0.34) 0%, transparent 65%),
-      radial-gradient(ellipse 55% 45% at 55% 85%, rgba(52,211,153,0.26) 0%, transparent 65%),
-      radial-gradient(ellipse 40% 35% at 80% 15%, rgba(6,182,212,0.18) 0%, transparent 65%);
+      radial-gradient(ellipse 90% 70% at 15% 20%, rgba(6,182,212,0.52) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 60% at 88% 70%, rgba(99,102,241,0.44) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 45% at 55% 85%, rgba(52,211,153,0.34) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 35% at 80% 15%, rgba(6,182,212,0.24) 0%, transparent 65%);
     background-size: 180% 180%, 160% 160%, 140% 140%, 120% 120%;
     background-position: 0% 50%, 100% 50%, 50% 0%, 80% 20%;
-    animation: mesh-drift 28s ease-in-out infinite, hue-cycle 40s ease-in-out infinite;
+    animation: mesh-drift 35s ease-in-out infinite, hue-cycle 50s ease-in-out infinite;
   }
 
   /* ─── Direction A base ───────────────────────────────────────────── */
@@ -71,34 +72,43 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
 
   /* Blob 1 — large, upper-left, primary colour */
   .blob-1 {
-    width: min(680px, 95vw);
-    height: min(600px, 85vw);
+    width: min(700px, 95vw);
+    height: min(620px, 85vw);
     top: -12%;
     left: -8%;
   }
-  [data-variant='b'] .blob-1 { background: radial-gradient(circle at 40% 40%, rgba(6,182,212,0.45) 0%, transparent 70%); }
-  [data-variant='a'] .blob-1 { background: radial-gradient(circle at 40% 40%, rgba(13,148,136,0.45) 0%, transparent 70%); }
+  [data-variant='b'] .blob-1 { background: radial-gradient(circle at 40% 40%, rgba(6,182,212,0.58) 0%, rgba(20,184,166,0.28) 45%, transparent 70%); }
+  [data-variant='a'] .blob-1 { background: radial-gradient(circle at 40% 40%, rgba(13,148,136,0.55) 0%, transparent 70%); }
 
   /* Blob 2 — medium, lower-right, secondary colour */
   .blob-2 {
-    width: min(540px, 78vw);
-    height: min(480px, 70vw);
+    width: min(560px, 78vw);
+    height: min(500px, 70vw);
     bottom: -10%;
     right: -6%;
   }
-  [data-variant='b'] .blob-2 { background: radial-gradient(circle at 60% 60%, rgba(99,102,241,0.38) 0%, transparent 70%); }
-  [data-variant='a'] .blob-2 { background: radial-gradient(circle at 60% 60%, rgba(16,185,129,0.35) 0%, transparent 70%); }
+  [data-variant='b'] .blob-2 { background: radial-gradient(circle at 60% 60%, rgba(99,102,241,0.50) 0%, rgba(59,130,246,0.22) 45%, transparent 70%); }
+  [data-variant='a'] .blob-2 { background: radial-gradient(circle at 60% 60%, rgba(16,185,129,0.45) 0%, transparent 70%); }
 
-  /* Blob 3 — small accent, mid-centre */
+  /* Blob 3 — medium accent, mid-centre, emerald */
   .blob-3 {
-    width: min(380px, 60vw);
-    height: min(320px, 52vw);
+    width: min(400px, 60vw);
+    height: min(340px, 52vw);
     top: 35%;
     left: 42%;
-    transform: translate(-50%, -50%);
   }
-  [data-variant='b'] .blob-3 { background: radial-gradient(circle at 50% 50%, rgba(52,211,153,0.28) 0%, transparent 70%); }
-  [data-variant='a'] .blob-3 { background: radial-gradient(circle at 50% 50%, rgba(59,130,246,0.22) 0%, transparent 70%); }
+  [data-variant='b'] .blob-3 { background: radial-gradient(circle at 50% 50%, rgba(52,211,153,0.36) 0%, rgba(6,182,212,0.14) 50%, transparent 70%); }
+  [data-variant='a'] .blob-3 { background: radial-gradient(circle at 50% 50%, rgba(59,130,246,0.28) 0%, transparent 70%); }
+
+  /* Blob 4 — small sparkle accent, upper-right */
+  .blob-4 {
+    width: min(260px, 42vw);
+    height: min(220px, 36vw);
+    top: 8%;
+    right: 10%;
+  }
+  [data-variant='b'] .blob-4 { background: radial-gradient(circle at 50% 50%, rgba(6,182,212,0.28) 0%, transparent 70%); }
+  [data-variant='a'] .blob-4 { background: radial-gradient(circle at 50% 50%, rgba(13,148,136,0.22) 0%, transparent 70%); }
 
   /* ─── Animations (all wrapped in motion-safe) ──────────────────────── */
 
@@ -121,33 +131,41 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
       75%     { filter: hue-rotate(8deg)   saturate(1.1); }
     }
 
-    /* Blob 1 — drifts slowly across a wide path */
+    /* Blob 1 — drifts slowly, morphs shape via independent X/Y scale */
     @keyframes blob-drift-1 {
-      0%,100% { transform: translate(0px,   0px)   scale(1.00); }
-      20%     { transform: translate(55px, -40px)  scale(1.08); }
-      40%     { transform: translate(-30px, 55px)  scale(0.93); }
-      60%     { transform: translate(40px,  30px)  scale(1.05); }
-      80%     { transform: translate(-50px,-25px)  scale(0.97); }
+      0%,100% { transform: translate(0px,   0px)   scaleX(1.00) scaleY(1.00); }
+      20%     { transform: translate(60px, -45px)  scaleX(1.13) scaleY(0.88); }
+      40%     { transform: translate(-35px, 60px)  scaleX(0.87) scaleY(1.12); }
+      60%     { transform: translate(45px,  35px)  scaleX(1.08) scaleY(0.94); }
+      80%     { transform: translate(-55px,-28px)  scaleX(0.93) scaleY(1.07); }
     }
 
-    /* Blob 2 — counter-cycles, creating interference patterns */
+    /* Blob 2 — counter-cycles, opposite morph rhythm */
     @keyframes blob-drift-2 {
-      0%,100% { transform: translate(0px,   0px)   scale(1.00); }
-      25%     { transform: translate(-60px, 35px)  scale(1.07); }
-      50%     { transform: translate(35px, -55px)  scale(0.91); }
-      75%     { transform: translate(-25px, 25px)  scale(1.04); }
+      0%,100% { transform: translate(0px,   0px)   scaleX(1.00) scaleY(1.00); }
+      25%     { transform: translate(-65px, 40px)  scaleX(0.88) scaleY(1.14); }
+      50%     { transform: translate(40px, -60px)  scaleX(1.14) scaleY(0.86); }
+      75%     { transform: translate(-30px, 30px)  scaleX(0.94) scaleY(1.06); }
     }
 
-    /* Blob 3 — small, faster, creates focal sparkle */
+    /* Blob 3 — medium accent, mid-path morph */
     @keyframes blob-drift-3 {
-      0%,100% { transform: translate(-50%,-50%) scale(1.0); }
-      33%     { transform: translate(-50%,-50%) translate(40px,-30px) scale(1.15); }
-      66%     { transform: translate(-50%,-50%) translate(-35px,40px) scale(0.85); }
+      0%,100% { transform: translate(calc(-50% + 0px),  calc(-50% + 0px))  scaleX(1.00) scaleY(1.00); }
+      33%     { transform: translate(calc(-50% + 45px), calc(-50% - 35px)) scaleX(1.20) scaleY(0.80); }
+      66%     { transform: translate(calc(-50% - 40px), calc(-50% + 45px)) scaleX(0.80) scaleY(1.20); }
     }
 
-    .blob-1 { animation: blob-drift-1 18s ease-in-out infinite; }
-    .blob-2 { animation: blob-drift-2 24s ease-in-out infinite; }
-    .blob-3 { animation: blob-drift-3 14s ease-in-out infinite; }
+    /* Blob 4 — small sparkle, gentle drift */
+    @keyframes blob-drift-4 {
+      0%,100% { transform: translate(0px,  0px)   scaleX(1.00) scaleY(1.00); }
+      35%     { transform: translate(28px,-22px)  scaleX(0.82) scaleY(1.16); }
+      70%     { transform: translate(-18px,18px)  scaleX(1.14) scaleY(0.84); }
+    }
+
+    .blob-1 { animation: blob-drift-1 22s ease-in-out infinite; }
+    .blob-2 { animation: blob-drift-2 30s ease-in-out infinite; }
+    .blob-3 { animation: blob-drift-3 17s ease-in-out infinite; }
+    .blob-4 { animation: blob-drift-4 20s ease-in-out infinite 2s; }
   }
 </style>
 
