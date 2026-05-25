@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINSANTE v3 — Téléchargement / Download</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #006633;
+    --green-dark: #004d26;
+    --green-light: #e8f5ee;
+    --blue: #1A3A6B;
+    --blue-light: #eef2f9;
+    --gray: #6b7280;
+    --border: #e5e7eb;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f9fafb;
+    color: #111827;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: var(--green-dark);
+    color: #fff;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 6px 16px;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: #fff;
+    border-bottom: 2px solid var(--green);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--green);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { fill: #fff; }
+  .logo-text { font-size: 1.05rem; font-weight: 700; color: var(--blue); line-height: 1.2; }
+  .logo-text span { color: var(--green); }
+  .logo-sub { font-size: 0.7rem; color: var(--gray); font-weight: 400; }
+
+  /* ─── MAIN ─── */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--blue) 0%, #2a4f8f 100%);
+    padding: 28px 32px 24px;
+    text-align: center;
+    color: #fff;
+  }
+  .card-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    padding: 4px 14px;
+    margin-bottom: 12px;
+  }
+  .card-header h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card-header p {
+    font-size: 0.82rem;
+    opacity: 0.82;
+    line-height: 1.5;
+  }
+
+  .card-body { padding: 32px; }
+
+  /* ─── PASSWORD SECTION ─── */
+  #password-section {}
+
+  .field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .input-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .input-wrap input[type="password"],
+  .input-wrap input[type="text"] {
+    width: 100%;
+    padding: 12px 44px 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.15em;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-wrap input:focus { border-color: var(--green); }
+  .toggle-pw {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none; border: none;
+    color: var(--gray);
+    font-size: 0.85rem;
+    padding: 2px;
+    line-height: 1;
+  }
+  .toggle-pw:hover { color: var(--blue); }
+
+  .error-msg {
+    display: none;
+    background: var(--red-light);
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: var(--red);
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .error-msg.visible { display: block; }
+
+  .btn-unlock {
+    width: 100%;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-unlock:hover { background: var(--green-dark); }
+
+  .hint {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.75rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .hint a { color: var(--blue); text-decoration: none; }
+  .hint a:hover { text-decoration: underline; }
+
+  /* ─── DOWNLOAD SECTION ─── */
+  #download-section { display: none; }
+
+  .thank-you {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .thank-you .icon {
+    width: 56px; height: 56px;
+    background: var(--green-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 1.6rem;
+  }
+  .thank-you h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .thank-you p {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .download-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+  .dl-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .dl-item:hover {
+    border-color: var(--green);
+    background: var(--green-light);
+    box-shadow: 0 2px 10px rgba(0,102,51,0.08);
+  }
+  .dl-icon {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .dl-icon.html-icon { background: #fff7ed; color: #ea580c; }
+  .dl-icon.docx-icon { background: #eff6ff; color: #2563eb; }
+
+  .dl-meta { flex: 1; min-width: 0; }
+  .dl-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .dl-desc { font-size: 0.74rem; color: var(--gray); line-height: 1.4; }
+
+  .dl-arrow {
+    color: var(--green);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-align: center;
+  }
+  .back-link a { color: var(--blue); text-decoration: none; font-weight: 600; }
+  .back-link a:hover { text-decoration: underline; }
+
+  .terms-note {
+    background: #f9fafb;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.73rem;
+    color: var(--gray);
+    line-height: 1.55;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #fff;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 16px 24px;
+    font-size: 0.72rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+  footer a { color: var(--green); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 520px) {
+    .card-header { padding: 22px 20px 20px; }
+    .card-header h1 { font-size: 1.15rem; }
+    .card-body { padding: 24px 20px; }
+    .dl-name { font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  FieldHealth Africa — Espace Acheteur Sécurisé / Secure Buyer Portal
+</div>
+
+<header>
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 8.5v7l-8 4-8-4v-7l8-4.32z"/><path d="M12 11a2 2 0 100 4 2 2 0 000-4z"/></svg>
+  </div>
+  <div class="logo-text">
+    FieldHealth<span>Africa</span>
+    <div class="logo-sub">fieldhealthafrica.org</div>
+  </div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="card-header">
+      <div class="badge">MINSANTE v3 — TÉLÉCHARGEMENT / DOWNLOAD</div>
+      <h1>Outil de Gestion Financière<br><span style="font-weight:400;font-size:0.9em">Financial Management Tool</span></h1>
+      <p>Accès réservé aux acheteurs · Buyer access only</p>
+    </div>
+
+    <div class="card-body">
+
+      <!-- PASSWORD GATE -->
+      <div id="password-section">
+        <label class="field-label" for="pw-input">Mot de passe d'accès / Access password</label>
+
+        <div class="input-wrap">
+          <input type="password" id="pw-input" placeholder="Entrez votre mot de passe…" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" />
+          <button class="toggle-pw" id="toggle-pw-btn" type="button" title="Afficher/masquer" aria-label="Toggle password visibility">
+            👁
+          </button>
+        </div>
+
+        <div class="error-msg" id="error-msg">
+          ❌ Mot de passe incorrect. / Incorrect password.<br>
+          Veuillez vérifier votre mot de passe d'achat. Please check your purchase password.
+        </div>
+
+        <button class="btn-unlock" id="unlock-btn" type="button">
+          🔓 Déverrouiller les téléchargements / Unlock Downloads
+        </button>
+
+        <p class="hint">
+          Votre mot de passe vous a été envoyé via WhatsApp après confirmation du paiement.<br>
+          Your password was sent via WhatsApp after payment confirmation.<br><br>
+          Problème? / Problem? <a href="https://wa.me/+237656066428?text=MINSANTE%20v3%20-%20probl%C3%A8me%20de%20t%C3%A9l%C3%A9chargement" target="_blank" rel="noopener noreferrer">Contactez-nous / Contact us →</a>
+        </p>
+      </div>
+
+      <!-- DOWNLOAD SECTION (hidden until password correct) -->
+      <div id="download-section">
+
+        <div class="thank-you">
+          <div class="icon">✅</div>
+          <h2>Accès accordé / Access granted</h2>
+          <p>
+            Merci pour votre achat. Vos fichiers sont prêts.<br>
+            Thank you for your purchase. Your files are ready below.
+          </p>
+        </div>
+
+        <div class="download-list">
+          <a class="dl-item" href="/downloads/MINSANTE_v3_GestionFinanciere.html" download>
+            <div class="dl-icon html-icon">📄</div>
+            <div class="dl-meta">
+              <div class="dl-name">MINSANTE_v3_GestionFinanciere.html</div>
+              <div class="dl-desc">Outil complet — fichier HTML autonome (hors-ligne)<br>Complete tool — standalone offline HTML file</div>
+            </div>
+            <div class="dl-arrow">⬇</div>
+          </a>
+
+          <a class="dl-item" href="/downloads/MINSANTE_v3_UserGuide_FR_EN.docx" download>
+            <div class="dl-icon docx-icon">📘</div>
+            <div class="dl-meta">
+              <div class="dl-name">MINSANTE_v3_UserGuide_FR_EN.docx</div>
+              <div class="dl-desc">Guide d'utilisation bilingue FR/EN — Word<br>Bilingual user guide FR/EN — Word format</div>
+            </div>
+            <div class="dl-arrow">⬇</div>
+          </a>
+        </div>
+
+        <div class="terms-note">
+          Ces fichiers sont réservés à votre usage personnel et professionnel. Redistribution interdite.<br>
+          These files are for your personal and professional use only. Redistribution prohibited.<br>
+          © 2026 Dr. Nzozone Henry Fomukong · FieldHealth Africa
+        </div>
+
+        <hr class="divider">
+
+        <div class="back-link">
+          ← <a href="https://fieldhealthafrica.org" target="_blank" rel="noopener noreferrer">Retour à fieldhealthafrica.org / Back to fieldhealthafrica.org</a>
+        </div>
+
+      </div>
+      <!-- end download-section -->
+
+    </div>
+    <!-- end card-body -->
+  </div>
+</main>
+
+<footer>
+  <a href="https://fieldhealthafrica.org" target="_blank" rel="noopener noreferrer">fieldhealthafrica.org</a> ·
+  Dr. Nzozone Henry Fomukong, District Medical Officer, Mamfe, Cameroon ·
+  <a href="https://fieldhealthafrica.org/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a> ·
+  <a href="https://fieldhealthafrica.org/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+</footer>
+
+<script>
+  (function () {
+    var CORRECT = 'MINSANTE2025';
+
+    var input    = document.getElementById('pw-input');
+    var errorMsg = document.getElementById('error-msg');
+    var toggleBtn= document.getElementById('toggle-pw-btn');
+    var unlockBtn= document.getElementById('unlock-btn');
+    var pwSection= document.getElementById('password-section');
+    var dlSection= document.getElementById('download-section');
+
+    /* Toggle show/hide password */
+    toggleBtn.addEventListener('click', function () {
+      if (input.type === 'password') {
+        input.type = 'text';
+        toggleBtn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        toggleBtn.textContent = '👁';
+      }
+      input.focus();
+    });
+
+    /* Allow Enter key to submit */
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { checkPassword(); }
+    });
+
+    /* Clear error on typing */
+    input.addEventListener('input', function () {
+      errorMsg.classList.remove('visible');
+    });
+
+    unlockBtn.addEventListener('click', checkPassword);
+
+    function checkPassword() {
+      var val = input.value.trim().toUpperCase();
+      if (val === CORRECT) {
+        pwSection.style.display = 'none';
+        dlSection.style.display = 'block';
+      } else {
+        errorMsg.classList.add('visible');
+        input.value = '';
+        input.focus();
+        /* Shake animation */
+        input.style.animation = 'none';
+        input.offsetHeight; /* reflow */
+        input.style.animation = 'shake 0.35s ease';
+      }
+    }
+  })();
+</script>
+
+<style>
+  @keyframes shake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-7px); }
+    40%  { transform: translateX(7px); }
+    60%  { transform: translateX(-5px); }
+    80%  { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MINSANTE Outil de Gestion Financière v3 | FieldHealth Africa</title>
+  <meta name="description" content="Outil de gestion financière des recettes propres pour FOSA catégories 3, 4 et 5 au Cameroun. Conforme aux décrets 2016/6447/PM et 2018/366. 10 000 FCFA — paiement Mobile Money." />
+  <style>
+    :root {
+      --green: #006633;
+      --green-light: #00843F;
+      --green-pale: #E8F5EE;
+      --blue: #1A3A6B;
+      --blue-light: #2A5098;
+      --blue-pale: #EAF0FA;
+      --white: #FFFFFF;
+      --gray-100: #F7F7F7;
+      --gray-200: #EBEBEB;
+      --gray-400: #9E9E9E;
+      --gray-700: #444444;
+      --text: #1A1A1A;
+      --border: #D8D8D8;
+      --amber: #B45309;
+      --amber-bg: #FFFBEB;
+      --amber-border: #FCD34D;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.10);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
+      --radius: 8px;
+      --radius-lg: 14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; font-size: 15px; }
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; display: block; border-radius: var(--radius); }
+
+    /* ── Utilities ──────────────────────────────── */
+    .container { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 56px 0; }
+    .section-alt { background: var(--gray-100); }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .badge-green { background: var(--green-pale); color: var(--green); border: 1px solid #A8D5BB; }
+    .badge-blue  { background: var(--blue-pale);  color: var(--blue);  border: 1px solid #AACBF0; }
+    .badge-price { background: var(--green); color: var(--white); font-size: 14px; padding: 6px 18px; }
+    .divider { height: 1px; background: var(--border); margin: 32px 0; }
+    .bilingual-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+    .check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .check-icon { flex-shrink: 0; width: 22px; height: 22px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+    .check-icon svg { width: 12px; height: 12px; stroke: white; fill: none; stroke-width: 3; }
+
+    /* ── Top bar ────────────────────────────────── */
+    .topbar { background: var(--blue); color: rgba(255,255,255,0.85); font-size: 13px; padding: 8px 0; }
+    .topbar .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+    .topbar a { color: rgba(255,255,255,0.9); }
+    .topbar a:hover { color: #fff; }
+
+    /* ── Header ─────────────────────────────────── */
+    .header { background: var(--white); border-bottom: 3px solid var(--green); padding: 14px 0; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .header-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+    .header-brand span.field { color: var(--green); }
+    .header-cta { background: var(--green); color: var(--white); padding: 9px 20px; border-radius: 6px; font-weight: 700; font-size: 14px; white-space: nowrap; }
+    .header-cta:hover { background: var(--green-light); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────── */
+    .hero { background: linear-gradient(135deg, var(--blue) 0%, #102954 100%); color: white; padding: 60px 0 52px; }
+    .hero .container { display: grid; grid-template-columns: 1fr; gap: 36px; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .hero h1 { font-size: clamp(24px, 4vw, 38px); font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+    .hero h1 span { color: #6EE7A0; }
+    .hero-sub { font-size: 16px; color: rgba(255,255,255,0.80); margin-bottom: 24px; line-height: 1.6; }
+    .hero-sub em { font-style: normal; color: rgba(255,255,255,0.60); font-size: 14px; display: block; margin-top: 4px; }
+    .hero-price-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+    .price-main { font-size: 32px; font-weight: 700; color: #6EE7A0; }
+    .price-note { font-size: 13px; color: rgba(255,255,255,0.60); }
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 13px 26px; border-radius: 7px; font-weight: 700; font-size: 15px; cursor: pointer; border: none; transition: background 0.2s, transform 0.1s; text-align: center; }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-primary:hover { background: var(--green-light); }
+    .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.5); }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .hero-badge-item { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.20); color: rgba(255,255,255,0.85); font-size: 12px; padding: 4px 10px; border-radius: 20px; }
+
+    /* ── Screenshots ────────────────────────────── */
+    .screenshots { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 40px 0 0; }
+    .screenshot-frame { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+    .screenshot-caption { background: var(--gray-100); border-top: 1px solid var(--border); padding: 8px 14px; font-size: 12px; color: var(--gray-400); }
+
+    /* ── Built from requests ────────────────────── */
+    .requests-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .request-card { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--green); border-radius: var(--radius); padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; }
+    .request-card .check-icon { flex-shrink: 0; }
+    .request-card-text strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 2px; }
+    .request-card-text span { color: var(--gray-700); font-size: 13px; }
+
+    /* ── Calculation engine ─────────────────────── */
+    .calc-steps { display: flex; flex-direction: column; gap: 0; }
+    .calc-step { display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start; position: relative; }
+    .calc-step:not(:last-child)::before { content: ''; position: absolute; left: 15px; top: 40px; bottom: -8px; width: 2px; background: var(--border); }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: white; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+    .step-body { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px; }
+    .step-body strong { display: block; color: var(--blue); font-size: 14px; margin-bottom: 3px; }
+    .step-body span { color: var(--gray-700); font-size: 13px; }
+    .step-body .formula { background: var(--gray-100); border-radius: 4px; padding: 4px 10px; font-family: 'Courier New', monospace; font-size: 13px; color: var(--green); display: inline-block; margin-top: 6px; }
+    .triangulation-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .tri-check { display: flex; align-items: flex-start; gap: 10px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 11px 14px; }
+    .tri-num { flex-shrink: 0; width: 24px; height: 24px; background: var(--green-pale); color: var(--green); border: 1px solid #A8D5BB; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .tri-check p { font-size: 13px; color: var(--gray-700); }
+    .tri-check p strong { color: var(--text); }
+
+    /* ── Modules ────────────────────────────────── */
+    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .module-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; }
+    .module-num { flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-pale); border: 1px solid #AACBF0; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .module-card strong { display: block; font-size: 13px; color: var(--text); margin-bottom: 2px; }
+    .module-card span { font-size: 12px; color: var(--gray-400); }
+
+    /* ── Included ───────────────────────────────── */
+    .included-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .included-item { display: flex; align-items: flex-start; gap: 14px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .included-icon { flex-shrink: 0; width: 42px; height: 42px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .included-icon.green { background: var(--green-pale); }
+    .included-icon.blue  { background: var(--blue-pale); }
+    .included-item strong { display: block; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .included-item p { font-size: 13px; color: var(--gray-700); }
+
+    /* ── Legal ──────────────────────────────────── */
+    .legal-list { display: flex; flex-direction: column; gap: 8px; }
+    .legal-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; }
+    .legal-tag { flex-shrink: 0; font-size: 11px; font-weight: 700; background: var(--blue); color: white; padding: 2px 8px; border-radius: 4px; margin-top: 1px; }
+    .legal-item p { color: var(--gray-700); }
+    .legal-item p strong { color: var(--text); }
+
+    /* ── Payment section ────────────────────────── */
+    .payment-card { background: var(--white); border: 2px solid var(--green); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-md); max-width: 560px; margin: 0 auto; }
+    .payment-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .payment-price { font-size: 28px; font-weight: 700; color: var(--green); margin-bottom: 20px; }
+    #step-0 {}
+    #step-1, #step-2 { display: none; }
+    .momo-instructions { background: var(--gray-100); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin: 16px 0; }
+    .momo-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .momo-row:last-child { border-bottom: none; }
+    .momo-label { color: var(--gray-400); font-size: 13px; }
+    .momo-value { font-weight: 700; color: var(--text); font-size: 15px; }
+    .momo-value.highlight { color: var(--green); font-size: 17px; }
+    .network-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .mtn { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+    .orange { background: #FFF7ED; color: #9A3412; border: 1px solid #FDBA74; }
+    .network-block { margin-bottom: 12px; padding: 12px; background: white; border: 1px solid var(--border); border-radius: 6px; }
+    .btn-whatsapp { background: #25D366; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-whatsapp:hover { background: #1DAA54; }
+    .btn-back { background: none; border: 1px solid var(--border); color: var(--gray-700); font-size: 13px; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+    .btn-back:hover { background: var(--gray-100); }
+    .confirmation-box { text-align: center; padding: 24px 0; }
+    .confirmation-box .big-check { width: 60px; height: 60px; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .confirmation-box .big-check svg { width: 28px; height: 28px; stroke: var(--green); fill: none; stroke-width: 2.5; }
+    .confirmation-box h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+    .confirmation-box p { color: var(--gray-700); font-size: 14px; }
+
+    /* ── Author card ────────────────────────────── */
+    .author-card { display: flex; align-items: flex-start; gap: 18px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-sm); }
+    .author-avatar { flex-shrink: 0; width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--blue-pale); border: 3px solid var(--green); }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .author-title { font-size: 13px; color: var(--gray-400); line-height: 1.5; margin-bottom: 8px; }
+    .author-bio { font-size: 13px; color: var(--gray-700); line-height: 1.6; }
+
+    /* ── Footer ─────────────────────────────────── */
+    .footer { background: var(--blue); color: rgba(255,255,255,0.75); padding: 32px 0; font-size: 13px; }
+    .footer .container { display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; }
+    .footer-brand { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
+    .footer-brand span { color: #6EE7A0; }
+    .footer a { color: rgba(255,255,255,0.75); }
+    .footer a:hover { color: white; }
+
+    /* ── Responsive ─────────────────────────────── */
+    @media (min-width: 640px) {
+      .requests-grid { grid-template-columns: 1fr 1fr; }
+      .screenshots { grid-template-columns: 1fr 1fr; }
+      .included-list { grid-template-columns: 1fr 1fr 1fr; }
+      .triangulation-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 760px) {
+      .modules-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="container">
+      <span>FieldHealth Africa — Outils de santé numérique pour les FOSA</span>
+      <a href="https://fieldhealthafrica.org">fieldhealthafrica.org</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-brand">
+        <span class="field">Field</span>Health Africa
+      </div>
+      <a href="#payment" class="header-cta btn">Acheter — 10 000 FCFA</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="badge badge-green">Outil Pro</span>
+          <span class="badge" style="background:rgba(255,255,255,0.12);color:white;border-color:rgba(255,255,255,0.25);">FOSA Cat. 3 · 4 · 5</span>
+          <span class="badge" style="background:rgba(255,255,255,0.12);color:white;border-color:rgba(255,255,255,0.25);">Paiement unique</span>
+        </div>
+        <h1>MINSANTE <span>Outil de Gestion Financière</span> des Recettes Propres v3</h1>
+        <div class="hero-sub">
+          Gérez les recettes propres de votre FOSA avec rigueur, conformité et clarté.<br>
+          Conforme aux décrets et circulaires MINSANTE applicables.
+          <em>Financial Management Tool for Internally Generated Funds — Cameroon Health Facilities</em>
+        </div>
+        <div class="hero-price-row">
+          <span class="price-main">10 000 FCFA</span>
+          <span class="price-note">Paiement unique · Fichier HTML + Guide FR/EN</span>
+        </div>
+        <div class="hero-buttons">
+          <a href="#payment" class="btn btn-primary">Payer par MOMO →</a>
+          <a href="#modules" class="btn btn-outline">Voir les modules</a>
+        </div>
+        <div class="hero-badges">
+          <span class="hero-badge-item">🔌 Hors-ligne — aucun internet requis</span>
+          <span class="hero-badge-item">🌐 Bilingue FR / EN</span>
+          <span class="hero-badge-item">📄 Fichier unique HTML</span>
+          <span class="hero-badge-item">📲 Mobile Money</span>
+        </div>
+      </div>
+
+      <!-- Screenshots in hero -->
+      <div class="screenshots">
+        <div class="screenshot-frame">
+          <img src="/images/blog/MINSANTE_v3_GestionFinanciere_2/MINSANTE_v3_GestionFinanciere_2.png" alt="Rapport de gestion financière des recettes propres — MINSANTE v3" />
+          <div class="screenshot-caption">Rapport de gestion mensuel — exportable et imprimable</div>
+        </div>
+        <div class="screenshot-frame">
+          <img src="/images/blog/MINSANTE_v3_GestionFinanciere_2/MINSANTE_v3_GestionFinanciere_3.png" alt="Module de vérification et triangulation — MINSANTE v3" />
+          <div class="screenshot-caption">Module Triangulation — 6 contrôles automatiques</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Built from requests -->
+  <section class="section">
+    <div class="container">
+      <p class="bilingual-label">Améliorations v3 · V3 Improvements</p>
+      <h2 style="font-size:22px;color:var(--blue);margin-bottom:6px;">Construit à partir de vos demandes</h2>
+      <p style="color:var(--gray-700);font-size:14px;margin-bottom:28px;"><em>Built from field requests — every feature below was asked for by practitioners using v2</em></p>
+      <div class="requests-grid">
+
+        <div class="request-card">
+          <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="request-card-text">
+            <strong>Compatible FOSA catégories 3, 4 et 5</strong>
+            <span>V2 ne couvrait que les catégories 4–5. V3 s'adapte aux structures de catégorie 3. / Now covers all FOSA revenue categories.</span>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="request-card-text">
+            <strong>Rapport imprimable en un clic</strong>
+            <span>Génère le Rapport de Gestion Financière des Recettes Propres, format officiel MINSANTE. / One-click printable management report.</span>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="request-card-text">
+            <strong>Module Pharmacie séparé avec CR dédié</strong>
+            <span>Suivi du Cost Recovery pharmacie indépendant du CR général, avec vérification du dépôt compte pharmacie. / Separate pharmacy CR module.</span>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="request-card-text">
+            <strong>Détection automatique des erreurs de calcul décadaire</strong>
+            <span>Identifie la division mensuelle incorrecte par 3 — l'erreur la plus fréquente dans les registres manuels. / Detects the most common manual calculation error.</span>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="request-card-text">
+            <strong>Interface bilingue Français / Anglais intégrale</strong>
+            <span>Bascule instantanée FR↔EN sur toutes les interfaces. Adapté aux régions anglophones du Cameroun. / Instant FR↔EN switching throughout.</span>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="request-card-text">
+            <strong>Guide utilisateur de 30+ pages bilingue</strong>
+            <span>Procédures pas-à-pas, exemples de FOSA réelle, FAQ dépannage, lexique FR/EN. / Step-by-step guide with real FOSA examples.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Calculation engine -->
+  <section class="section section-alt">
+    <div class="container">
+      <p class="bilingual-label">Moteur de calcul · Calculation engine</p>
+      <h2 style="font-size:22px;color:var(--blue);margin-bottom:6px;">Formule officielle en 6 étapes</h2>
+      <p style="color:var(--gray-700);font-size:14px;margin-bottom:32px;">Conforme aux décrets 2016/6447/PM et RGCP — <em>Compliant with Cameroon IGF regulatory framework</em></p>
+
+      <div class="calc-steps">
+        <div class="calc-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Recettes Brutes / Gross Revenue</strong>
+            <span>Total des encaissements de la période par service (consultations, labo, maternité, chirurgie, imagerie, pharmacie…)</span>
+          </div>
+        </div>
+        <div class="calc-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Cost Recovery (CR)</strong>
+            <span>Prélevé en premier sur les recettes brutes selon le taux propre à chaque catégorie de FOSA.</span>
+            <div class="formula">CR = Recettes Brutes × Taux CR</div>
+          </div>
+        </div>
+        <div class="calc-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Reste Net / Net Balance</strong>
+            <span>Montant restant après déduction du Cost Recovery — base de répartition 30/70.</span>
+            <div class="formula">Reste Net = Recettes Brutes − CR</div>
+          </div>
+        </div>
+        <div class="calc-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Quotes-Parts (QP) — Motivation du personnel</strong>
+            <span>30% du Reste Net. Inclut le Fonds de Solidarité QP (10%) à verser à BISEC Bank.</span>
+            <div class="formula">QP = Reste Net × 30% &nbsp;|&nbsp; FS-QP = QP × 10%</div>
+          </div>
+        </div>
+        <div class="calc-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Recette Affectée (RA) — Versement au Trésor</strong>
+            <span>70% du Reste Net. Inclut le Fonds de Solidarité RA (10%) à verser à BISEC Bank.</span>
+            <div class="formula">RA = Reste Net × 70% &nbsp;|&nbsp; FS-RA = RA × 10%</div>
+          </div>
+        </div>
+        <div class="calc-step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <strong>Net RA par décade — Versement Trésor</strong>
+            <span>Calculé à partir des recettes réelles de chaque décade — pas la division mensuelle par 3. Quittance obligatoire.</span>
+            <div class="formula">Net RA décade = RA des jours concernés × 90%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="bilingual-label" style="margin-bottom:12px;">Moteur de triangulation · 6-check verification engine</p>
+      <div class="triangulation-grid">
+        <div class="tri-check"><div class="tri-num">1</div><p><strong>Registres Services</strong> vs Journal de Caisse</p></div>
+        <div class="tri-check"><div class="tri-num">2</div><p><strong>RA Nette (décades)</strong> vs Versements Trésor</p></div>
+        <div class="tri-check"><div class="tri-num">3</div><p><strong>QP Nettes</strong> vs Montant Distribué Personnel</p></div>
+        <div class="tri-check"><div class="tri-num">4</div><p><strong>Fonds Solidarité</strong> vs Dépôts BISEC décades</p></div>
+        <div class="tri-check"><div class="tri-num">5</div><p><strong>CR Pharmacie</strong> vs Dépôt Compte Pharmacie</p></div>
+        <div class="tri-check"><div class="tri-num">6</div><p><strong>CR Disponible</strong> vs Dépenses engagées</p></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 10 Modules -->
+  <section class="section" id="modules">
+    <div class="container">
+      <p class="bilingual-label">Structure de l'outil · Tool structure</p>
+      <h2 style="font-size:22px;color:var(--blue);margin-bottom:6px;">10 modules intégrés</h2>
+      <p style="color:var(--gray-700);font-size:14px;margin-bottom:28px;"><em>10 integrated modules — one HTML file, opens in any browser</em></p>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-num">1</div><div><strong>DASHBOARD</strong><span>Vue d'ensemble mensuelle</span></div></div>
+        <div class="module-card"><div class="module-num">2</div><div><strong>REGISTRES</strong><span>Saisie par service (12 catégories)</span></div></div>
+        <div class="module-card"><div class="module-num">3</div><div><strong>JOURNAL DE CAISSE</strong><span>Enregistrement quotidien</span></div></div>
+        <div class="module-card"><div class="module-num">4</div><div><strong>VERSEMENTS TRÉSOR</strong><span>Suivi des décades + quittances</span></div></div>
+        <div class="module-card"><div class="module-num">5</div><div><strong>SOLIDARITÉ</strong><span>Fonds BISEC — QP & RA</span></div></div>
+        <div class="module-card"><div class="module-num">6</div><div><strong>PHARMACIE</strong><span>CR pharmacie dédié</span></div></div>
+        <div class="module-card"><div class="module-num">7</div><div><strong>DÉPENSES CR</strong><span>Conformité décrets marchés</span></div></div>
+        <div class="module-card"><div class="module-num">8</div><div><strong>QUOTES-PARTS</strong><span>Calcul & distribution personnel</span></div></div>
+        <div class="module-card"><div class="module-num">9</div><div><strong>TRIANGULATION</strong><span>6 contrôles croisés automatiques</span></div></div>
+        <div class="module-card"><div class="module-num">10</div><div><strong>RAPPORT</strong><span>Export Excel + impression</span></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- What's included -->
+  <section class="section section-alt">
+    <div class="container">
+      <p class="bilingual-label">Contenu du pack · What's included</p>
+      <h2 style="font-size:22px;color:var(--blue);margin-bottom:28px;">Ce que vous recevez</h2>
+      <div class="included-list">
+        <div class="included-item">
+          <div class="included-icon green">📄</div>
+          <div>
+            <strong>MINSANTE_v3_GestionFinanciere.html</strong>
+            <p>L'outil complet. Un seul fichier HTML. Double-clic → s'ouvre dans n'importe quel navigateur. Aucune installation. Fonctionne hors-ligne.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-icon blue">📘</div>
+          <div>
+            <strong>Guide utilisateur bilingue FR/EN (30+ pages)</strong>
+            <p>Configuration initiale, saisie mensuelle, impression des rapports, dépannage, FAQ, et lexique MINSANTE complet.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <div class="included-icon green">🔄</div>
+          <div>
+            <strong>Mises à jour futures incluses</strong>
+            <p>Tout acheteur de v3 reçoit les correctifs et améliorations mineurs sans surcoût. Les mises à jour majeures seront annoncées.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Legal references -->
+  <section class="section">
+    <div class="container">
+      <p class="bilingual-label">Base réglementaire · Regulatory basis</p>
+      <h2 style="font-size:22px;color:var(--blue);margin-bottom:20px;">Références juridiques</h2>
+      <div class="legal-list">
+        <div class="legal-item"><span class="legal-tag">Décret</span><p><strong>Décret N° 2016/6447/PM du 28 juillet 2016</strong> — Modalités de gestion des recettes propres des formations sanitaires publiques.</p></div>
+        <div class="legal-item"><span class="legal-tag">Décret</span><p><strong>Décret N° 2018/366 du 20 juin 2018</strong> — Seuils de passation des marchés publics et seuils de compétence des commissions.</p></div>
+        <div class="legal-item"><span class="legal-tag">RGCP</span><p><strong>RGCP Art. 68</strong> — Obligation de versement des recettes affectées au Trésor Public par décade.</p></div>
+        <div class="legal-item"><span class="legal-tag">RGCP</span><p><strong>RGCP Art. 71</strong> — Dispositions relatives aux dépenses sur recettes propres et Cost Recovery.</p></div>
+        <div class="legal-item"><span class="legal-tag">Circulaire</span><p><strong>Circulaire MINSANTE</strong> — Instructions relatives à la gestion et au contrôle interne des recettes propres dans les FOSA publiques.</p></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Payment section -->
+  <section class="section section-alt" id="payment">
+    <div class="container">
+      <p class="bilingual-label" style="text-align:center;margin-bottom:8px;">Commande · Order</p>
+      <h2 style="font-size:22px;color:var(--blue);text-align:center;margin-bottom:28px;">Obtenir l'outil</h2>
+
+      <div class="payment-card">
+        <div class="payment-title">Paiement Mobile Money</div>
+        <div class="payment-price">10 000 FCFA <span style="font-size:14px;font-weight:400;color:var(--gray-400);">— paiement unique</span></div>
+
+        <!-- Step 0: Initial CTA -->
+        <div id="step-0">
+          <p style="font-size:14px;color:var(--gray-700);margin-bottom:18px;">Paiement par MTN Mobile Money ou Orange Money. Après paiement, envoyez votre preuve de paiement sur WhatsApp et recevez les fichiers sous 24h.</p>
+          <p style="font-size:13px;color:var(--gray-700);margin-bottom:18px;"><em>Pay via MTN Mobile Money or Orange Money. Send proof of payment on WhatsApp and receive your files within 24 hours.</em></p>
+          <button class="btn btn-primary" style="width:100%;font-size:16px;padding:14px;" onclick="showStep(1)">
+            Payer par MOMO →
+          </button>
+        </div>
+
+        <!-- Step 1: Payment instructions -->
+        <div id="step-1">
+          <p style="font-size:14px;color:var(--gray-700);margin-bottom:16px;">Effectuez votre paiement vers l'un des numéros ci-dessous :</p>
+
+          <div class="momo-instructions">
+            <div class="network-block">
+              <span class="network-badge mtn">MTN Mobile Money</span>
+              <div class="momo-row"><span class="momo-label">Numéro</span><span class="momo-value highlight">674 868 495</span></div>
+              <div class="momo-row"><span class="momo-label">Nom</span><span class="momo-value">FOMUKONG Henry</span></div>
+            </div>
+            <div class="network-block">
+              <span class="network-badge orange">Orange Money</span>
+              <div class="momo-row"><span class="momo-label">Numéro</span><span class="momo-value highlight">656 066 428</span></div>
+              <div class="momo-row"><span class="momo-label">Nom</span><span class="momo-value">FOMUKONG Henry</span></div>
+            </div>
+            <div class="momo-row"><span class="momo-label">Montant</span><span class="momo-value highlight">10 000 FCFA</span></div>
+            <div class="momo-row"><span class="momo-label">Référence (motif)</span><span class="momo-value">MINSANTE-V3</span></div>
+          </div>
+
+          <div style="background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--amber);margin-bottom:18px;">
+            ⚠️ Notez bien la référence <strong>MINSANTE-V3</strong> dans le motif de paiement pour que votre commande soit identifiée.
+          </div>
+
+          <button class="btn btn-whatsapp btn" style="width:100%;font-size:15px;padding:13px;" onclick="showStep(2)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            J'ai payé — envoyer la preuve sur WhatsApp
+          </button>
+          <button class="btn-back" onclick="showStep(0)">← Retour</button>
+        </div>
+
+        <!-- Step 2: Confirmation -->
+        <div id="step-2">
+          <div class="confirmation-box">
+            <div class="big-check">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Merci pour votre commande !</h3>
+            <p>Vous recevrez les fichiers sous <strong>24 heures</strong> après vérification de votre paiement.</p>
+            <p style="margin-top:10px;font-size:13px;color:var(--gray-400);">Si vous n'avez pas encore envoyé votre preuve, cliquez ci-dessous :</p>
+            <a href="https://wa.me/+237656066428?text=J%27ai%20pay%C3%A9%2010000%20FCFA%20pour%20MINSANTE%20v3%20-%20voici%20ma%20preuve" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:11px 22px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Envoyer sur WhatsApp
+            </a>
+            <button class="btn-back" style="display:block;margin:12px auto 0;" onclick="showStep(0)">← Nouvelle commande</button>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center;font-size:13px;color:var(--gray-400);margin-top:16px;">
+        Questions ? <a href="https://wa.me/+237656066428" target="_blank" rel="noopener noreferrer">WhatsApp (+237 656 066 428)</a> · <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Author card -->
+  <section class="section">
+    <div class="container">
+      <p class="bilingual-label" style="margin-bottom:16px;">À propos de l'auteur · About the author</p>
+      <div class="author-card">
+        <div class="author-avatar">
+          <img src="/images/founder.jpeg" alt="Dr Henry Fomukong" onerror="this.style.display='none'" />
+        </div>
+        <div>
+          <div class="author-name">Dr. Nzozone Henry Fomukong</div>
+          <div class="author-title">
+            Médecin · Field Epidemiologist · District Medical Officer, Mamfe, Cameroun<br>
+            <em>Medical Doctor · Field Epidemiologist · DMO, Mamfe, Cameroon</em>
+          </div>
+          <div class="author-bio">
+            Fondateur de FieldHealth Africa. A dirigé la réouverture de l'Hôpital de District de Konye et la reprise des services de vaccination dans les zones inaccessibles de Kendem et Kajifu. Titulaire d'un diplôme de Data Science (IDSS) et auteur de 7 publications scientifiques. Chaque outil publié sur cette plateforme a été testé sur le terrain avant sa diffusion.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand"><span>Field</span>Health Africa</div>
+      <div>From data to decisions, in the field.</div>
+      <div><a href="https://fieldhealthafrica.org">www.fieldhealthafrica.org</a> · <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a></div>
+      <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.45);">© 2026 FieldHealth Africa. Tous droits réservés. · Outil développé par Dr. Nzozone Henry Fomukong, DMO Mamfe, Cameroun.</div>
+    </div>
+  </footer>
+
+  <script>
+    function showStep(n) {
+      document.getElementById('step-0').style.display = n === 0 ? 'block' : 'none';
+      document.getElementById('step-1').style.display = n === 1 ? 'block' : 'none';
+      document.getElementById('step-2').style.display = n === 2 ? 'block' : 'none';
+      if (n === 2) {
+        window.open(
+          'https://wa.me/+237656066428?text=J%27ai%20pay%C3%A9%2010000%20FCFA%20pour%20MINSANTE%20v3%20-%20voici%20ma%20preuve',
+          '_blank'
+        );
+      }
+    }
+  </script>
+
+</body>
+</html>
