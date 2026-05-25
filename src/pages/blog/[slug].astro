@@ -4,15 +4,22 @@ import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
   }));
 }
 
+function readingTime(body: string) {
+  const words = body.trim().split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return `${mins} min read`;
+}
+
 const { post } = Astro.props;
 const { Content } = await render(post);
+const rt = readingTime(post.body ?? '');
 ---
 
 <Base
@@ -20,7 +27,6 @@ const { Content } = await render(post);
   description={post.data.description}
 >
 
-  <!-- Post header -->
   <article class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
 
     <!-- Back link -->
@@ -36,19 +42,22 @@ const { Content } = await render(post);
       ))}
     </div>
 
+    <!-- Headline -->
     <h1 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight mb-4">
       {post.data.title}
     </h1>
 
-    <div class="flex items-center gap-4 text-white/35 text-sm mb-10 pb-10 border-b border-white/[0.08]">
+    <!-- Meta row -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-white/35 text-sm mb-10 pb-10 border-b border-white/[0.08]">
       <span>{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
       {post.data.updatedDate && (
         <span>· Updated {post.data.updatedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
       )}
+      <span>· {rt}</span>
       <span>· Dr. Nzozone Henry Fomukong</span>
     </div>
 
-    <!-- Affiliate disclosure (shown only on posts with affiliate links) -->
+    <!-- Affiliate disclosure (top — shown only on posts with affiliate links) -->
     {post.data.hasAffiliateLinks && (
       <div class="mb-8">
         <AffiliateDisclosure />
@@ -68,15 +77,52 @@ const { Content } = await render(post);
       <Content />
     </div>
 
-    <!-- Bottom affiliate disclosure (repeat for long posts) -->
+    <!-- Affiliate disclosure (bottom — repeat for long posts) -->
     {post.data.hasAffiliateLinks && (
       <div class="mt-12 pt-8 border-t border-white/[0.08]">
         <AffiliateDisclosure />
       </div>
     )}
 
-    <!-- Post footer -->
-    <div class="mt-16 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <!-- ── Substack CTA ────────────────────────────────────────────────── -->
+    <div class="mt-16 rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] [backdrop-filter:blur(18px)] border border-white/[0.12] ring-1 ring-cyan-500/15 p-8">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
+          <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-white font-semibold mb-1">New tools. Field notes. No noise.</p>
+          <p class="text-white/55 text-sm leading-relaxed mb-4">
+            Get notified when new tools launch and read dispatches from the district — straight from Mamfe to your inbox.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a
+              href="https://drhenrynzozone.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(6,182,212,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+            >
+              Subscribe on Substack
+            </a>
+            {post.data.substackUrl && (
+              <a
+                href={post.data.substackUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white/70 font-medium text-sm hover:border-white/35 hover:text-white transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+              >
+                Read full version on Substack →
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Author footer ──────────────────────────────────────────────── -->
+    <div class="mt-10 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-cyan-900/50 to-teal-900/30 border border-cyan-500/20 flex-shrink-0">
           <img src="/images/founder.jpeg" alt="Dr. Nzozone Henry Fomukong" width="40" height="40" class="w-full h-full object-cover" onerror="this.style.display='none'" loading="lazy" />
