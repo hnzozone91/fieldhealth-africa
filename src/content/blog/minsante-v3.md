@@ -4,7 +4,7 @@ description: "Version 3 of the MINSANTE Financial Management Tool for Cameroonia
 pubDate: 2026-05-25
 tags: ["finance", "field-notes", "tools"]
 hasAffiliateLinks: false
-substackUrl: "https://drhenrynzozone.substack.com/p/minsante-financial-management-tool-v3"
+substackUrl: "https://drhenrynzozone.substack.com/p/minsante-financial-management-tool"
 draft: false
 ---
 
