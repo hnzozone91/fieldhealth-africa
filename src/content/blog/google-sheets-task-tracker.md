@@ -18,6 +18,8 @@ The Digital Health Task Tracker is a Google Sheets template designed to help dis
 
 It has supported work in Mamfe health district in Cameroon — from immunisation campaigns to HIV programming, surveillance to staffing.
 
+![Google Sheets Task Tracker — visual dashboard and activity tracking](/images/blog/google-sheets-task-tracker/Screenshot%202026-05-25%20201959.png)
+
 Key features:
 
 - ✅ Fully automated task tracking logic

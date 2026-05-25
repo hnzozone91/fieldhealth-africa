@@ -14,6 +14,8 @@ None of those conditions hold in the average African district health facility.
 
 So I built a different kind of tool.
 
+![Pharmacy Inventory v2.1 workbook dashboard](/images/blog/pharmacy-inventory-v2/image.jpg)
+
 ## What this is
 
 A complete pharmacy inventory management workbook for a single health facility. One Excel file. 18 sheets. 245 drugs pre-loaded with another 55 free slots. No internet. No installation. No subscription. No vendor lock-in.

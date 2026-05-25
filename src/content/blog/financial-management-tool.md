@@ -28,6 +28,8 @@ The tool is a single HTML file. You double-click it. It opens in any browser. Th
 
 It has twelve service tabs in the **Registers** module — one per revenue line — where you record the daily summary: total amount, number of patients, receipt number range. The **Cash Journal** mirrors how the registrar works at the office. The **Treasury** module calculates the expected Net RA for each decade from the actual revenues of those days only — not the monthly total divided by three, which is the calculation error I see most often in manual registers.
 
+![Financial management tool — registers and calculation interface](/images/blog/financial-management-tool/image%20(1).jpg)
+
 The **triangulation engine** is the part I am most proud of. It runs six simultaneous checks:
 
 - Service registers vs. cash journal

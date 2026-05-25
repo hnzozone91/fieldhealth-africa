@@ -14,6 +14,8 @@ To support this gap, I developed the **Reproductive Health Data Quality and Perf
 
 The tool works with one month of DHIS2 aggregate facility data exported from the Data Visualisation app.
 
+![Reproductive Health Data Quality and Performance Review Tool v1.0](/images/blog/reproductive-health-data-quality/Screenshot%202026-05-25%20201715.png)
+
 ## What the tool helps you do
 
 The tool automatically supports review of:
