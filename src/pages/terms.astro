@@ -3,17 +3,101 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="Terms of Use" description="FieldHealth Africa terms of use — rules governing use of this website and its tools.">
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
+
     <h1 class="font-display font-bold text-3xl text-white mb-4">Terms of Use</h1>
     <p class="text-white/40 text-sm mb-10">Last updated: May 2026</p>
 
-    <div class="rounded-xl border border-dashed border-white/15 p-6 text-white/40 text-sm italic mb-8">
-      TODO — Paste your full Terms of Use here. Generate at{' '}
-      <a href="https://app.termly.io" target="_blank" rel="noopener noreferrer" class="underline hover:text-white/60">termly.io</a>
-      {' '}(free plan). Cover: acceptable use, no clinical reliance disclaimer (tools are for administrative/operational use only, not clinical decision-making), intellectual property, limitation of liability, governing law (Cameroon / OHADA).
+    <!-- Non-clinical disclaimer — must be prominent -->
+    <div class="rounded-xl bg-amber-500/[0.07] border border-amber-500/25 p-5 text-sm text-amber-200/80 leading-relaxed mb-10">
+      <p class="font-semibold text-amber-300 mb-2">⚠ Important — Not for clinical use</p>
+      <p>The tools provided by FieldHealth Africa are designed exclusively for <strong class="text-amber-200">administrative, operational, and educational purposes</strong> in health-system management. They are not intended to support, replace, or influence individual clinical decisions, diagnoses, or treatment plans. Always consult a qualified healthcare professional for clinical matters. Use of any tool on this site for clinical decision-making is at the user's sole risk.</p>
     </div>
 
-    <div class="rounded-xl bg-amber-500/[0.05] border border-amber-500/20 p-5 text-sm text-amber-200/70 leading-relaxed">
-      <strong class="text-amber-300">Important:</strong> The tools provided by FieldHealth Africa are designed for administrative, operational, and educational use in health settings. They are not intended to replace clinical judgment or be used as a basis for individual clinical decisions. Always consult a qualified healthcare professional for clinical matters.
+    <div class="space-y-10 text-white/65 text-sm leading-relaxed">
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">1. Acceptance of terms</h2>
+        <p>By accessing or using fieldhealthafrica.org (the "Site"), you agree to be bound by these Terms of Use. If you do not agree, please do not use the Site. These terms apply to all visitors, registered users, and anyone who accesses or uses the Site in any way.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">2. Who we are</h2>
+        <p>FieldHealth Africa is operated personally by <strong class="text-white">Dr. Nzozone Henry Fomukong</strong>, District Medical Officer, Mamfe, Cameroon. References to "we", "us", or "our" refer to Dr. Nzozone Henry Fomukong as operator of the Site.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">3. Free Library — permitted use</h2>
+        <p class="mb-3">Tools in the Free Library are made available at no charge for non-commercial use by health practitioners, health system managers, students, and researchers. You may:</p>
+        <ul class="space-y-1 pl-4 mb-3">
+          <li>Download, use, and adapt tools for your own operational or educational purposes.</li>
+          <li>Share tools with colleagues within your organisation.</li>
+        </ul>
+        <p class="mb-3">You may not:</p>
+        <ul class="space-y-1 pl-4">
+          <li>Redistribute or resell free tools, whether modified or unmodified, for commercial gain.</li>
+          <li>Remove attribution notices or claim authorship of tools you did not create.</li>
+          <li>Use free tools as the basis of a competing commercial product without written permission.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">4. Pro Library — licence terms</h2>
+        <p class="mb-3">Purchase of a Pro Library tool grants you a <strong class="text-white">personal, non-exclusive, non-transferable licence</strong> to use that tool. Unless otherwise stated in the product description:</p>
+        <ul class="space-y-1 pl-4">
+          <li>The licence covers one user only.</li>
+          <li>You may not share, sublicence, resell, or redistribute the tool to third parties.</li>
+          <li>Multi-user or organisational licences are available on request — contact us at <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a>.</li>
+        </ul>
+        <p class="mt-3">All sales are final. Refunds may be considered on a case-by-case basis where a tool is materially defective — contact us within 14 days of purchase.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">5. Intellectual property</h2>
+        <p>All tools, templates, code, written content, and other materials on this Site are the intellectual property of Dr. Nzozone Henry Fomukong unless otherwise attributed. Nothing in these terms transfers any intellectual property rights to you beyond the limited licence granted above. The FieldHealth Africa name, logo, and branding may not be used without prior written consent.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">6. Acceptable use</h2>
+        <p class="mb-3">You agree not to:</p>
+        <ul class="space-y-1 pl-4">
+          <li>Use the Site for any unlawful purpose or in violation of any applicable law or regulation.</li>
+          <li>Attempt to gain unauthorised access to any part of the Site or its underlying systems.</li>
+          <li>Transmit any malicious code, spam, or unsolicited communications via our forms.</li>
+          <li>Misrepresent your identity or affiliation when contacting us.</li>
+          <li>Scrape, crawl, or systematically extract content from the Site without written permission.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">7. Disclaimer of warranties</h2>
+        <p>The Site and all tools are provided <strong class="text-white">"as is"</strong> and <strong class="text-white">"as available"</strong>, without warranties of any kind, express or implied. We do not warrant that tools are error-free, complete, or fit for any particular purpose beyond their stated operational use. We do not warrant uninterrupted access to the Site. Your use of any tool is at your own risk.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">8. Limitation of liability</h2>
+        <p>To the fullest extent permitted by applicable law, Dr. Nzozone Henry Fomukong shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the Site or any tool, including but not limited to loss of data, loss of revenue, or operational disruption. Total liability, if any, shall not exceed the amount you paid for the specific tool giving rise to the claim in the 12 months preceding the event.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">9. Third-party links and services</h2>
+        <p>The Site contains links to third-party websites and services (including affiliate links, Paystack, Formspree, and Substack). These links are provided for convenience only. We are not responsible for the content, privacy practices, or reliability of any third-party site. Affiliate links are disclosed in accordance with our <a href="/affiliate-disclosure" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">Affiliate Disclosure</a>.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">10. Changes to these terms</h2>
+        <p>We reserve the right to modify these terms at any time. Changes take effect when posted to this page. The "Last updated" date at the top of this page will reflect the most recent revision. Continued use of the Site after changes are posted constitutes acceptance of the revised terms.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">11. Governing law</h2>
+        <p>These terms are governed by the laws of the Republic of Cameroon and, where applicable, the OHADA Uniform Acts. Any dispute arising from or related to these terms shall be subject to the jurisdiction of the competent courts of Cameroon, without prejudice to any mandatory consumer-protection rights you may hold under the law of your own country.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">12. Contact</h2>
+        <p>Questions about these terms: <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a></p>
+      </section>
+
     </div>
   </div>
 </Base>

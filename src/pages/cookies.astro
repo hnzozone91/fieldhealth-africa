@@ -3,25 +3,108 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="Cookie Policy" description="FieldHealth Africa cookie policy — what cookies we use and how to control them.">
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
+
     <h1 class="font-display font-bold text-3xl text-white mb-4">Cookie Policy</h1>
     <p class="text-white/40 text-sm mb-10">Last updated: May 2026</p>
 
-    <div class="rounded-xl border border-dashed border-white/15 p-6 text-white/40 text-sm italic mb-8">
-      TODO — Paste your full Cookie Policy here. Generate at{' '}
-      <a href="https://app.termly.io" target="_blank" rel="noopener noreferrer" class="underline hover:text-white/60">termly.io</a>
-      {' '}(free plan). Cover: essential cookies (none beyond session), analytics cookies (GA4 — only loaded when GA4_MEASUREMENT_ID env var is set), third-party cookies (Formspree, Paystack on payment pages), how to opt out.
+    <!-- Summary box -->
+    <div class="rounded-xl bg-white/[0.05] border border-white/[0.12] p-5 text-sm leading-relaxed mb-10 space-y-2 text-white/70">
+      <p class="font-semibold text-white mb-3">Quick summary</p>
+      <p>✅ &nbsp;Basic browsing and free-tool downloads work with no cookies at all.</p>
+      <p>📊 &nbsp;Google Analytics cookies are only set if a GA4 ID is configured — currently disabled on this deployment.</p>
+      <p>💳 &nbsp;Paystack sets cookies when you visit a checkout page — only if you are purchasing a Pro tool.</p>
+      <p>📧 &nbsp;Formspree may set a short-lived session cookie when you submit a form.</p>
+      <p>📭 &nbsp;We set no advertising cookies, tracking pixels, or third-party marketing scripts.</p>
     </div>
 
-    <div class="space-y-6 text-white/60 text-sm leading-relaxed">
+    <div class="space-y-10 text-white/65 text-sm leading-relaxed">
+
       <section>
-        <h2 class="font-display font-bold text-lg text-white mb-2">Summary</h2>
-        <ul class="space-y-2">
-          <li>✅ This site works without any cookies for basic browsing and downloads.</li>
-          <li>📊 Google Analytics 4 is loaded only if a GA4 measurement ID is configured. It uses cookies to track aggregate page views.</li>
-          <li>💳 When you visit a Paystack payment page, Paystack's own cookie policy applies.</li>
-          <li>📧 Formspree may set a session cookie when you submit a form.</li>
-        </ul>
+        <h2 class="font-display font-bold text-xl text-white mb-3">1. What are cookies?</h2>
+        <p>Cookies are small text files placed on your device by a website. They are widely used to make websites work, remember your preferences, and provide information to site owners. You can control and delete cookies through your browser settings.</p>
       </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">2. Cookies we use</h2>
+
+        <div class="space-y-4 mt-2">
+
+          <div class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25 text-emerald-300 text-xs font-semibold">Essential</span>
+              <p class="text-white font-medium">Formspree session cookie</p>
+            </div>
+            <p class="mb-2">Set by Formspree when you submit the contact form or the free-library download gate. Used to prevent duplicate submissions and protect against spam.</p>
+            <table class="w-full text-xs text-white/50 border-collapse">
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Provider</td><td>Formspree (formspree.io)</td></tr>
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Purpose</td><td>Form submission integrity</td></tr>
+              <tr><td class="py-1.5 pr-4 font-medium text-white/60">Duration</td><td>Session (expires when you close your browser)</td></tr>
+            </table>
+          </div>
+
+          <div class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded-full bg-blue-500/15 border border-blue-500/25 text-blue-300 text-xs font-semibold">Analytics</span>
+              <p class="text-white font-medium">Google Analytics 4 (_ga, _ga_*)</p>
+            </div>
+            <p class="mb-2">Set only if a GA4 measurement ID has been configured on this deployment. Collects aggregate data about page visits, session duration, and device type. No personally identifiable information is collected under our configuration.</p>
+            <table class="w-full text-xs text-white/50 border-collapse">
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Provider</td><td>Google LLC</td></tr>
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Purpose</td><td>Aggregate site analytics</td></tr>
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Duration</td><td>_ga: 2 years · _ga_*: 2 years</td></tr>
+              <tr><td class="py-1.5 pr-4 font-medium text-white/60">Opt-out</td><td><a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline underline-offset-2">Google Analytics Opt-out Add-on</a></td></tr>
+            </table>
+          </div>
+
+          <div class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/25 text-teal-300 text-xs font-semibold">Payment</span>
+              <p class="text-white font-medium">Paystack cookies</p>
+            </div>
+            <p class="mb-2">Set by Paystack only when you navigate to a Pro Library checkout page. Paystack uses cookies to maintain your payment session and detect fraud. These cookies are governed entirely by Paystack's own cookie and privacy policy.</p>
+            <table class="w-full text-xs text-white/50 border-collapse">
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Provider</td><td>Paystack (paystack.com)</td></tr>
+              <tr class="border-b border-white/[0.07]"><td class="py-1.5 pr-4 font-medium text-white/60">Purpose</td><td>Secure payment processing</td></tr>
+              <tr><td class="py-1.5 pr-4 font-medium text-white/60">Applies</td><td>Checkout pages only</td></tr>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">3. What we do not use</h2>
+        <p>We do not use advertising cookies, retargeting pixels, social-media tracking scripts, heat-mapping tools, or any other third-party marketing technology. There are no Facebook Pixel, LinkedIn Insight, or similar tags on this site.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">4. How to manage cookies</h2>
+        <p class="mb-3">You can control cookies through your browser settings. Most browsers allow you to:</p>
+        <ul class="space-y-1 pl-4 mb-3">
+          <li>View and delete existing cookies.</li>
+          <li>Block cookies from specific sites or all sites.</li>
+          <li>Set preferences for first-party vs third-party cookies.</li>
+        </ul>
+        <p class="mb-3">Links to cookie settings for common browsers:</p>
+        <ul class="space-y-1 pl-4">
+          <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">Google Chrome</a></li>
+          <li><a href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">Mozilla Firefox</a></li>
+          <li><a href="https://support.apple.com/en-gb/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">Apple Safari</a></li>
+          <li><a href="https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">Microsoft Edge</a></li>
+        </ul>
+        <p class="mt-3">Note: blocking essential cookies may affect form submission functionality.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">5. Changes to this policy</h2>
+        <p>We will update this policy if we introduce new cookies or change how existing ones are used. The "Last updated" date at the top of this page will reflect any changes.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display font-bold text-xl text-white mb-3">6. Contact</h2>
+        <p>Questions about our cookie use: <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a></p>
+      </section>
+
     </div>
   </div>
 </Base>
