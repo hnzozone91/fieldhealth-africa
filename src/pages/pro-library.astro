@@ -40,25 +40,6 @@ const inDevelopment = [
   </section>
 
 
-  <!-- Pricing model -->
-  <section class="py-12 px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-4xl">
-      <h2 class="font-display font-bold text-2xl text-white mb-6">Pricing model</h2>
-      <div data-reveal class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {[
-          { tier: 'À la carte', range: '$79 – $799', desc: 'Buy a single tool outright. Includes source code, documentation, and 30-day email support. Best for one-time project needs.' },
-          { tier: 'Subscription', range: '$29 – $999 / mo', desc: 'Access the full growing Pro Library. Best for consultants who need tools across multiple projects and want new releases included.' },
-          { tier: 'Enterprise', range: '$5,000 – $35,000', desc: 'Custom tool development, training, integration support, and multi-seat licensing for teams and institutions.' },
-        ].map(({ tier, range, desc }) => (
-          <div class="rounded-2xl bg-white/[0.04] border border-white/[0.13] ring-1 ring-teal-500/15 p-6">
-            <p class="text-teal-400 text-xs font-semibold uppercase tracking-widest mb-1">{tier}</p>
-            <p class="font-display font-bold text-xl text-white mb-3">{range}</p>
-            <p class="text-white/55 text-sm leading-relaxed">{desc}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
 
   <!-- Live product(s) -->
@@ -141,6 +122,67 @@ const inDevelopment = [
     </div>
   </section>
 
+
+  <!-- MINSANTE v3 — live paid tool -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl">
+      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-6">Available now</p>
+
+      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-teal-400/30 shadow-[0_0_40px_-6px_rgba(20,184,166,0.22)] overflow-hidden">
+        <div class="p-8">
+          <div class="flex flex-col lg:flex-row gap-8 items-start">
+
+            <!-- Screenshot -->
+            <div class="flex-shrink-0 w-full lg:w-56 h-40 rounded-xl overflow-hidden border border-teal-500/20">
+              <img src="/images/blog/MINSANTE_v3_GestionFinanciere_2/MINSANTE_v3_GestionFinanciere_2.png" alt="MINSANTE v3 Gestion Financière screenshot" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+
+            <!-- Info -->
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
+                <span class="text-white/30 text-xs">v3 · HTML · Bilingual FR / EN · 10,000 FCFA</span>
+              </div>
+              <h2 class="font-display font-bold text-2xl text-white mb-3">MINSANTE v3 — Outil de Gestion Financière</h2>
+              <p class="text-white/60 text-sm leading-relaxed mb-5">
+                Complete financial management tool for Category 3–5 health facilities in Cameroon.
+                Automates the 6-step Recettes Propres calculation, decade-by-decade Treasury deposits,
+                6-way triangulation audit, and generates a print-ready official report — all in a single
+                offline HTML file. Built from field requests. Compliant with Décret 2016/6447/PM and RGCP.
+              </p>
+              <ul class="space-y-2 mb-6">
+                {[
+                  'Single offline HTML file — no installation, no internet required',
+                  '10 modules: Dashboard, Registers, Cash Journal, Treasury, Solidarity, Pharmacy, Expenditures, QP, Triangulation, Report',
+                  'Monthly Grid view + decade-aware Treasury and Solidarity tables',
+                  'Period-flexible triangulation (monthly, range, or full year)',
+                  'CSV / Excel export on every module',
+                  'Bilingual user guide (FR / EN) included',
+                ].map(item => (
+                  <li class="flex items-start gap-2.5 text-sm text-white/65">
+                    <svg class="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="/tools/minsante-v3/"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(20,184,166,0.4)]"
+              >
+                Get MINSANTE v3 — 10,000 FCFA →
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
+          <span>🌐 Opens in browser · No installation</span>
+          <span>🇫🇷🇬🇧 Bilingual FR / EN</span>
+          <span>📋 MINSANTE-compliant · Décret 2016/6447/PM</span>
+          <span>💳 MTN MoMo · Orange Money</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- In development -->
   <section class="py-8 px-4 sm:px-6 lg:px-8">
