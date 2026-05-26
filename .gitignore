@@ -39,3 +39,7 @@ founder.jpeg
 
 # Tool source files (sold products — not for public repo)
 TOOL PRODUCTION PROJECT FOR DHA/
+
+.dev.vars*
+!.dev.vars.example
+!.env.example
