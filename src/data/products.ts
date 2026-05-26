@@ -43,7 +43,7 @@ export const products: Product[] = [
     // TODO: paste your Paystack Payment Link here and set live: true
     paystackLink: '[PAYSTACK_LINK_DRUG_STOCKOUT]',
     live: false,
-    status: 'live',
+    status: 'in_development',
   },
 ];
 
