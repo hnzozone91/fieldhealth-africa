@@ -224,13 +224,13 @@ const posts = (await getCollection('blog'))
 
         <div class="flex flex-col sm:flex-row gap-8 items-start relative z-10">
           <!-- Photo -->
-          <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden"
+          <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl"
                style="background: linear-gradient(135deg, rgba(6,182,212,0.22) 0%, rgba(20,184,166,0.10) 100%); border: 1px solid rgba(6,182,212,0.22); box-shadow: 0 12px 32px -6px rgba(6,182,212,0.22), inset 0 1px 0 rgba(255,255,255,0.10);">
             <img
-              src="/images/founder.jpeg"
+              src="/images/founder-2.png"
               alt="Dr. Nzozone Henry Fomukong, founder of FieldHealth Africa"
               width="144" height="144"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-contain object-bottom"
               loading="lazy"
               onerror="this.style.display='none'"
             />
