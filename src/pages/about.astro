@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '../layouts/Base.astro';
 import AuroraBackground from '../components/AuroraBackground.astro';
 import NewsletterBand from '../components/NewsletterBand.astro';
@@ -12,10 +12,13 @@ import NewsletterBand from '../components/NewsletterBand.astro';
   <!-- Page hero -->
   <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <AuroraBackground variant="b" />
+    <!-- Dot-grid overlay -->
+    <div aria-hidden="true" class="absolute inset-0 z-[1] pointer-events-none"
+         style="background-image: radial-gradient(rgba(6,182,212,0.07) 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);"></div>
     <div class="relative z-10 mx-auto max-w-3xl">
       <div class="inline-flex items-center gap-2.5 mb-8">
         <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
-        <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">Our story</span>
+        <span class="font-mono text-cyan-300/70 text-[11px] uppercase tracking-widest">// about</span>
       </div>
       <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
         Built in the field,<br />
@@ -31,11 +34,16 @@ import NewsletterBand from '../components/NewsletterBand.astro';
   <!-- Founder section -->
   <section class="py-16 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
-      <div data-reveal class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/20 p-8 sm:p-10">
+      <p class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-4">// founder</p>
+      <div data-reveal
+           class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-cyan-500/20 overflow-hidden p-8 sm:p-10"
+           style="background: linear-gradient(145deg, rgba(6,182,212,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(20,184,166,0.05) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(6,182,212,0.28), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.50), transparent);"></div>
         <div class="flex flex-col sm:flex-row gap-8 items-start">
 
           <!-- Photo -->
-          <div class="flex-shrink-0 w-36 h-36 sm:w-44 sm:h-44 rounded-2xl bg-gradient-to-br from-cyan-900/50 to-teal-900/30 border border-cyan-500/20 overflow-hidden">
+          <div class="flex-shrink-0 w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border border-cyan-500/25"
+               style="box-shadow: 0 8px 28px -4px rgba(6,182,212,0.22);">
             <img
               src="/images/founder.jpeg"
               alt="Dr. Nzozone Henry Fomukong"
@@ -48,7 +56,7 @@ import NewsletterBand from '../components/NewsletterBand.astro';
 
           <!-- Intro -->
           <div class="flex-1">
-            <p class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-2">Founder</p>
+            <p class="font-mono text-[9px] text-cyan-400/50 uppercase tracking-widest mb-2">[ FOUNDER ]</p>
             <h2 data-reveal class="font-display font-bold text-2xl sm:text-3xl text-white mb-1">Dr. Nzozone Henry Fomukong</h2>
             <p class="text-white/45 text-sm mb-5">MD · Field Epidemiologist · District Medical Officer, Mamfe · Data Scientist · Public Health Strategist</p>
             <div class="space-y-3 text-white/65 text-sm leading-relaxed">
@@ -75,6 +83,7 @@ import NewsletterBand from '../components/NewsletterBand.astro';
   <!-- Origin story -->
   <section class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-3xl space-y-6">
+      <p class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-2">// origin_story</p>
       <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">Why I built this</h2>
 
       <div class="space-y-4 text-white/65 text-sm leading-relaxed">
@@ -95,18 +104,20 @@ import NewsletterBand from '../components/NewsletterBand.astro';
         </p>
       </div>
 
-      <!-- Credential highlights (real facts) -->
+      <!-- Credential highlights -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
         {[
-          { icon: '🎓', label: 'Medical Degree', detail: 'Medical Doctor (MD)' },
-          { icon: '🔬', label: 'Field Epidemiology', detail: 'Trained field epidemiologist' },
-          { icon: '📊', label: 'Data Science', detail: 'Diploma, IDSS (MIT affiliate)' },
-          { icon: '📄', label: 'Publications', detail: '7 peer-reviewed papers' },
-          { icon: '🏥', label: 'Konye Hospital', detail: 'Reopened after 4-year closure' },
-          { icon: '💉', label: 'Vaccination', detail: 'Coverage raised 29% → 44%' },
-        ].map(({ icon, label, detail }) => (
-          <div class="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.07]">
-            <span class="text-xl" aria-hidden="true">{icon}</span>
+          { label: 'Medical Degree',    detail: 'Medical Doctor (MD)',                tag: 'MD' },
+          { label: 'Field Epidemiology', detail: 'Trained field epidemiologist',      tag: 'EPID' },
+          { label: 'Data Science',       detail: 'Diploma, IDSS (MIT affiliate)',     tag: 'DATA' },
+          { label: 'Publications',       detail: '7 peer-reviewed papers',            tag: 'PUB' },
+          { label: 'Konye Hospital',     detail: 'Reopened after 4-year closure',     tag: 'OPS' },
+          { label: 'Vaccination',        detail: 'Coverage raised 29% → 44%',         tag: 'EPI' },
+        ].map(({ label, detail, tag }) => (
+          <div data-reveal
+               class="relative flex items-start gap-3 p-4 rounded-2xl border border-white/[0.07] overflow-hidden"
+               style="background: rgba(255,255,255,0.03); box-shadow: 0 8px 24px -4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);">
+            <p class="font-mono text-[8px] text-cyan-400/40 uppercase tracking-widest mt-0.5">[{tag}]</p>
             <div>
               <p class="text-white/80 text-sm font-medium">{label}</p>
               <p class="text-white/45 text-xs mt-0.5">{detail}</p>
@@ -117,10 +128,11 @@ import NewsletterBand from '../components/NewsletterBand.astro';
 
       <!-- Tools / stack -->
       <div class="pt-2">
-        <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-3">Technical stack</p>
+        <p class="font-mono text-[10px] text-cyan-400/40 uppercase tracking-widest mb-3">// tech_stack</p>
         <div class="flex flex-wrap gap-2">
           {['Python', 'DHIS2', 'KoboToolbox', 'Tableau', 'Power BI', 'Excel', 'Claude API', 'PIRI methodology'].map((tool) => (
-            <span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/60 text-xs font-medium">{tool}</span>
+            <span class="px-3 py-1 rounded-full border border-white/10 text-white/60 text-xs font-medium font-mono"
+                  style="background: rgba(255,255,255,0.04);">{tool}</span>
           ))}
         </div>
       </div>
@@ -131,9 +143,10 @@ import NewsletterBand from '../components/NewsletterBand.astro';
   <!-- Two-library model -->
   <section class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-3xl">
+      <p class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-3">// model</p>
       <h2 data-reveal class="font-display font-bold text-2xl sm:text-3xl text-white mb-6">The two-library model</h2>
 
-      <div class="space-y-4 text-white/65 text-sm leading-relaxed mb-6">
+      <div class="space-y-4 text-white/65 text-sm leading-relaxed mb-8">
         <p>
           FieldHealth Africa runs on two libraries because it serves two different needs.
         </p>
@@ -149,14 +162,22 @@ import NewsletterBand from '../components/NewsletterBand.astro';
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div class="rounded-2xl bg-white/[0.04] border border-white/[0.13] ring-1 ring-cyan-500/20 p-6">
-          <p class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-2">Free Library</p>
+        <!-- Free Library card -->
+        <div data-reveal
+             class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-cyan-500/20 overflow-hidden p-6"
+             style="background: linear-gradient(145deg, rgba(6,182,212,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(6,182,212,0.04) 100%); box-shadow: 0 18px 44px -8px rgba(0,0,0,0.55), 0 0 36px -10px rgba(6,182,212,0.25), inset 0 1.5px 0 rgba(255,255,255,0.10), inset 0 -2px 8px rgba(0,0,0,0.28);">
+          <div aria-hidden="true" class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.50), transparent);"></div>
+          <p class="font-mono text-[9px] text-cyan-400/55 uppercase tracking-widest mb-2">[ FREE_ACCESS ]</p>
           <h3 class="font-display font-bold text-lg text-white mb-2">For African practitioners</h3>
           <p class="text-white/55 text-sm leading-relaxed">DMOs, pharmacists, facility managers, M&E officers. Tools built for the district — free, always.</p>
           <a href="/free-library" class="inline-flex items-center gap-1 text-cyan-400 text-sm font-medium mt-4 hover:text-cyan-300 transition-colors">Browse tools →</a>
         </div>
-        <div class="rounded-2xl bg-white/[0.04] border border-white/[0.13] ring-1 ring-teal-400/20 p-6">
-          <p class="text-teal-400 text-xs font-semibold uppercase tracking-widest mb-2">Pro Library</p>
+        <!-- Pro Library card -->
+        <div data-reveal data-reveal-delay="100"
+             class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/20 overflow-hidden p-6"
+             style="background: linear-gradient(145deg, rgba(20,184,166,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(20,184,166,0.04) 100%); box-shadow: 0 18px 44px -8px rgba(0,0,0,0.55), 0 0 36px -10px rgba(20,184,166,0.25), inset 0 1.5px 0 rgba(255,255,255,0.10), inset 0 -2px 8px rgba(0,0,0,0.28);">
+          <div aria-hidden="true" class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(20,184,166,0.50), transparent);"></div>
+          <p class="font-mono text-[9px] text-teal-400/55 uppercase tracking-widest mb-2">[ PRO_ACCESS ]</p>
           <h3 class="font-display font-bold text-lg text-white mb-2">For global professionals</h3>
           <p class="text-white/55 text-sm leading-relaxed">NGO M&E teams, global health consultants, researchers. Premium tools with professional-grade deliverables.</p>
           <a href="/pro-library" class="inline-flex items-center gap-1 text-teal-400 text-sm font-medium mt-4 hover:text-teal-300 transition-colors">Explore Pro tools →</a>
@@ -181,5 +202,3 @@ import NewsletterBand from '../components/NewsletterBand.astro';
   <NewsletterBand />
 
 </Base>
-
-

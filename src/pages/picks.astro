@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '../layouts/Base.astro';
 import AuroraBackground from '../components/AuroraBackground.astro';
 import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
@@ -10,7 +10,6 @@ const grouped = {
   'For Building and Publishing':  affiliates.filter(a => a.category === 'building-and-publishing'),
 };
 
-// Descriptions for each pick — add real copy when ready
 const descriptions: Record<string, string> = {
   kobo:     'KoboToolbox is the standard for humanitarian and health data collection. Free for NGOs, works offline, and exports to Excel or SPSS. I use it for every field survey — from PIRI assessments to outbreak line listings.',
   notion:   'My knowledge management system for running a district health office. We use it for SOP documentation, meeting notes, project tracking, and staff onboarding. The free tier covers most use cases.',
@@ -18,6 +17,12 @@ const descriptions: Record<string, string> = {
   datacamp: 'Where I completed most of my Python and data science training. Structured tracks, real-world exercises, and a certificate programme that holds up professionally. Highly recommended for health workers moving into data roles.',
   substack: 'The platform I use for FieldHealth Africa\'s newsletter. Zero tech overhead, direct relationship with readers, and the best interface for long-form field notes. Worth it if you are building an audience around health expertise.',
   clickup:  'Project management for health programme planning. We use it to track multi-district campaigns, vaccination rollouts, and infrastructure repair schedules. The free tier is generous.',
+};
+
+const groupSlugs: Record<string, string> = {
+  'For Healthcare Workers':      '// healthcare_workers',
+  'For Data and Analysis':       '// data_and_analysis',
+  'For Building and Publishing': '// building_and_publishing',
 };
 ---
 
@@ -29,10 +34,12 @@ const descriptions: Record<string, string> = {
   <!-- Hero -->
   <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <AuroraBackground variant="b" />
+    <div aria-hidden="true" class="absolute inset-0 z-[1] pointer-events-none"
+         style="background-image: radial-gradient(rgba(99,102,241,0.07) 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);"></div>
     <div class="relative z-10 mx-auto max-w-3xl">
       <div class="inline-flex items-center gap-2.5 mb-8">
         <div class="w-8 h-px bg-indigo-400/60" aria-hidden="true"></div>
-        <span class="text-indigo-300/80 text-xs font-semibold uppercase tracking-widest">Picks</span>
+        <span class="font-mono text-indigo-300/70 text-[11px] uppercase tracking-widest">// picks</span>
       </div>
       <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
         Tools I actually use.
@@ -57,13 +64,19 @@ const descriptions: Record<string, string> = {
   {Object.entries(grouped).map(([groupName, picks]) => (
     <section class="py-12 px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-4xl">
+        <p class="font-mono text-[10px] text-indigo-400/45 uppercase tracking-widest mb-3">{groupSlugs[groupName] ?? `// ${groupName.toLowerCase().replace(/\s+/g, '_')}`}</p>
         <h2 data-reveal class="font-display font-bold text-xl text-white mb-6">{groupName}</h2>
-        <div class="space-y-4">
+        <div class="space-y-5">
           {picks.map((pick) => (
-            <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-indigo-500/15 p-6 sm:p-8">
+            <div data-reveal
+                 class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-indigo-500/20 overflow-hidden p-6 sm:p-8"
+                 style="background: linear-gradient(145deg, rgba(99,102,241,0.09) 0%, rgba(10,13,18,0.92) 55%, rgba(99,102,241,0.03) 100%); box-shadow: 0 18px 44px -8px rgba(0,0,0,0.58), 0 0 40px -10px rgba(99,102,241,0.20), inset 0 1.5px 0 rgba(255,255,255,0.10), inset 0 -2px 8px rgba(0,0,0,0.28);">
+              <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(99,102,241,0.48), transparent);"></div>
               <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-                <h3 class="font-display font-bold text-xl text-white">{pick.label}</h3>
-                <!-- Cloaked affiliate link via /recommends/<slug> CF Function -->
+                <div>
+                  <p class="font-mono text-[9px] text-indigo-400/50 uppercase tracking-widest mb-1">[ CURATED ]</p>
+                  <h3 class="font-display font-bold text-xl text-white">{pick.label}</h3>
+                </div>
                 <a
                   href={`/recommends/${pick.slug}`}
                   target="_blank"
@@ -75,15 +88,12 @@ const descriptions: Record<string, string> = {
                 </a>
               </div>
 
-              <!-- Description: 100–200 words per pick -->
               <p class="text-white/60 text-sm leading-relaxed mb-4">
                 {descriptions[pick.slug] ?? (
-                  /* TODO: add description for this pick */
-                  <span class="text-white/30 italic">TODO — add 100–200 word description for {pick.label}.</span>
+                  <span class="text-white/30 italic">TODO — add description for {pick.label}.</span>
                 )}
               </p>
 
-              <!-- Per-card disclosure -->
               <AffiliateDisclosure compact={true} />
             </div>
           ))}
@@ -93,5 +103,3 @@ const descriptions: Record<string, string> = {
   ))}
 
 </Base>
-
-

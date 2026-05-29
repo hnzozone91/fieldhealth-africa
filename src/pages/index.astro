@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '../layouts/Base.astro';
 import AuroraBackground from '../components/AuroraBackground.astro';
 import GlassCard from '../components/GlassCard.astro';
@@ -16,27 +16,34 @@ const posts = (await getCollection('blog'))
 >
 
   <!-- ════════════════════════════════════════════
-       HERO — Direction B: Aurora Signal
+       HERO
        ════════════════════════════════════════════ -->
-  <section class="relative min-h-[92vh] flex items-center overflow-hidden" style="background-color:#0f0f14">
+  <section class="relative min-h-[92vh] flex items-center overflow-hidden" style="background-color:#0a0d12">
     <AuroraBackground variant="b" parallax={true} />
+
+    <!-- Dot-grid overlay — fades out toward edges -->
+    <div aria-hidden="true" class="absolute inset-0 z-[1] pointer-events-none"
+         style="background-image: radial-gradient(rgba(6,182,212,0.10) 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 100%);"></div>
+
+    <!-- Horizontal scan-line accent -->
+    <div aria-hidden="true" class="absolute top-[38%] left-0 right-0 h-px z-[1] pointer-events-none"
+         style="background: linear-gradient(90deg, transparent 0%, rgba(6,182,212,0.15) 25%, rgba(6,182,212,0.30) 50%, rgba(6,182,212,0.15) 75%, transparent 100%);"></div>
 
     <div id="hero-content" class="relative z-10 w-full px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto py-20">
       <div class="max-w-3xl relative">
 
-        <!-- Pulsing headline aura — purely decorative, behind all text -->
+        <!-- Pulsing headline aura -->
         <div aria-hidden="true" class="absolute inset-0 -z-10 pointer-events-none overflow-visible">
           <div class="absolute -top-[30%] -left-[8%] w-[130%] h-[160%] animate-headline-pulse"
-               style="background: radial-gradient(ellipse 65% 55% at 30% 42%, rgba(6,182,212,0.44), rgba(20,184,166,0.24) 38%, transparent 65%);
-                      filter: blur(42px);
-                      will-change: opacity, transform;">
+               style="background: radial-gradient(ellipse 65% 55% at 30% 42%, rgba(6,182,212,0.44), rgba(20,184,166,0.24) 38%, transparent 65%); filter: blur(42px); will-change: opacity, transform;">
           </div>
         </div>
 
-        <!-- Eyebrow -->
+        <!-- Eyebrow — HUD terminal style -->
         <div class="inline-flex items-center gap-2.5 mb-10 animate-fade-up" style="animation-delay:0.05s">
           <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
-          <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">FieldHealth Africa</span>
+          <span class="font-mono text-cyan-300/70 text-[11px] uppercase tracking-widest">// FieldHealth Africa</span>
+          <span class="font-mono text-cyan-500/35 text-[10px]">v2026</span>
         </div>
 
         <!-- Headline -->
@@ -59,45 +66,59 @@ const posts = (await getCollection('blog'))
         <div class="mt-10 flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay:0.26s">
           <a
             href="/free-library"
-            class="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-base transition-all duration-200 hover:shadow-[0_0_32px_rgba(6,182,212,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+            class="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-base transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+            style="box-shadow: 0 8px 32px -4px rgba(6,182,212,0.50), 0 0 0 1px rgba(255,255,255,0.10) inset; transition: box-shadow 0.2s, background 0.2s;"
+            onmouseover="this.style.boxShadow='0 8px 40px -4px rgba(6,182,212,0.65), 0 0 0 1px rgba(255,255,255,0.14) inset'"
+            onmouseout="this.style.boxShadow='0 8px 32px -4px rgba(6,182,212,0.50), 0 0 0 1px rgba(255,255,255,0.10) inset'"
           >
             Browse the Free Library
             <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
           <a
             href="/pro-library"
-            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-base hover:border-white/35 hover:bg-white/[0.05] transition-all duration-200 backdrop-blur-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-base hover:border-cyan-500/40 hover:bg-white/[0.05] transition-all duration-200 backdrop-blur-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
           >
             Explore Pro Tools
           </a>
         </div>
 
-        <!-- Stats -->
-        <div class="mt-14 flex flex-wrap gap-8 animate-fade-up" style="animation-delay:0.34s">
+        <!-- Stats — HUD data terminal blocks -->
+        <div class="mt-14 flex flex-wrap gap-4 animate-fade-up" style="animation-delay:0.34s">
           {[
-            { n: '7',  label: 'Peer-reviewed publications' },
-            { n: '1',  label: 'Live free tool'             },
-            { n: '1',  label: 'Live pro tool'              },
-          ].map(({ n, label }) => (
-            <div>
-              <p class="font-display font-bold text-3xl text-white">{n}</p>
-              <p class="text-white/40 text-xs mt-0.5">{label}</p>
+            { n: '07', tag: 'PAPERS',  label: 'Peer-reviewed publications' },
+            { n: '01', tag: 'FREE',    label: 'Live free tool'             },
+            { n: '01', tag: 'PRO',     label: 'Live pro tool'              },
+          ].map(({ n, tag, label }) => (
+            <div class="rounded-2xl px-5 py-4 min-w-[106px]"
+                 style="background: linear-gradient(145deg, rgba(6,182,212,0.09) 0%, rgba(10,13,18,0.82) 100%); border: 1px solid rgba(6,182,212,0.18); box-shadow: 0 12px 32px -6px rgba(0,0,0,0.58), 0 0 28px -8px rgba(6,182,212,0.22), inset 0 1.5px 0 rgba(255,255,255,0.09), inset 0 -1px 4px rgba(0,0,0,0.32);">
+              <p class="font-mono text-[9px] text-cyan-400/55 uppercase tracking-widest mb-1.5">[ {tag} ]</p>
+              <p class="font-display font-bold text-3xl text-white tabular-nums tracking-tight">{n}</p>
+              <p class="font-mono text-[9px] text-white/30 mt-1 leading-tight">{label}</p>
             </div>
           ))}
         </div>
       </div>
-        <!-- Floating accent shapes — desktop only, CSS-only, no filter or backdrop -->
-        <div aria-hidden="true" class="absolute right-[8%] top-[60px] hidden lg:block pointer-events-none">
-          <div class="w-24 h-24 border border-cyan-400/[0.18] rounded-2xl rotate-[18deg] animate-float"
-               style="box-shadow: 0 0 28px -6px rgba(6,182,212,0.18), inset 0 0 12px rgba(6,182,212,0.05);">
-          </div>
-        </div>
-        <div aria-hidden="true" class="absolute right-[14%] top-[220px] hidden lg:block pointer-events-none">
-          <div class="w-12 h-12 border border-teal-400/[0.13] rounded-xl -rotate-[14deg] animate-float-slow"
-               style="animation-delay:2.2s">
-          </div>
-        </div>
 
+      <!-- Floating accent shapes — desktop only -->
+      <div aria-hidden="true" class="absolute right-[8%] top-[60px] hidden lg:block pointer-events-none">
+        <div class="w-24 h-24 rounded-2xl rotate-[18deg] animate-float relative"
+             style="background: linear-gradient(135deg, rgba(6,182,212,0.09) 0%, transparent 100%); border: 1px solid rgba(6,182,212,0.18); box-shadow: 0 12px 40px -8px rgba(6,182,212,0.18), inset 0 1px 0 rgba(255,255,255,0.08);">
+          <div class="absolute inset-0 flex items-end justify-end p-2.5">
+            <span class="font-mono text-[8px] text-cyan-400/25">0x1A</span>
+          </div>
+        </div>
+      </div>
+      <div aria-hidden="true" class="absolute right-[14%] top-[220px] hidden lg:block pointer-events-none">
+        <div class="w-12 h-12 rounded-xl -rotate-[14deg] animate-float-slow"
+             style="animation-delay:2.2s; background: rgba(20,184,166,0.06); border: 1px solid rgba(20,184,166,0.15);">
+        </div>
+      </div>
+      <!-- HUD readout — far right, extra-large screens only -->
+      <div aria-hidden="true" class="absolute right-[5%] top-[42%] hidden xl:flex flex-col gap-1.5 items-end pointer-events-none">
+        {['◆ SYS_ONLINE', '◇ DATA_LIVE', '◇ BUILD_v2026'].map(line => (
+          <span class="font-mono text-[9px] text-cyan-400/22 tracking-wider">{line}</span>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -107,37 +128,84 @@ const posts = (await getCollection('blog'))
        ════════════════════════════════════════════ -->
   <section class="py-20 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl">
-      <h2 data-reveal class="text-center font-display font-bold text-3xl sm:text-4xl text-white mb-4">Everything in one place</h2>
-      <p data-reveal data-reveal-delay="100" class="text-center text-white/50 mb-12 max-w-xl mx-auto text-sm">Two libraries and a curated picks page — built around what practitioners actually need.</p>
+      <div class="mb-12 text-center">
+        <p data-reveal class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-3">// 01_resources</p>
+        <h2 data-reveal data-reveal-delay="100" class="font-display font-bold text-3xl sm:text-4xl text-white mb-4">Everything in one place</h2>
+        <p data-reveal data-reveal-delay="200" class="text-white/50 max-w-xl mx-auto text-sm">Two libraries and a curated picks page — built around what practitioners actually need.</p>
+      </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-        <a data-reveal data-reveal-delay="100" href="/free-library" class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-cyan-500/25 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_38px_-8px_rgba(6,182,212,0.35)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:ring-cyan-400/40 hover:shadow-[0_8px_48px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_56px_-4px_rgba(6,182,212,0.56)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 group-hover:border-cyan-400/35 transition-colors" aria-hidden="true">
-            <svg class="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <!-- Free Library -->
+        <a data-reveal data-reveal-delay="100" href="/free-library"
+           class="group relative rounded-3xl [backdrop-filter:blur(22px)] border border-cyan-500/20 p-6 flex flex-col transition-all duration-300 overflow-hidden hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
+           style="background: linear-gradient(145deg, rgba(6,182,212,0.13) 0%, rgba(10,13,18,0.90) 55%, rgba(6,182,212,0.05) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(6,182,212,0.32), inset 0 1.5px 0 rgba(255,255,255,0.12), inset 0 -2px 8px rgba(0,0,0,0.32);">
+          <!-- Dot-grid on hover -->
+          <div aria-hidden="true" class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+               style="background-image: radial-gradient(rgba(6,182,212,0.09) 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <!-- Top edge glow -->
+          <div aria-hidden="true" class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.55), transparent);"></div>
+
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
+                 style="background: linear-gradient(135deg, rgba(6,182,212,0.28) 0%, rgba(6,182,212,0.08) 100%); border: 1px solid rgba(6,182,212,0.28); box-shadow: 0 8px 22px -4px rgba(6,182,212,0.28), inset 0 1px 0 rgba(255,255,255,0.12);"
+                 aria-hidden="true">
+              <svg class="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            </div>
+            <p class="font-mono text-[9px] text-cyan-400/50 uppercase tracking-widest mb-2">[ FREE_ACCESS ]</p>
+            <h3 class="font-display font-bold text-xl text-white mb-2">Free Library</h3>
+            <p class="text-white/55 text-sm leading-relaxed flex-1">Practical tools for African health workers — Excel dashboards, SOPs, and calculators tested in the district. No payment wall.</p>
+            <div class="mt-5 flex items-center gap-1 text-cyan-400 text-sm font-medium">Browse free tools <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
           </div>
-          <h3 class="font-display font-bold text-xl text-white mb-2">Free Library</h3>
-          <p class="text-white/55 text-sm leading-relaxed flex-1">Practical tools for African health workers — Excel dashboards, SOPs, and calculators tested in the district. No payment wall.</p>
-          <div class="mt-5 flex items-center gap-1 text-cyan-400 text-sm font-medium">Browse free tools <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
         </a>
 
-        <a data-reveal data-reveal-delay="200" href="/pro-library" class="group relative rounded-2xl bg-gradient-to-b from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.18] ring-1 ring-teal-400/35 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_42px_-6px_rgba(20,184,166,0.42)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.26] hover:ring-teal-300/50 hover:shadow-[0_8px_48px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_60px_-4px_rgba(20,184,166,0.62)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2">
-          <div class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-[10px] font-bold uppercase tracking-wider">Pro</div>
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500/20 to-emerald-500/10 border border-teal-500/20 flex items-center justify-center mb-5 group-hover:border-teal-400/35 transition-colors" aria-hidden="true">
-            <svg class="w-6 h-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <!-- Pro Library -->
+        <a data-reveal data-reveal-delay="200" href="/pro-library"
+           class="group relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/22 p-6 flex flex-col transition-all duration-300 overflow-hidden hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2"
+           style="background: linear-gradient(145deg, rgba(20,184,166,0.14) 0%, rgba(10,13,18,0.90) 55%, rgba(52,211,153,0.06) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -8px rgba(20,184,166,0.42), inset 0 1.5px 0 rgba(255,255,255,0.12), inset 0 -2px 8px rgba(0,0,0,0.32);">
+          <!-- Dot-grid on hover -->
+          <div aria-hidden="true" class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+               style="background-image: radial-gradient(rgba(20,184,166,0.11) 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <!-- Top edge glow -->
+          <div aria-hidden="true" class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(20,184,166,0.65), transparent);"></div>
+          <!-- Pro badge -->
+          <div class="absolute top-4 right-4 font-mono text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full"
+               style="background: rgba(20,184,166,0.14); border: 1px solid rgba(20,184,166,0.28); color: rgba(94,234,212,0.88);">[ PRO ]</div>
+
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
+                 style="background: linear-gradient(135deg, rgba(20,184,166,0.28) 0%, rgba(20,184,166,0.08) 100%); border: 1px solid rgba(20,184,166,0.28); box-shadow: 0 8px 22px -4px rgba(20,184,166,0.28), inset 0 1px 0 rgba(255,255,255,0.12);"
+                 aria-hidden="true">
+              <svg class="w-6 h-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <p class="font-mono text-[9px] text-teal-400/50 uppercase tracking-widest mb-2">[ PRO_ACCESS ]</p>
+            <h3 class="font-display font-bold text-xl text-white mb-2">Pro Library</h3>
+            <p class="text-white/55 text-sm leading-relaxed flex-1">Premium Python apps, AI-powered dashboards, and predictive tools for NGO M&E teams, global health consultants, and researchers.</p>
+            <div class="mt-5 flex items-center gap-1 text-teal-300 text-sm font-medium">Explore Pro tools <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
           </div>
-          <h3 class="font-display font-bold text-xl text-white mb-2">Pro Library</h3>
-          <p class="text-white/55 text-sm leading-relaxed flex-1">Premium Python apps, AI-powered dashboards, and predictive tools for NGO M&E teams, global health consultants, and researchers.</p>
-          <div class="mt-5 flex items-center gap-1 text-teal-300 text-sm font-medium">Explore Pro tools <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
         </a>
 
-        <a data-reveal data-reveal-delay="300" href="/picks" class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-indigo-500/25 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.12),0_0_38px_-8px_rgba(99,102,241,0.34)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:ring-indigo-400/40 hover:shadow-[0_8px_48px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.18),0_0_56px_-4px_rgba(99,102,241,0.56)] hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400 focus-visible:outline-offset-2">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/10 border border-indigo-500/20 flex items-center justify-center mb-5 group-hover:border-indigo-400/35 transition-colors" aria-hidden="true">
-            <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        <!-- Picks -->
+        <a data-reveal data-reveal-delay="300" href="/picks"
+           class="group relative rounded-3xl [backdrop-filter:blur(22px)] border border-indigo-500/20 p-6 flex flex-col transition-all duration-300 overflow-hidden hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-400 focus-visible:outline-offset-2"
+           style="background: linear-gradient(145deg, rgba(99,102,241,0.13) 0%, rgba(10,13,18,0.90) 55%, rgba(99,102,241,0.05) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(99,102,241,0.36), inset 0 1.5px 0 rgba(255,255,255,0.12), inset 0 -2px 8px rgba(0,0,0,0.32);">
+          <!-- Dot-grid on hover -->
+          <div aria-hidden="true" class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+               style="background-image: radial-gradient(rgba(99,102,241,0.09) 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <!-- Top edge glow -->
+          <div aria-hidden="true" class="absolute top-0 left-8 right-8 h-px" style="background: linear-gradient(90deg, transparent, rgba(99,102,241,0.55), transparent);"></div>
+
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
+                 style="background: linear-gradient(135deg, rgba(99,102,241,0.28) 0%, rgba(99,102,241,0.08) 100%); border: 1px solid rgba(99,102,241,0.28); box-shadow: 0 8px 22px -4px rgba(99,102,241,0.28), inset 0 1px 0 rgba(255,255,255,0.12);"
+                 aria-hidden="true">
+              <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </div>
+            <p class="font-mono text-[9px] text-indigo-400/50 uppercase tracking-widest mb-2">[ CURATED ]</p>
+            <h3 class="font-display font-bold text-xl text-white mb-2">Picks</h3>
+            <p class="text-white/55 text-sm leading-relaxed flex-1">Tools I actually use — curated for healthcare workers, data analysts, and builders. Affiliate links disclosed.</p>
+            <div class="mt-5 flex items-center gap-1 text-indigo-400 text-sm font-medium">See recommendations <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
           </div>
-          <h3 class="font-display font-bold text-xl text-white mb-2">Picks</h3>
-          <p class="text-white/55 text-sm leading-relaxed flex-1">Tools I actually use — curated for healthcare workers, data analysts, and builders. Affiliate links disclosed.</p>
-          <div class="mt-5 flex items-center gap-1 text-indigo-400 text-sm font-medium">See recommendations <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
         </a>
 
       </div>
@@ -150,11 +218,20 @@ const posts = (await getCollection('blog'))
        ════════════════════════════════════════════ -->
   <section class="py-4 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
-      <div data-reveal class="rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.18] ring-1 ring-cyan-500/28 shadow-[0_4px_32px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.13),0_0_48px_-10px_rgba(6,182,212,0.32)] overflow-hidden p-8">
-        <div class="flex flex-col sm:flex-row gap-8 items-start">
+      <p data-reveal class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-5">// 02_founder</p>
+      <div data-reveal data-reveal-delay="100"
+           class="relative rounded-3xl [backdrop-filter:blur(24px)] border border-cyan-500/18 overflow-hidden p-8"
+           style="background: linear-gradient(145deg, rgba(6,182,212,0.10) 0%, rgba(10,13,18,0.92) 60%, rgba(20,184,166,0.05) 100%); box-shadow: 0 24px 64px -8px rgba(0,0,0,0.64), 0 0 56px -12px rgba(6,182,212,0.28), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <!-- Top edge glow -->
+        <div aria-hidden="true" class="absolute top-0 left-12 right-12 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.50), transparent);"></div>
+        <!-- Subtle dot-grid corner accent -->
+        <div aria-hidden="true" class="absolute bottom-0 right-0 w-40 h-40 pointer-events-none rounded-br-3xl overflow-hidden opacity-30"
+             style="background-image: radial-gradient(rgba(6,182,212,0.15) 1px, transparent 1px); background-size: 16px 16px; mask-image: radial-gradient(ellipse 100% 100% at 100% 100%, black 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse 100% 100% at 100% 100%, black 0%, transparent 70%);"></div>
 
+        <div class="flex flex-col sm:flex-row gap-8 items-start relative z-10">
           <!-- Photo -->
-          <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl bg-gradient-to-br from-cyan-900/50 to-teal-900/30 border border-cyan-500/20 overflow-hidden">
+          <div class="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden"
+               style="background: linear-gradient(135deg, rgba(6,182,212,0.22) 0%, rgba(20,184,166,0.10) 100%); border: 1px solid rgba(6,182,212,0.22); box-shadow: 0 12px 32px -6px rgba(6,182,212,0.22), inset 0 1px 0 rgba(255,255,255,0.10);">
             <img
               src="/images/founder.jpeg"
               alt="Dr. Nzozone Henry Fomukong, founder of FieldHealth Africa"
@@ -167,7 +244,7 @@ const posts = (await getCollection('blog'))
 
           <!-- Bio -->
           <div class="flex-1 min-w-0">
-            <p class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-2">About the founder</p>
+            <p class="font-mono text-[9px] text-cyan-400/55 uppercase tracking-widest mb-2">[ FOUNDER ]</p>
             <h2 class="font-display font-bold text-2xl text-white mb-3">Dr. Nzozone Henry Fomukong</h2>
             <p class="text-white/65 text-sm leading-relaxed mb-4">
               Medical doctor, field epidemiologist, and District Medical Officer in Mamfe, Cameroon — one of Central Africa's most demanding operational settings.
@@ -190,22 +267,29 @@ const posts = (await getCollection('blog'))
        ════════════════════════════════════════════ -->
   <section class="py-20 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl">
-      <div data-reveal class="flex items-center justify-between mb-10">
-        <h2 class="font-display font-bold text-3xl text-white">Latest from the blog</h2>
+      <div data-reveal class="flex items-end justify-between mb-3">
+        <p class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest">// 03_intel</p>
         <a href="/blog" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 rounded">All posts →</a>
       </div>
+      <h2 data-reveal data-reveal-delay="100" class="font-display font-bold text-3xl text-white mb-10">Latest from the blog</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {posts.length > 0 ? posts.map((post, i) => (
           <a
             data-reveal data-reveal-delay={i === 0 ? undefined : i === 1 ? "100" : "200"}
             href={`/blog/${post.id}`}
-            class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-white/[0.08] shadow-[0_4px_28px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.10)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:scale-[1.015] hover:shadow-[0_8px_40px_rgba(0,0,0,0.44),inset_0_1px_0_rgba(255,255,255,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
+            class="group relative rounded-3xl [backdrop-filter:blur(20px)] border border-white/[0.09] p-6 flex flex-col transition-all duration-300 overflow-hidden hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
+            style="background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(10,13,18,0.90) 60%, rgba(255,255,255,0.03) 100%); box-shadow: 0 20px 52px -8px rgba(0,0,0,0.60), 0 0 32px -12px rgba(6,182,212,0.18), inset 0 1.5px 0 rgba(255,255,255,0.09), inset 0 -2px 6px rgba(0,0,0,0.28);"
           >
-            <span class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">{post.data.tags[0] ?? 'Field Notes'}</span>
-            <h3 class="font-display font-bold text-lg text-white mb-2 leading-snug">{post.data.title}</h3>
-            <p class="text-white/55 text-sm leading-relaxed flex-1">{post.data.description}</p>
-            <p class="text-white/30 text-xs mt-4">{post.data.pubDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</p>
+            <div aria-hidden="true" class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+                 style="background-image: radial-gradient(rgba(6,182,212,0.08) 1px, transparent 1px); background-size: 20px 20px;"></div>
+            <div aria-hidden="true" class="absolute top-0 left-6 right-6 h-px opacity-30 group-hover:opacity-60 transition-opacity" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.50), transparent);"></div>
+            <div class="relative z-10 flex flex-col flex-1">
+              <span class="font-mono text-cyan-400 text-[10px] uppercase tracking-widest mb-3">[{post.data.tags[0] ?? 'Field Notes'}]</span>
+              <h3 class="font-display font-bold text-lg text-white mb-2 leading-snug">{post.data.title}</h3>
+              <p class="text-white/55 text-sm leading-relaxed flex-1">{post.data.description}</p>
+              <p class="font-mono text-white/25 text-[10px] mt-4">{post.data.pubDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</p>
+            </div>
           </a>
         )) : (
           [
@@ -213,11 +297,18 @@ const posts = (await getCollection('blog'))
             { tag: 'Field Notes',  title: 'What 8 Years as a DMO Taught Me About Data', excerpt: 'The gap between what health systems collect and what field teams need.', date: 'TODO', href: '/blog', delay: "100" },
             { tag: 'Pro Tools',   title: 'Predicting Drug Stock-Outs Before They Happen', excerpt: 'Methodology behind our predictive model — inputs, outputs, limitations.', date: 'TODO', href: '/blog', delay: "200" },
           ].map((p) => (
-            <a data-reveal data-reveal-delay={p.delay} href={p.href} class="group rounded-2xl bg-gradient-to-br from-white/[0.10] to-white/[0.04] [backdrop-filter:blur(24px)] border border-white/[0.16] ring-1 ring-white/[0.08] shadow-[0_4px_28px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.10)] p-6 flex flex-col transition-all duration-300 hover:from-white/[0.14] hover:to-white/[0.06] hover:border-white/[0.24] hover:scale-[1.015] hover:shadow-[0_8px_40px_rgba(0,0,0,0.44),inset_0_1px_0_rgba(255,255,255,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2">
-              <span class="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">{p.tag}</span>
-              <h3 class="font-display font-bold text-lg text-white mb-2 leading-snug">{p.title}</h3>
-              <p class="text-white/55 text-sm leading-relaxed flex-1">{p.excerpt}</p>
-              <p class="text-white/30 text-xs mt-4">{p.date}</p>
+            <a data-reveal data-reveal-delay={p.delay} href={p.href}
+               class="group relative rounded-3xl [backdrop-filter:blur(20px)] border border-white/[0.09] p-6 flex flex-col transition-all duration-300 overflow-hidden hover:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 focus-visible:outline-offset-2"
+               style="background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(10,13,18,0.90) 60%, rgba(255,255,255,0.03) 100%); box-shadow: 0 20px 52px -8px rgba(0,0,0,0.60), 0 0 32px -12px rgba(6,182,212,0.18), inset 0 1.5px 0 rgba(255,255,255,0.09), inset 0 -2px 6px rgba(0,0,0,0.28);">
+              <div aria-hidden="true" class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+                   style="background-image: radial-gradient(rgba(6,182,212,0.08) 1px, transparent 1px); background-size: 20px 20px;"></div>
+              <div aria-hidden="true" class="absolute top-0 left-6 right-6 h-px opacity-30 group-hover:opacity-60 transition-opacity" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.50), transparent);"></div>
+              <div class="relative z-10 flex flex-col flex-1">
+                <span class="font-mono text-cyan-400 text-[10px] uppercase tracking-widest mb-3">[{p.tag}]</span>
+                <h3 class="font-display font-bold text-lg text-white mb-2 leading-snug">{p.title}</h3>
+                <p class="text-white/55 text-sm leading-relaxed flex-1">{p.excerpt}</p>
+                <p class="font-mono text-white/25 text-[10px] mt-4">{p.date}</p>
+              </div>
             </a>
           ))
         )}
@@ -233,7 +324,7 @@ const posts = (await getCollection('blog'))
 
 </Base>
 
-<!-- Hero content parallax — text moves at 15% of scroll speed (subtle depth) -->
+<!-- Hero content parallax -->
 <script>
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const el = document.getElementById('hero-content');
@@ -251,4 +342,3 @@ const posts = (await getCollection('blog'))
     }
   }
 </script>
-

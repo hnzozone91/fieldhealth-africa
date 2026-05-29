@@ -1,4 +1,4 @@
-﻿---
+---
 /**
  * /checkout-success
  * Paystack callback target for successful payments.
@@ -20,10 +20,17 @@ import Base from '../layouts/Base.astro';
 >
   <div class="min-h-[80vh] flex items-center justify-center px-4 py-20">
     <div class="max-w-lg w-full text-center">
-      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-teal-500/25 shadow-[0_0_48px_-8px_rgba(20,184,166,0.25)] p-10">
+
+      <!-- Clay card -->
+      <div class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/25 overflow-hidden p-10"
+           style="background: linear-gradient(145deg, rgba(20,184,166,0.12) 0%, rgba(10,13,18,0.93) 55%, rgba(20,184,166,0.05) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -10px rgba(20,184,166,0.28), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(20,184,166,0.55), transparent);"></div>
+
+        <p class="font-mono text-[9px] text-teal-400/50 uppercase tracking-widest mb-6">[ PAYMENT_CONFIRMED ]</p>
 
         <!-- Success icon -->
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500/20 to-emerald-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" aria-hidden="true"
+             style="background: linear-gradient(135deg, rgba(20,184,166,0.28) 0%, rgba(20,184,166,0.08) 100%); border: 1px solid rgba(20,184,166,0.30); box-shadow: 0 8px 22px -4px rgba(20,184,166,0.30), inset 0 1px 0 rgba(255,255,255,0.10);">
           <svg class="w-8 h-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
           </svg>
@@ -35,8 +42,10 @@ import Base from '../layouts/Base.astro';
           <strong class="text-white">Check your email</strong> — your download link and receipt will arrive within a few minutes.
         </p>
 
-        <div class="rounded-xl bg-white/[0.04] border border-white/[0.07] p-5 text-left mb-8">
-          <p class="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">What happens next</p>
+        <!-- Steps card -->
+        <div class="rounded-2xl border border-white/[0.07] p-5 text-left mb-8"
+             style="background: rgba(255,255,255,0.03);">
+          <p class="font-mono text-[9px] text-teal-400/50 uppercase tracking-widest mb-3">[ NEXT_STEPS ]</p>
           <ol class="space-y-2.5">
             {[
               'Check the email you used at checkout for a receipt from Paystack.',
@@ -44,14 +53,15 @@ import Base from '../layouts/Base.astro';
               'Download and open the tool. If you run into anything, reply to that email.',
             ].map((step, i) => (
               <li class="flex items-start gap-3 text-sm text-white/60">
-                <span class="w-5 h-5 rounded-full bg-teal-500/20 border border-teal-500/30 text-teal-300 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-teal-300 text-[11px] font-bold font-mono"
+                      style="background: rgba(20,184,166,0.15); border: 1px solid rgba(20,184,166,0.28);">{i + 1}</span>
                 {step}
               </li>
             ))}
           </ol>
         </div>
 
-        <p class="text-white/35 text-xs mb-6">
+        <p class="font-mono text-white/30 text-[10px] mb-6 tracking-wide">
           No email after 10 minutes? Check spam or contact{' '}
           <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400/80 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a>.
         </p>
@@ -69,4 +79,3 @@ import Base from '../layouts/Base.astro';
     </div>
   </div>
 </Base>
-

@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '../layouts/Base.astro';
 import AuroraBackground from '../components/AuroraBackground.astro';
 
@@ -25,10 +25,13 @@ const roles = [
 
   <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <AuroraBackground variant="b" />
+    <!-- Dot-grid overlay -->
+    <div aria-hidden="true" class="absolute inset-0 z-[1] pointer-events-none"
+         style="background-image: radial-gradient(rgba(6,182,212,0.07) 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);"></div>
     <div class="relative z-10 mx-auto max-w-3xl">
       <div class="inline-flex items-center gap-2.5 mb-8">
         <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
-        <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">Contact</span>
+        <span class="font-mono text-cyan-300/70 text-[11px] uppercase tracking-widest">// contact</span>
       </div>
       <h1 class="font-display font-bold text-4xl sm:text-5xl text-white mb-4">Get in touch</h1>
       <p class="text-white/60 text-lg leading-relaxed">
@@ -40,8 +43,13 @@ const roles = [
   <section class="py-8 px-4 sm:px-6 lg:px-8 pb-24">
     <div class="mx-auto max-w-2xl">
 
-      <!-- Formspree form -->
-      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/15 p-8">
+      <!-- Clay form card -->
+      <div class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-cyan-500/20 overflow-hidden p-8"
+           style="background: linear-gradient(145deg, rgba(6,182,212,0.10) 0%, rgba(10,13,18,0.93) 55%, rgba(6,182,212,0.04) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(6,182,212,0.25), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.52), transparent);"></div>
+
+        <p class="font-mono text-[9px] text-cyan-400/45 uppercase tracking-widest mb-5">[ SEND_MESSAGE ]</p>
+
         <form
           id="contact-form"
           action={CONTACT_FORM}
@@ -95,8 +103,8 @@ const roles = [
               required
               class="w-full px-4 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white/80 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition appearance-none"
             >
-              <option value="" class="bg-[#0f0f14]">Select your role…</option>
-              {roles.map((r) => <option value={r} class="bg-[#0f0f14]">{r}</option>)}
+              <option value="" class="bg-[#0a0d12]">Select your role…</option>
+              {roles.map((r) => <option value={r} class="bg-[#0a0d12]">{r}</option>)}
             </select>
           </div>
 
@@ -144,7 +152,8 @@ const roles = [
 
         <!-- Success state -->
         <div id="contact-thanks" class="text-center py-8 hidden">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto mb-4" aria-hidden="true">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" aria-hidden="true"
+               style="background: linear-gradient(135deg, rgba(6,182,212,0.25) 0%, rgba(6,182,212,0.08) 100%); border: 1px solid rgba(6,182,212,0.30); box-shadow: 0 8px 22px -4px rgba(6,182,212,0.25), inset 0 1px 0 rgba(255,255,255,0.10);">
             <svg class="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
           </div>
           <h2 class="font-display font-bold text-xl text-white mb-2">Message sent!</h2>
@@ -194,4 +203,3 @@ const roles = [
     }
   }
 </script>
-

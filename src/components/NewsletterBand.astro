@@ -1,35 +1,43 @@
-﻿---
-/**
- * NewsletterBand.astro — reusable Substack CTA section.
- */
+---
 ---
 
 <section class="py-20 px-4 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl text-center">
-    <div data-reveal class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/20 shadow-[0_0_36px_-4px_rgba(6,182,212,0.18)] p-10">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-teal-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
-        <svg class="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-        </svg>
-      </div>
-      <h2 data-reveal data-reveal-delay="100" class="font-display font-bold text-2xl sm:text-3xl text-white mb-3">
-        New tools. Field notes. No noise.
-      </h2>
-      <p data-reveal data-reveal-delay="150" class="text-white/60 mb-8 leading-relaxed">
-        Get notified when new tools launch and read dispatches from the district.
-      </p>
-      <div data-reveal data-reveal-delay="200">
+    <p data-reveal class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-5">// stay_connected</p>
+    <div data-reveal data-reveal-delay="100"
+         class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-cyan-500/20 overflow-hidden p-10"
+         style="background: linear-gradient(145deg, rgba(6,182,212,0.11) 0%, rgba(10,13,18,0.92) 55%, rgba(20,184,166,0.05) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -10px rgba(6,182,212,0.28), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+      <!-- Top edge glow -->
+      <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.55), transparent);"></div>
+      <!-- Dot-grid corner accent -->
+      <div aria-hidden="true" class="absolute bottom-0 right-0 w-36 h-36 pointer-events-none rounded-br-3xl overflow-hidden opacity-25"
+           style="background-image: radial-gradient(rgba(6,182,212,0.18) 1px, transparent 1px); background-size: 16px 16px; mask-image: radial-gradient(ellipse 100% 100% at 100% 100%, black 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse 100% 100% at 100% 100%, black 0%, transparent 70%);"></div>
+
+      <div class="relative z-10">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-6"
+             style="background: linear-gradient(135deg, rgba(6,182,212,0.28) 0%, rgba(6,182,212,0.08) 100%); border: 1px solid rgba(6,182,212,0.28); box-shadow: 0 8px 22px -4px rgba(6,182,212,0.28), inset 0 1px 0 rgba(255,255,255,0.12);"
+             aria-hidden="true">
+          <svg class="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-white mb-3">
+          New tools. Field notes. No noise.
+        </h2>
+        <p class="text-white/60 mb-8 leading-relaxed">
+          Get notified when new tools launch and read dispatches from the district.
+        </p>
         <a
           href="https://drhenrynzozone.substack.com"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black font-bold text-base transition-all duration-200 hover:shadow-[0_0_28px_rgba(6,182,212,0.40)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-2"
+          style="box-shadow: 0 8px 28px -4px rgba(6,182,212,0.40), inset 0 1px 0 rgba(255,255,255,0.10);"
         >
           Subscribe on Substack
         </a>
-        <p class="text-white/30 text-xs mt-4">No spam. Unsubscribe any time.</p>
+        <p class="font-mono text-white/25 text-[10px] mt-4 tracking-wide">No spam. Unsubscribe any time.</p>
       </div>
     </div>
   </div>
 </section>
-

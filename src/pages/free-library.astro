@@ -1,4 +1,4 @@
-﻿---
+---
 import Base from '../layouts/Base.astro';
 import AuroraBackground from '../components/AuroraBackground.astro';
 import DownloadGate from '../components/DownloadGate.astro';
@@ -24,10 +24,12 @@ const comingSoon = [
   <!-- Hero -->
   <section class="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <AuroraBackground variant="b" />
+    <div aria-hidden="true" class="absolute inset-0 z-[1] pointer-events-none"
+         style="background-image: radial-gradient(rgba(6,182,212,0.07) 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);"></div>
     <div class="relative z-10 mx-auto max-w-3xl">
       <div class="inline-flex items-center gap-2.5 mb-8">
         <div class="w-8 h-px bg-cyan-400/60" aria-hidden="true"></div>
-        <span class="text-cyan-300/80 text-xs font-semibold uppercase tracking-widest">Free Library</span>
+        <span class="font-mono text-cyan-300/70 text-[11px] uppercase tracking-widest">// free_library</span>
       </div>
       <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6">
         Practical tools,<br />
@@ -43,10 +45,13 @@ const comingSoon = [
   <!-- Live tools -->
   <section class="py-4 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl space-y-6">
-      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest">Available now</p>
+      <p class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest">// available_now</p>
 
-      <!-- ── Tool 1: Pharmacy Inventory Tracker v2.1 ── -->
-      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-cyan-500/25 shadow-[0_0_40px_-6px_rgba(6,182,212,0.20)] overflow-hidden">
+      <!-- ── Tool 1: Pharmacy Inventory Tracker v2.1 (cyan) ── -->
+      <div data-reveal
+           class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-cyan-500/20 overflow-hidden"
+           style="background: linear-gradient(145deg, rgba(6,182,212,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(6,182,212,0.04) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(6,182,212,0.25), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.55), transparent);"></div>
         <div class="p-8">
           <div class="flex flex-col sm:flex-row gap-6 items-start">
 
@@ -56,8 +61,9 @@ const comingSoon = [
 
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-500/25 text-cyan-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
-                <span class="text-white/30 text-xs">v2.1 · Excel + PDF guide</span>
+                <span class="font-mono px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                      style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.28); color: rgba(103,232,249,0.9);">[ LIVE ]</span>
+                <span class="font-mono text-white/30 text-[10px]">v2.1 · Excel + PDF guide</span>
               </div>
               <h2 class="font-display font-bold text-2xl text-white mb-2">Pharmacy Inventory Tracker v2.1</h2>
               <p class="text-white/60 text-sm leading-relaxed mb-6">
@@ -77,15 +83,18 @@ const comingSoon = [
             </div>
           </div>
         </div>
-        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
-          <span>📦 Works offline · No macros required</span>
-          <span>🌍 Designed for low-bandwidth environments</span>
-          <span>📝 Tested in Mamfe health district, Cameroon</span>
+        <div class="border-t px-8 py-4 flex flex-wrap gap-4 font-mono text-[10px] text-white/35" style="border-color: rgba(6,182,212,0.10);">
+          <span>[ offline ] Works offline · No macros required</span>
+          <span>[ field ] Designed for low-bandwidth environments</span>
+          <span>[ tested ] Mamfe health district, Cameroon</span>
         </div>
       </div>
 
-      <!-- ── Tool 2: RH Data Quality Performance Review Tool v1.1 ── -->
-      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-amber-500/20 shadow-[0_0_40px_-6px_rgba(245,158,11,0.12)] overflow-hidden">
+      <!-- ── Tool 2: RH Data Quality Performance Review Tool v1.1 (amber) ── -->
+      <div data-reveal data-reveal-delay="80"
+           class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-amber-500/20 overflow-hidden"
+           style="background: linear-gradient(145deg, rgba(245,158,11,0.09) 0%, rgba(10,13,18,0.92) 55%, rgba(245,158,11,0.03) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(245,158,11,0.18), inset 0 1.5px 0 rgba(255,255,255,0.10), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(245,158,11,0.48), transparent);"></div>
         <div class="p-8">
           <div class="flex flex-col sm:flex-row gap-6 items-start">
 
@@ -95,8 +104,9 @@ const comingSoon = [
 
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/25 text-amber-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
-                <span class="text-white/30 text-xs">v1.1 · Excel + PDF guide</span>
+                <span class="font-mono px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                      style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.28); color: rgba(252,211,77,0.9);">[ LIVE ]</span>
+                <span class="font-mono text-white/30 text-[10px]">v1.1 · Excel + PDF guide</span>
               </div>
               <h2 class="font-display font-bold text-2xl text-white mb-2">RH Data Quality Performance Review Tool v1.1</h2>
               <p class="text-white/60 text-sm leading-relaxed mb-6">
@@ -116,15 +126,18 @@ const comingSoon = [
             </div>
           </div>
         </div>
-        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
-          <span>📊 Works offline · No macros required</span>
-          <span>🏥 Facility-level scoring against national benchmarks</span>
-          <span>📋 District review–ready summary output</span>
+        <div class="border-t px-8 py-4 flex flex-wrap gap-4 font-mono text-[10px] text-white/35" style="border-color: rgba(245,158,11,0.10);">
+          <span>[ offline ] Works offline · No macros required</span>
+          <span>[ score ] Facility-level scoring against national benchmarks</span>
+          <span>[ report ] District review–ready summary output</span>
         </div>
       </div>
 
-      <!-- ── Tool 3: MINSANTE v2 Gestion Financière ── -->
-      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-violet-500/20 shadow-[0_0_40px_-6px_rgba(139,92,246,0.12)] overflow-hidden">
+      <!-- ── Tool 3: MINSANTE v2 Gestion Financière (violet) ── -->
+      <div data-reveal data-reveal-delay="160"
+           class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-violet-500/20 overflow-hidden"
+           style="background: linear-gradient(145deg, rgba(139,92,246,0.09) 0%, rgba(10,13,18,0.92) 55%, rgba(139,92,246,0.03) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 48px -10px rgba(139,92,246,0.18), inset 0 1.5px 0 rgba(255,255,255,0.10), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(139,92,246,0.48), transparent);"></div>
         <div class="p-8">
           <div class="flex flex-col sm:flex-row gap-6 items-start">
 
@@ -134,8 +147,9 @@ const comingSoon = [
 
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/25 text-violet-300 text-[10px] font-bold uppercase tracking-wider">Live</span>
-                <span class="text-white/30 text-xs">v2 · Web (HTML) · Bilingual FR / EN</span>
+                <span class="font-mono px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                      style="background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.28); color: rgba(196,181,253,0.9);">[ LIVE ]</span>
+                <span class="font-mono text-white/30 text-[10px]">v2 · Web (HTML) · Bilingual FR / EN</span>
               </div>
               <h2 class="font-display font-bold text-2xl text-white mb-2">MINSANTE v2 — Gestion Financière</h2>
               <p class="text-white/60 text-sm leading-relaxed mb-6">
@@ -156,10 +170,10 @@ const comingSoon = [
             </div>
           </div>
         </div>
-        <div class="border-t border-white/[0.06] px-8 py-4 flex flex-wrap gap-4 text-xs text-white/35">
-          <span>🌐 Opens in browser · No installation required</span>
-          <span>🇫🇷🇬🇧 Bilingual FR / EN</span>
-          <span>📋 Built to MINSANTE specifications</span>
+        <div class="border-t px-8 py-4 flex flex-wrap gap-4 font-mono text-[10px] text-white/35" style="border-color: rgba(139,92,246,0.10);">
+          <span>[ web ] Opens in browser · No installation required</span>
+          <span>[ i18n ] Bilingual FR / EN</span>
+          <span>[ compliant ] Built to MINSANTE specifications</span>
         </div>
       </div>
 
@@ -170,16 +184,14 @@ const comingSoon = [
   <!-- Coming soon cards -->
   <section class="py-16 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
-      <p class="text-white/40 text-xs font-semibold uppercase tracking-widest mb-6">Coming soon</p>
+      <p class="font-mono text-[10px] text-cyan-400/45 uppercase tracking-widest mb-6">// coming_soon</p>
       <div data-reveal class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {comingSoon.map(({ title, desc }) => (
-          <div class="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 opacity-60 relative overflow-hidden">
-            <!-- Diagonal stripe overlay -->
+          <div class="rounded-2xl border border-white/[0.06] p-5 opacity-55 relative overflow-hidden"
+               style="background: rgba(255,255,255,0.02);">
             <div class="absolute inset-0 opacity-[0.025]" style="background-image: repeating-linear-gradient(45deg, white, white 1px, transparent 1px, transparent 8px);" aria-hidden="true"></div>
             <div class="relative">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="px-2.5 py-0.5 rounded-full bg-white/10 text-white/40 text-[10px] font-bold uppercase tracking-wider">Coming soon</span>
-              </div>
+              <p class="font-mono text-[9px] text-white/30 uppercase tracking-widest mb-3">[ COMING_SOON ]</p>
               <h3 class="font-display font-bold text-base text-white/70 mb-1.5">{title}</h3>
               <p class="text-white/40 text-xs leading-relaxed">{desc}</p>
             </div>
@@ -192,5 +204,3 @@ const comingSoon = [
   <NewsletterBand />
 
 </Base>
-
-

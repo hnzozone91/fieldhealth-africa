@@ -1,4 +1,4 @@
-﻿---
+---
 /**
  * /checkout-cancelled
  * Paystack callback target when user cancels the payment.
@@ -14,9 +14,16 @@ import Base from '../layouts/Base.astro';
 >
   <div class="min-h-[80vh] flex items-center justify-center px-4 py-20">
     <div class="max-w-lg w-full text-center">
-      <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] [backdrop-filter:blur(18px)] border border-white/[0.13] ring-1 ring-white/10 p-10">
 
-        <div class="w-16 h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+      <!-- Clay card -->
+      <div class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-white/15 overflow-hidden p-10"
+           style="background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(10,13,18,0.93) 55%, rgba(255,255,255,0.02) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.65), 0 0 40px -12px rgba(255,255,255,0.05), inset 0 1.5px 0 rgba(255,255,255,0.10), inset 0 -2px 8px rgba(0,0,0,0.32);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);"></div>
+
+        <p class="font-mono text-[9px] text-white/30 uppercase tracking-widest mb-6">[ PAYMENT_CANCELLED ]</p>
+
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" aria-hidden="true"
+             style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10); box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);">
           <svg class="w-8 h-8 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -36,7 +43,7 @@ import Base from '../layouts/Base.astro';
           </a>
         </div>
 
-        <p class="text-white/30 text-xs mt-6">
+        <p class="font-mono text-white/30 text-[10px] mt-6 tracking-wide">
           Had a problem with payment? Email{' '}
           <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400/70 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a>.
         </p>
@@ -44,4 +51,3 @@ import Base from '../layouts/Base.astro';
     </div>
   </div>
 </Base>
-
