@@ -125,11 +125,79 @@ const inDevelopment = [
   </section>
 
 
-  <!-- MINSANTE v3 -->
+  <!-- Live tools -->
   <section class="py-8 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
       <p class="font-mono text-[10px] text-teal-400/45 uppercase tracking-widest mb-6">// available_now</p>
 
+      <!-- Health Indicator Calculator Suite -->
+      <div data-reveal
+           class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/25 overflow-hidden mb-6"
+           style="background: linear-gradient(145deg, rgba(20,184,166,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(20,184,166,0.04) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -10px rgba(20,184,166,0.25), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(20,184,166,0.55), transparent);"></div>
+        <div class="p-8">
+          <div class="flex flex-col lg:flex-row gap-8 items-start">
+
+            <!-- Screenshot -->
+            <div class="flex-shrink-0 w-full lg:w-56 h-40 rounded-xl overflow-hidden border border-teal-500/20">
+              <img src="/images/blog/health-indicator-calculator-suite/health-indicator-calculator-suite.png" alt="Health Indicator Calculator Suite — report context, 55 indicators, DHIS2 auto-import" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+
+            <!-- Info -->
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="font-mono px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                      style="background: rgba(20,184,166,0.15); border: 1px solid rgba(20,184,166,0.32); color: rgba(94,234,212,0.9);">[ LIVE ]</span>
+                <span class="font-mono text-white/30 text-[10px]">v1.1 · Web app · 55 indicators · $79 one-time / $29·mo / $299·mo</span>
+              </div>
+              <h2 class="font-display font-bold text-2xl text-white mb-3">Health Indicator Calculator Suite</h2>
+              <p class="text-white/60 text-sm leading-relaxed mb-5">
+                Compute 55 WHO / UNICEF / Global Fund / PEPFAR indicators across six domains —
+                coverage &amp; EPI, HIV/TB/Malaria, mortality, nutrition, utilisation, and data quality.
+                Upload a raw DHIS2 / HMIS pivot export and it auto-detects and analyses every facility
+                with no manual mapping, benchmarks each result against editable targets with paste-ready
+                interpretation, and exports report-ready Excel / CSV. Built and tested in a Mamfe DMO office.
+              </p>
+              <ul class="space-y-2 mb-6">
+                {[
+                  '55 WHO / UNICEF / Global Fund / PEPFAR indicators across six domains',
+                  'Auto-imports raw DHIS2 / HMIS pivot exports — no manual mapping',
+                  'Benchmarked against editable national targets, with paste-ready interpretation',
+                  'Bulk multi-facility computation + custom indicator builder',
+                  'Excel / CSV export on every result',
+                  'Free Lite version for practitioners — coming soon',
+                ].map(item => (
+                  <li class="flex items-start gap-2.5 text-sm text-white/65">
+                    <svg class="w-4 h-4 text-teal-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="https://fieldhealth-indicators-tb4zamjekmwxqjotcc4tbi.streamlit.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(20,184,166,0.4)]"
+                >
+                  Launch the tool →
+                </a>
+                <span class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/15 text-white/40 font-bold text-sm cursor-not-allowed">
+                  Free Lite version — coming soon
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-t px-8 py-4 flex flex-wrap gap-4 font-mono text-[10px] text-white/30" style="border-color: rgba(20,184,166,0.10);">
+          <span>[ web ] Opens in browser · No installation</span>
+          <span>[ data ] DHIS2 / HMIS auto-import</span>
+          <span>[ pricing ] $79 one-time · $29/mo · $299/mo institutional</span>
+          <span>[ pay ] MTN MoMo · Orange Money · Card</span>
+        </div>
+      </div>
+
+      <!-- MINSANTE v3 -->
       <div data-reveal
            class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/25 overflow-hidden"
            style="background: linear-gradient(145deg, rgba(20,184,166,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(20,184,166,0.04) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -10px rgba(20,184,166,0.25), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
