@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
     "astro": "astro",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "node -e \"console.error('This site auto-deploys on Netlify on push to main. To publish, run: git push origin main'); process.exit(1)\"",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {

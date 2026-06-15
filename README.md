@@ -2,8 +2,9 @@
 
 > From data to decisions, in the field.
 
-Astro + Tailwind + Cloudflare Pages static site for Dr. Nzozone Henry Fomukong's
-digital health tools organisation.
+Astro + Tailwind static site for Dr. Nzozone Henry Fomukong's digital health
+tools organisation. **Hosted on Netlify** (`fieldhealthafrica.org`), which builds
+and deploys automatically on every push to `main`.
 
 ---
 
@@ -13,8 +14,27 @@ digital health tools organisation.
 npm install
 npm run dev          # → http://localhost:4321
 npm run build        # → dist/
-npm run preview      # preview the build locally
+npm run preview      # build + serve locally (via wrangler dev)
 ```
+
+---
+
+## Deployment
+
+**The live site is hosted on Netlify and deploys automatically from GitHub.**
+There is no manual deploy command — pushing to `main` is the deploy:
+
+```bash
+git push origin main   # Netlify builds (npm run build) and publishes dist/ to fieldhealthafrica.org
+```
+
+A Netlify build typically completes in 15–60s. `npm run deploy` is intentionally
+a no-op guard that prints this instruction.
+
+> **Legacy note:** an unused Cloudflare Worker (`wrangler.jsonc`,
+> `fieldhealth-africa.*.workers.dev`) still exists from an earlier setup. It is
+> **not** wired to the domain. Do not run `wrangler deploy` expecting it to update
+> production — it won't.
 
 ---
 
@@ -25,28 +45,28 @@ npm run preview      # preview the build locally
 | Framework    | Astro (static output)                    |
 | Styling      | Tailwind CSS + @tailwindcss/typography   |
 | Fonts        | Inter + Space Grotesk (self-hosted woff2)|
-| Dynamic      | Cloudflare Pages Functions (`functions/`)|
+| Dynamic      | `functions/` — see ⚠️ note below          |
 | Payments     | Paystack hosted Payment Links            |
 | Email/leads  | Formspree forms + Substack newsletter    |
-| Deploy       | Cloudflare Pages (free tier)             |
+| Deploy       | Netlify (auto-deploy on push to `main`)  |
 | Analytics    | Google Analytics 4 (env-var gated)       |
 
 ---
 
 ## Environment variables
 
-Set these in **Cloudflare Pages → Settings → Environment variables**.
+Set these in **Netlify → Site configuration → Environment variables**.
 Never put them in code or commit them.
 
-| Variable              | Where             | Notes                                                        |
-|-----------------------|-------------------|--------------------------------------------------------------|
-| `GA4_MEASUREMENT_ID`  | Pages env (prod)  | Your GA4 ID, e.g. `G-XXXXXXXXXX`. Omit to disable tracking. |
-| `PAYSTACK_SECRET_KEY` | Pages env (prod)  | Only needed when server-side payment verification is enabled (see stub). |
+| Variable              | Where               | Notes                                                        |
+|-----------------------|---------------------|--------------------------------------------------------------|
+| `GA4_MEASUREMENT_ID`  | Netlify env (prod)  | Your GA4 ID, e.g. `G-XXXXXXXXXX`. Omit to disable tracking. |
+| `PAYSTACK_SECRET_KEY` | Netlify env (prod)  | Only needed when server-side payment verification is enabled (see stub). |
 
 ### Paystack key types
 
 - **Public/publishable key** (`pk_live_…`) — safe in browser code. Used if you ever switch to Paystack inline checkout. **Not currently used** — we use hosted Payment Links which need no key in the browser.
-- **Secret key** (`sk_live_…`) — **NEVER in client code**. Lives in Cloudflare env vars only. Currently unused (stub only).
+- **Secret key** (`sk_live_…`) — **NEVER in client code**. Lives in Netlify env vars only. Currently unused (stub only).
 
 ---
 
@@ -61,7 +81,7 @@ Never put them in code or commit them.
 5. Copy the link URL (looks like `https://paystack.com/pay/…`)
 6. Paste it into `src/data/products.ts` → `paystackLink` field
 7. Set `live: true` on the product
-8. Commit + push — Cloudflare Pages rebuilds automatically
+8. Commit + push to `main` — Netlify rebuilds automatically
 
 ---
 
@@ -94,7 +114,7 @@ No other file needs changing.
    Allowed categories: `healthcare-workers` · `data-and-analysis` · `building-and-publishing`.
    **Never use `clinical` or anything affecting patient decisions.**
 
-2. **`functions/recommends/[slug].ts`** — mirror the same slug → URL mapping in the `AFFILIATES` object (CF Functions can't import from `src/`).
+2. **`functions/recommends/[slug].ts`** — mirror the same slug → URL mapping in the `AFFILIATES` object (the function can't import from `src/`). ⚠️ Note: this `functions/` route is not active on Netlify — see the "Serverless functions" section.
 
 3. **`src/pages/picks.astro`** — add a description string to the `descriptions` object (100–200 words).
 
@@ -144,23 +164,26 @@ Copy-Item "$src2/space-grotesk-latin-700-normal.woff2" public/fonts/
 
 ---
 
-## Cloudflare Pages Functions
-
-Functions live in `functions/` alongside `src/`. Cloudflare auto-detects them.
+## Serverless functions (`functions/`)
 
 | File                              | Route                        | Purpose                          |
 |-----------------------------------|------------------------------|----------------------------------|
 | `functions/recommends/[slug].ts`  | `/recommends/:slug`          | Affiliate link cloaker (302)     |
 | `functions/api/verify-payment.ts` | `/api/verify-payment`        | Payment verification stub (501)  |
 
-The `verify-payment` function is **NOT wired live** — see the stub for the upgrade path to embedded Paystack checkout + server-side verification.
+> ⚠️ **Host mismatch — not active on Netlify.** The root `functions/` directory is
+> a **Cloudflare Pages** convention; Netlify does not auto-detect it. On the current
+> Netlify deploy these routes are **not live**. To run them on Netlify, port the
+> handlers to `netlify/functions/` (or `netlify/edge-functions/`) and add the
+> matching redirects in `netlify.toml`. The affiliate cloaker (`/recommends/:slug`)
+> is the only one with user impact; `verify-payment` is an unwired stub regardless.
 
 ---
 
 ## GA4 — where to paste your ID
 
 1. Get your Measurement ID from [analytics.google.com](https://analytics.google.com) → Admin → Data Streams → your stream → Measurement ID (starts with `G-`)
-2. Go to Cloudflare Pages → your project → Settings → Environment variables → Production
+2. Go to Netlify → your site → Site configuration → Environment variables
 3. Add: `GA4_MEASUREMENT_ID` = `G-XXXXXXXXXX`
 4. Redeploy (trigger a new build or push a commit)
 
@@ -177,9 +200,12 @@ The `gtag` script is only loaded when `GA4_MEASUREMENT_ID` is set — the site w
 
 ---
 
-## DNS (Namecheap → Cloudflare Pages)
+## DNS (Namecheap → Netlify)
 
-See the GATE 2 walkthrough — Dr. Fomukong pastes records directly into Namecheap. Exact records will be provided at GATE 2.
+The domain `fieldhealthafrica.org` is registered at Namecheap and points to Netlify
+(verified live: `Server: Netlify`). DNS records follow Netlify's custom-domain setup
+(either Netlify DNS nameservers, or an `ALIAS`/`CNAME` to the Netlify site + apex
+handling). Manage the domain under **Netlify → Domain management**.
 
 ---
 
@@ -192,7 +218,7 @@ See the GATE 2 walkthrough — Dr. Fomukong pastes records directly into Nameche
 - [ ] Paste Formspree downloads endpoint → `src/pages/free-library.astro`
 - [ ] Paste Substack subscribe URL (3 locations: index, about, newsletter component)
 - [ ] Paste real affiliate URLs into `src/data/affiliates.ts` + `functions/recommends/[slug].ts`
-- [ ] Paste GA4 Measurement ID into Cloudflare Pages env vars
+- [ ] Paste GA4 Measurement ID into Netlify env vars
 - [ ] Upload real `FieldHealth_Pharmacy_Inventory_v2.1.xlsx` → `public/downloads/`
 - [ ] Upload real `FieldHealth_Pharmacy_Inventory_v2.1_User_Guide.docx` → `public/downloads/`
 - [ ] Replace `public/images/og-default.svg` with real 1200×630 PNG
