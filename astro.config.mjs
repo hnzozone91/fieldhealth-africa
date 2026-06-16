@@ -2,9 +2,8 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
-import cloudflare from "@astrojs/cloudflare";
-
 // https://astro.build/config
+// Static output — built by Netlify (npm run build) and served from dist/.
 export default defineConfig({
   output: 'static',
   site: 'https://fieldhealthafrica.org',
@@ -18,6 +17,4 @@ export default defineConfig({
         !page.includes('/checkout-cancelled'),
     }),
   ],
-
-  adapter: cloudflare()
 });

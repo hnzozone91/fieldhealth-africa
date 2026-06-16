@@ -6,8 +6,8 @@
  *
  * KEY MANAGEMENT NOTE:
  *   - paystackLink is a PUBLIC URL (safe in client code — it is a hosted payment page).
- *   - Secret keys (if ever used for server-side verification) go in Cloudflare
- *     Pages environment variables ONLY, never here.
+ *   - Secret keys (if ever used for server-side verification) go in Netlify
+ *     environment variables ONLY, never here.
  *   - See functions/api/verify-payment.ts for the stub verification function.
  */
 

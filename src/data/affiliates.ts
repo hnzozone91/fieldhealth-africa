@@ -2,7 +2,7 @@
  * affiliates.ts — affiliate redirect map.
  *
  * Each entry maps a slug (used in /recommends/<slug>) to a destination URL.
- * The Cloudflare Pages Function at functions/recommends/[slug].ts reads this map.
+ * The Netlify Function at netlify/functions/recommends.mts imports this map.
  *
  * ETHICAL CONSTRAINT (non-negotiable per brief):
  *   Only productivity, data, and learning tools. No clinical software,

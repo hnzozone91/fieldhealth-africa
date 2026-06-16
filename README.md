@@ -14,7 +14,7 @@ and deploys automatically on every push to `main`.
 npm install
 npm run dev          # → http://localhost:4321
 npm run build        # → dist/
-npm run preview      # build + serve locally (via wrangler dev)
+npm run preview      # serve the built dist/ locally (astro preview)
 ```
 
 ---
@@ -30,11 +30,6 @@ git push origin main   # Netlify builds (npm run build) and publishes dist/ to f
 
 A Netlify build typically completes in 15–60s. `npm run deploy` is intentionally
 a no-op guard that prints this instruction.
-
-> **Legacy note:** an unused Cloudflare Worker (`wrangler.jsonc`,
-> `fieldhealth-africa.*.workers.dev`) still exists from an earlier setup. It is
-> **not** wired to the domain. Do not run `wrangler deploy` expecting it to update
-> production — it won't.
 
 ---
 
@@ -114,11 +109,10 @@ No other file needs changing.
    Allowed categories: `healthcare-workers` · `data-and-analysis` · `building-and-publishing`.
    **Never use `clinical` or anything affecting patient decisions.**
 
-2. **`functions/recommends/[slug].ts`** — mirror the same slug → URL mapping in the `AFFILIATES` object (the function can't import from `src/`). ⚠️ Note: this `functions/` route is not active on Netlify — see the "Serverless functions" section.
+2. **`src/pages/picks.astro`** — add a description string to the `descriptions` object (100–200 words).
 
-3. **`src/pages/picks.astro`** — add a description string to the `descriptions` object (100–200 words).
-
-No other files need changing.
+That's it — the redirect function (`netlify/functions/recommends.mts`) imports the
+map from `affiliates.ts` directly, so there is no second copy to keep in sync.
 
 ---
 
@@ -164,19 +158,22 @@ Copy-Item "$src2/space-grotesk-latin-700-normal.woff2" public/fonts/
 
 ---
 
-## Serverless functions (`functions/`)
+## Serverless functions
 
-| File                              | Route                        | Purpose                          |
-|-----------------------------------|------------------------------|----------------------------------|
-| `functions/recommends/[slug].ts`  | `/recommends/:slug`          | Affiliate link cloaker (302)     |
-| `functions/api/verify-payment.ts` | `/api/verify-payment`        | Payment verification stub (501)  |
+| File                                 | Route                 | Host    | Purpose                          |
+|--------------------------------------|-----------------------|---------|----------------------------------|
+| `netlify/functions/recommends.mts`   | `/recommends/:slug`   | Netlify | Affiliate link cloaker (302) — **active** |
+| `functions/api/verify-payment.ts`    | `/api/verify-payment` | —       | Payment verification stub (501) — **inactive** |
 
-> ⚠️ **Host mismatch — not active on Netlify.** The root `functions/` directory is
-> a **Cloudflare Pages** convention; Netlify does not auto-detect it. On the current
-> Netlify deploy these routes are **not live**. To run them on Netlify, port the
-> handlers to `netlify/functions/` (or `netlify/edge-functions/`) and add the
-> matching redirects in `netlify.toml`. The affiliate cloaker (`/recommends/:slug`)
-> is the only one with user impact; `verify-payment` is an unwired stub regardless.
+**`recommends`** is a Netlify Function (v2). Its route is declared via the
+`config.path` export — no `netlify.toml` redirect needed. It imports the
+destination map from `src/data/affiliates.ts`, so the map has a single source of
+truth.
+
+> ⚠️ **`functions/api/verify-payment.ts` is a leftover Cloudflare Pages stub** and
+> is **not active on Netlify** (root `functions/` is a Cloudflare-Pages convention).
+> It only ever returned 501. If/when server-side Paystack verification is needed,
+> port it to `netlify/functions/` like `recommends.mts`.
 
 ---
 
