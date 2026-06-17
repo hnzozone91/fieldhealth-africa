@@ -5,7 +5,7 @@
  * Props:
  *   title          — <title> content (page-specific prefix, site name appended)
  *   description    — meta description
- *   ogImage?       — absolute URL for OG image (defaults to /images/og-default.png)
+ *   ogImage?       — path/URL for OG image (defaults to /images/og-home.jpg, 1200x630)
  *   noIndex?       — adds noindex tag on pages that shouldn't be indexed
  */
 import Header from '../components/Header.astro';
@@ -25,7 +25,7 @@ interface Props {
 const {
   title,
   description,
-  ogImage = '/images/og-default.svg',
+  ogImage = '/images/og-home.jpg',
   noIndex = false,
 } = Astro.props;
 

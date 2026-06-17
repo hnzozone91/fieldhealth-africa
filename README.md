@@ -218,7 +218,7 @@ handling). Manage the domain under **Netlify → Domain management**.
 - [ ] Paste GA4 Measurement ID into Netlify env vars
 - [ ] Upload real `FieldHealth_Pharmacy_Inventory_v2.1.xlsx` → `public/downloads/`
 - [ ] Upload real `FieldHealth_Pharmacy_Inventory_v2.1_User_Guide.docx` → `public/downloads/`
-- [ ] Replace `public/images/og-default.svg` with real 1200×630 PNG
+- [x] OG image: `public/images/og-home.jpg` (1200×630) is the site-wide default
 - [ ] Fill TODO copy sections: Mamfe origin story, two-library model explanation
 - [ ] Replace placeholder blog post titles/dates with real publish dates
 - [ ] Set up Zapier: Formspree → email pipe for Substack lead capture
