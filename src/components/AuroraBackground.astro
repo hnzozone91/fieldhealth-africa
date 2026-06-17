@@ -131,8 +131,14 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
       75%     { filter: hue-rotate(8deg)   saturate(1.1); }
     }
 
-    /* Enable will-change: border-radius alongside transform for smoother morphing */
-    .aurora-blob { will-change: transform, border-radius; }
+    /* will-change: only transform is compositable — border-radius morph repaints
+       regardless, so hinting it just adds layer-management overhead. */
+    .aurora-blob { will-change: transform; }
+
+    /* Pause all aurora motion when the layer is scrolled out of view.
+       JS toggles animation-play-state on .aurora-root; children inherit it. */
+    .aurora-base,
+    .aurora-blob { animation-play-state: inherit; }
 
     /* Blob 1 — large, upper-left: slow drift + organic shape morph */
     @keyframes blob-drift-1 {
@@ -216,6 +222,26 @@ const rootId = parallax ? 'aurora-parallax-root' : undefined;
     .blob-4 { animation: blob-drift-4 20s ease-in-out infinite 2s; }
   }
 </style>
+
+<!-- Pause aurora motion when its layer is off-screen (perf — no visual change while visible).
+     Hoisted + deduped by Astro, so it runs once per page and handles every instance. -->
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const roots = document.querySelectorAll<HTMLElement>('.aurora-root');
+    if (roots.length) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            (entry.target as HTMLElement).style.animationPlayState =
+              entry.isIntersecting ? 'running' : 'paused';
+          });
+        },
+        { rootMargin: '120px' },
+      );
+      roots.forEach((root) => io.observe(root));
+    }
+  }
+</script>
 
 <!-- Parallax scroll handler (injected only when parallax={true}) -->
 <script define:vars={{ parallax }}>

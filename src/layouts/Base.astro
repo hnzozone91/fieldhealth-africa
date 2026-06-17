@@ -41,6 +41,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://fieldhea
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+  <!-- Activate the [data-reveal] hidden state before first paint (blocking, in <head>)
+       so there is no flash. If JS is disabled, the class is never added and all
+       [data-reveal] content stays visible — never hidden forever. -->
+  <script is:inline>document.documentElement.classList.add('js-ready');</script>
+
   <!-- Primary meta -->
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
@@ -142,16 +147,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://fieldhea
      Elements with [data-reveal] start invisible and slide up.
      The JS observer below adds .revealed when they enter the viewport.
      Reduced-motion: block skipped entirely — elements visible from paint.
+     Resilience: the hidden state is gated behind html.js-ready, set by a
+     blocking inline script in <head>. If JS never runs, nothing stays hidden.
   ──────────────────────────────────────────────────────────────────── */
   @media (prefers-reduced-motion: no-preference) {
-    [data-reveal] {
+    html.js-ready [data-reveal] {
       opacity: 0;
       transform: translateY(36px);
       transition:
         opacity  0.70s cubic-bezier(0.16, 1, 0.3, 1),
         transform 0.70s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    [data-reveal].revealed {
+    html.js-ready [data-reveal].revealed {
       opacity: 1;
       transform: translateY(0);
     }
@@ -179,6 +186,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://fieldhea
   (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    // (html.js-ready is set by a blocking inline script in <head>, before paint.)
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
