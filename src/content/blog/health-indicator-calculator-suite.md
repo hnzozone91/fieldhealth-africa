@@ -4,6 +4,7 @@ description: "The Health Indicator Calculator Suite computes 55 WHO/UNICEF/Globa
 pubDate: 2026-06-15
 tags: ["tools", "dhis2", "field-notes"]
 hasAffiliateLinks: false
+substackUrl: "https://drhenrynzozone.substack.com/p/i-turned-a-raw-dhis2-export-into"
 draft: false
 ---
 
