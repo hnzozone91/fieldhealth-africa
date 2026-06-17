@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import AuroraBackground from '../components/AuroraBackground.astro';
 import GlassCard from '../components/GlassCard.astro';
 import NewsletterBand from '../components/NewsletterBand.astro';
+import HeartbeatBanner from '../components/HeartbeatBanner.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
@@ -115,6 +116,12 @@ const posts = (await getCollection('blog'))
       </div>
     </div>
   </section>
+
+
+  <!-- ════════════════════════════════════════════
+       HEARTBEAT BRAND BAND
+       ════════════════════════════════════════════ -->
+  <HeartbeatBanner />
 
 
   <!-- ════════════════════════════════════════════

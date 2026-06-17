@@ -1,0 +1,120 @@
+---
+/**
+ * HeartbeatBanner.astro — full-width "live monitor" brand band.
+ *
+ * Digital-HUD aesthetic matching the site: dark glass band, dot-grid + scanline,
+ * the FieldHealth Africa wordmark as live text, and an animated ECG/heartbeat
+ * trace (the brand's core motif) with a sweeping lit "beam".
+ *
+ * Motion is CSS-only and respects prefers-reduced-motion: the global reduce rule
+ * in Base.astro freezes it, and the local reduce block below shows the full ECG
+ * statically (no sweep, no pulse).
+ */
+const ECG_PATH =
+  'M0,52 h120 l14,-9 l14,9 h30 l8,7 l10,-44 l10,54 l8,-17 h40 l20,-13 l22,13 h104 ' +
+  'h120 l14,-9 l14,9 h30 l8,7 l10,-44 l10,54 l8,-17 h40 l20,-13 l22,13 h104 ' +
+  'h120 l14,-9 l14,9 h30 l8,7 l10,-44 l10,54 l8,-17 h40 l20,-13 l22,13 h104';
+---
+
+<section class="hb-band relative overflow-hidden py-14 sm:py-16 px-4 sm:px-6 lg:px-8" aria-label="FieldHealth Africa">
+  <!-- Top + bottom hairline edge glow -->
+  <div aria-hidden="true" class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.55), transparent);"></div>
+  <div aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, rgba(20,184,166,0.45), transparent);"></div>
+
+  <!-- Dot-grid texture, fades at edges -->
+  <div aria-hidden="true" class="absolute inset-0 pointer-events-none"
+       style="background-image: radial-gradient(rgba(6,182,212,0.10) 1px, transparent 1px); background-size: 26px 26px; mask-image: radial-gradient(ellipse 75% 120% at 50% 50%, black 35%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 75% 120% at 50% 50%, black 35%, transparent 100%);"></div>
+
+  <!-- Drifting scanline accent -->
+  <div aria-hidden="true" class="hb-scanline absolute left-0 right-0 h-px pointer-events-none"
+       style="background: linear-gradient(90deg, transparent 0%, rgba(6,182,212,0.30) 35%, rgba(52,211,153,0.40) 50%, rgba(6,182,212,0.30) 65%, transparent 100%);"></div>
+
+  <div data-reveal class="relative z-10 mx-auto max-w-4xl text-center">
+
+    <!-- HUD top row -->
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <span class="font-mono text-cyan-300/60 text-[10px] sm:text-[11px] uppercase tracking-widest">// fieldhealth_africa</span>
+      <span class="font-mono inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+            style="background: rgba(20,184,166,0.14); border: 1px solid rgba(20,184,166,0.32); color: rgba(94,234,212,0.9);">
+        <span class="hb-live-dot inline-block w-1.5 h-1.5 rounded-full" style="background: rgb(52,211,153);" aria-hidden="true"></span>
+        LIVE
+      </span>
+    </div>
+
+    <!-- Wordmark -->
+    <h2 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-none tracking-tight">
+      FieldHealth&nbsp;<span class="hb-accent">Africa</span>
+    </h2>
+    <p class="font-mono text-white/45 text-[11px] sm:text-xs uppercase tracking-[0.2em] mt-4">
+      from data to decisions, in the field
+    </p>
+
+    <!-- Animated ECG / heartbeat trace -->
+    <div class="hb-ecg relative mt-8 mx-auto max-w-3xl" aria-hidden="true">
+      <div class="hb-scan-bar absolute inset-y-0 w-24 pointer-events-none"
+           style="background: linear-gradient(90deg, transparent, rgba(6,182,212,0.18), rgba(52,211,153,0.10), transparent);"></div>
+      <svg viewBox="0 0 1200 100" preserveAspectRatio="none" class="block w-full h-[64px] sm:h-[76px]" role="presentation">
+        <!-- Faint persistent trace -->
+        <path d={ECG_PATH} pathLength="1000" fill="none" stroke="rgba(94,234,212,0.18)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <!-- Bright sweeping beam -->
+        <path class="hb-beam" d={ECG_PATH} pathLength="1000" fill="none" stroke="rgb(94,234,212)" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hb-band {
+    background:
+      radial-gradient(ellipse 70% 140% at 50% 50%, rgba(6,182,212,0.07) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(10,13,18,0.0) 0%, rgba(10,13,18,0.55) 50%, rgba(10,13,18,0.0) 100%);
+  }
+
+  .hb-accent {
+    background: linear-gradient(to right, #67e8f9, #5eead4, #6ee7b7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Heartbeat trace — bright lit segment sweeps along the path (monitor draw) */
+  .hb-beam {
+    stroke-dasharray: 70 1000;
+    filter: drop-shadow(0 0 5px rgba(6,182,212,0.85)) drop-shadow(0 0 12px rgba(52,211,153,0.35));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hb-beam { animation: hb-sweep 3.6s linear infinite; }
+    .hb-scan-bar { animation: hb-scan 3.6s linear infinite; }
+    .hb-live-dot { animation: hb-pulse 1.6s ease-in-out infinite; }
+    .hb-scanline { animation: hb-scanline-move 7s ease-in-out infinite; }
+  }
+
+  @keyframes hb-sweep {
+    from { stroke-dashoffset: 1000; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes hb-scan {
+    from { transform: translateX(-30%); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    to   { transform: translateX(820%); opacity: 0; }
+  }
+  @keyframes hb-pulse {
+    0%, 100% { opacity: 1;   box-shadow: 0 0 0 0 rgba(52,211,153,0.55); }
+    50%      { opacity: 0.6; box-shadow: 0 0 0 4px rgba(52,211,153,0); }
+  }
+  @keyframes hb-scanline-move {
+    0%, 100% { top: 12%; opacity: 0; }
+    50%      { top: 88%; opacity: 1; }
+  }
+
+  /* Reduced motion: show the full ECG statically, no sweep/pulse */
+  @media (prefers-reduced-motion: reduce) {
+    .hb-beam { stroke-dasharray: none; opacity: 0.7; }
+    .hb-scan-bar { display: none; }
+  }
+</style>
