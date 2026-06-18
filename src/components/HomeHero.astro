@@ -1,0 +1,351 @@
+---
+/**
+ * HomeHero.astro — full-viewport "digital public health" welcome hero.
+ *
+ * Recreated from design_handoff_welcome_hero (high-fidelity) using the site's
+ * own tokens/utilities and fonts (Space Grotesk display + Inter body + mono
+ * labels) instead of the prototype's Google Fonts, for consistency + perf.
+ *
+ * - Full-bleed <canvas> network animation over a faint orange Africa silhouette
+ *   (africa.png, alpha-sampled so nodes over the continent render orange).
+ * - Entrance reuses the site's [data-reveal] system (resilient: content is never
+ *   hidden if JS fails; honours prefers-reduced-motion).
+ * - Count-up stats, floating tool chips. Canvas pauses off-screen + respects
+ *   reduced motion.
+ *
+ * -mt-24 cancels the layout's <main> pt-24 so the hero fills to the very top,
+ * with the global glass header floating over it.
+ */
+---
+
+<section
+  id="home-hero"
+  class="relative -mt-24 min-h-screen overflow-hidden"
+  style="background: radial-gradient(130% 95% at 30% 28%, #0d373d 0%, #082329 46%, #04131a 100%);"
+>
+  <!-- Network canvas -->
+  <canvas id="hero-net" class="absolute inset-0 w-full h-full" style="z-index:1;"></canvas>
+
+  <!-- Soft radial glows -->
+  <div aria-hidden="true" class="absolute pointer-events-none" style="z-index:1; top:-180px; left:-120px; width:680px; height:680px; border-radius:50%; background:radial-gradient(circle, rgba(45,212,191,.18), rgba(45,212,191,0) 65%);"></div>
+  <div aria-hidden="true" class="absolute pointer-events-none" style="z-index:1; bottom:-220px; right:-160px; width:760px; height:760px; border-radius:50%; background:radial-gradient(circle, rgba(247,147,60,.10), rgba(247,147,60,0) 62%);"></div>
+
+  <!-- Left-to-right legibility gradient -->
+  <div aria-hidden="true" class="absolute inset-0 pointer-events-none" style="z-index:2; background:linear-gradient(96deg, rgba(4,18,24,.94) 0%, rgba(4,18,24,.62) 40%, rgba(4,18,24,.08) 72%, rgba(4,18,24,.3) 100%);"></div>
+
+  <!-- Hero content -->
+  <div class="hero-content relative max-w-[1340px] mx-auto px-6 sm:px-10 lg:px-[60px] pt-32 sm:pt-36 lg:pt-[150px] pb-20" style="z-index:5;">
+
+    <!-- Eyebrow -->
+    <div data-reveal class="flex items-center gap-3.5 mb-7">
+      <span class="block w-[34px] h-px" style="background:#2dd4bf;" aria-hidden="true"></span>
+      <span class="font-mono text-[12px] uppercase" style="letter-spacing:.24em; color:#5eead4;">// FieldHealth <span style="color:#f7a35c;">Africa</span></span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="font-display font-bold text-[clamp(2.5rem,5vw+1rem,5.5rem)] leading-[0.98] tracking-[-0.025em]" style="color:#f2fbfa;">
+      <span data-reveal data-reveal-delay="100" class="block">From data</span>
+      <span data-reveal data-reveal-delay="150" class="block">to decisions,</span>
+      <span data-reveal data-reveal-delay="200" class="block" style="background:linear-gradient(92deg,#5eead4,#22d3ee 55%,#38bdf8); -webkit-background-clip:text; background-clip:text; color:transparent;">in the field.</span>
+    </h1>
+
+    <!-- Paragraph -->
+    <p data-reveal data-reveal-delay="300" class="mt-7 max-w-[510px] text-[18px] leading-[1.55]" style="color:#9fb9bb;">
+      Practical digital health tools built and tested by <span style="color:#f7a35c;">African</span> practitioners — free for health workers, premium for global consultants.
+    </p>
+
+    <!-- CTAs -->
+    <div data-reveal data-reveal-delay="400" class="flex flex-wrap gap-3.5 mt-9">
+      <a href="/free-library"
+         class="hero-cta-primary inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-semibold text-[15.5px] transition-[transform,filter] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+         style="background:linear-gradient(180deg,#2dd4bf,#13a594); color:#06231f; box-shadow:0 14px 34px -10px rgba(45,212,191,.55); outline-color:#5eead4;">
+        Browse the Free Library →
+      </a>
+      <a href="/pro-library"
+         class="hero-cta-secondary inline-flex items-center px-[26px] py-4 rounded-full font-medium text-[15.5px] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+         style="border:1px solid rgba(94,234,212,.32); background:rgba(94,234,212,.05); color:#d6f4ef; outline-color:#5eead4;">
+        Explore Pro Tools
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div data-reveal data-reveal-delay="500" class="flex flex-wrap gap-4 mt-14">
+      <a href="/about" class="hero-stat block w-[172px] p-[18px_20px] rounded-[14px] [backdrop-filter:blur(10px)] transition-[transform,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+         style="background:rgba(10,30,34,.5); border:1px solid rgba(94,234,212,.14); outline-color:#5eead4;">
+        <div class="font-mono text-[10px]" style="letter-spacing:.18em; color:#5eead4;">[ PAPERS ]</div>
+        <div class="font-display font-bold text-[40px] leading-none" style="color:#f2fbfa; margin:8px 0 4px;"><span data-count="7">00</span></div>
+        <div class="text-[12px]" style="color:#7e9799;">Peer-reviewed publications</div>
+      </a>
+      <a href="/free-library" class="hero-stat block w-[172px] p-[18px_20px] rounded-[14px] [backdrop-filter:blur(10px)] transition-[transform,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+         style="background:rgba(10,30,34,.5); border:1px solid rgba(94,234,212,.14); outline-color:#5eead4;">
+        <div class="font-mono text-[10px]" style="letter-spacing:.18em; color:#5eead4;">[ FREE ]</div>
+        <div class="font-display font-bold text-[40px] leading-none" style="color:#f2fbfa; margin:8px 0 4px;"><span data-count="4">00</span></div>
+        <div class="text-[12px]" style="color:#7e9799;">Free tools live</div>
+      </a>
+      <a href="/pro-library" class="hero-stat block w-[172px] p-[18px_20px] rounded-[14px] [backdrop-filter:blur(10px)] transition-[transform,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+         style="background:rgba(10,30,34,.5); border:1px solid rgba(94,234,212,.14); outline-color:#5eead4;">
+        <div class="font-mono text-[10px]" style="letter-spacing:.18em; color:#5eead4;">[ PRO ]</div>
+        <div class="font-display font-bold text-[40px] leading-none" style="color:#f2fbfa; margin:8px 0 4px;"><span data-count="2">00</span></div>
+        <div class="text-[12px]" style="color:#7e9799;">Pro tools live</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating tool chips (desktop only) -->
+  <div class="absolute inset-0 hidden xl:block" style="z-index:4; pointer-events:none;">
+    <a href="/blog/health-indicator-calculator-suite"
+       class="hero-chip pointer-events-auto absolute w-[224px] p-[15px_17px] rounded-[14px] [backdrop-filter:blur(12px)]"
+       style="top:148px; right:78px; background:rgba(94,234,212,.06); border:1px solid rgba(94,234,212,.2); animation:fhFloat 7s ease-in-out infinite;">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[10px]" style="letter-spacing:.16em; color:#5eead4;">INDICATOR CALCULATOR</span>
+        <span class="hero-livedot block w-2 h-2 rounded-full" style="background:#5eead4;" aria-hidden="true"></span>
+      </div>
+      <div class="flex items-end gap-[3px] h-7 mt-2.5" aria-hidden="true">
+        {[40, 72, 55, 90, 48, 78, 62].map((h) => (
+          <div class="flex-1 rounded-[2px]" style={`height:${h}%; background:linear-gradient(180deg,#5eead4,#22d3ee);`}></div>
+        ))}
+      </div>
+      <div class="font-mono text-[10px] mt-2.5" style="color:#7fa6a6;">55 indicators &nbsp;<span style="color:#5eead4;">LIVE</span></div>
+    </a>
+
+    <a href="/blog/minsante-v3"
+       class="hero-chip pointer-events-auto absolute w-[206px] p-[14px_16px] rounded-[13px] [backdrop-filter:blur(12px)]"
+       style="top:316px; right:256px; background:rgba(94,234,212,.05); border:1px solid rgba(94,234,212,.18); animation:fhFloatB 9s ease-in-out infinite .8s;">
+      <div class="font-mono text-[10px]" style="letter-spacing:.14em; color:#5eead4;">MINSANTE FINANCE · v3</div>
+      <div class="text-[14px] font-medium mt-[7px]" style="color:#e7f5f2;">Financial management tool</div>
+      <div class="font-mono text-[10px] mt-[5px]" style="letter-spacing:.1em; color:#3f5d60;">TREASURY · JOURNAL · EXPORT</div>
+    </a>
+
+    <a href="/blog/pharmacy-inventory-v2"
+       class="hero-chip pointer-events-auto absolute w-[212px] p-[14px_16px] rounded-[13px] [backdrop-filter:blur(12px)]"
+       style="top:486px; right:96px; background:rgba(94,234,212,.05); border:1px solid rgba(94,234,212,.18); animation:fhFloat 8.4s ease-in-out infinite .35s;">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-[10px]" style="letter-spacing:.14em; color:#5eead4;">PHARMACY INVENTORY</span>
+        <span class="block w-[7px] h-[7px] rounded-full" style="background:#5eead4;" aria-hidden="true"></span>
+      </div>
+      <div class="text-[14px] font-medium mt-[7px]" style="color:#e7f5f2;">Offline stock workbook</div>
+      <div class="font-mono text-[10px] mt-[5px]" style="letter-spacing:.1em; color:#3f5d60;">245 DRUGS PRE-LOADED</div>
+    </a>
+
+    <a href="/free-library"
+       class="hero-chip hero-chip-orange pointer-events-auto absolute w-[198px] p-[13px_16px] rounded-[13px] [backdrop-filter:blur(12px)]"
+       style="top:632px; right:268px; background:rgba(247,147,60,.06); border:1px solid rgba(247,147,60,.24); animation:fhFloatB 8.8s ease-in-out infinite .15s;">
+      <div class="font-mono text-[10px]" style="letter-spacing:.14em; color:#f7a35c;">FREE LIBRARY · 4 TOOLS</div>
+      <div class="text-[14px] font-medium mt-[7px]" style="color:#f6ede2;">Dashboards · SOPs · calculators</div>
+      <div class="font-mono text-[10px] mt-[5px]" style="letter-spacing:.1em; color:#9c7048;">NO PAYMENT WALL</div>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Content sits above the chips (z-5 vs z-4) but is mostly empty on the right;
+     make its blank areas click-through so the right-side chips stay clickable. */
+  #home-hero .hero-content { pointer-events: none; }
+  #home-hero .hero-content a { pointer-events: auto; }
+
+  /* Hover states (match handoff) */
+  .hero-cta-primary:hover { transform: translateY(-2px); filter: brightness(1.06); }
+  .hero-cta-secondary:hover { background: rgba(94,234,212,.12) !important; border-color: rgba(94,234,212,.5) !important; }
+  .hero-stat:hover { transform: translateY(-3px); border-color: rgba(94,234,212,.4) !important; }
+  .hero-chip { transition: background-color .2s, border-color .2s; }
+  .hero-chip:hover { border-color: rgba(94,234,212,.55) !important; background: rgba(94,234,212,.12) !important; }
+  .hero-chip-orange:hover { border-color: rgba(247,147,60,.55) !important; background: rgba(247,147,60,.12) !important; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes fhFloat  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes fhFloatB { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes fhLive   { 0%,100% { box-shadow:0 0 0 0 rgba(94,234,212,.55); opacity:1; } 50% { box-shadow:0 0 0 7px rgba(94,234,212,0); opacity:.55; } }
+    .hero-livedot { animation: fhLive 2s ease-in-out infinite; }
+  }
+
+  /* Reduced motion: drop chip float + dot pulse (canvas script also renders a single static frame) */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-chip { animation: none !important; }
+  }
+</style>
+
+<script>
+  // ── Count-up stats (07 / 04 / 02) ─────────────────────────────────────────
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counters = Array.from(document.querySelectorAll<HTMLElement>('#home-hero [data-count]'));
+  const pad2 = (n: number) => String(n).padStart(2, '0');
+  function runCounts() {
+    counters.forEach((el) => {
+      const target = Number(el.dataset.count || '0');
+      if (reduce) { el.textContent = pad2(target); return; }
+      const dur = 1300, start = performance.now();
+      const step = (now: number) => {
+        const p = Math.min(1, (now - start) / dur);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = pad2(Math.round(e * target));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  setTimeout(runCounts, 700);
+
+  // ── Network canvas ─────────────────────────────────────────────────────────
+  const canvas = document.getElementById('hero-net') as HTMLCanvasElement | null;
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    let W = 0, H = 0, dpr = 1, raf = 0, running = false, t = 0;
+
+    const afImg = new Image();
+    let afReady = false, afMask: Uint8ClampedArray | null = null, afNW = 0, afNH = 0;
+    afImg.onload = () => {
+      afNW = afImg.naturalWidth; afNH = afImg.naturalHeight;
+      const oc = document.createElement('canvas');
+      oc.width = afNW; oc.height = afNH;
+      const octx = oc.getContext('2d')!;
+      octx.drawImage(afImg, 0, 0);
+      afMask = octx.getImageData(0, 0, afNW, afNH).data;
+      afReady = true;
+    };
+    afImg.src = '/images/africa.png';
+
+    const afRect = () => {
+      const drawH = H * 0.82;
+      const drawW = drawH * (afNH ? afNW / afNH : 0.93);
+      return { x: W * 0.52, y: H * 0.10, w: drawW, h: drawH };
+    };
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      canvas.width = Math.max(1, W * dpr); canvas.height = Math.max(1, H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+
+    const pip = (x: number, y: number) => {
+      if (!afReady || !afMask) return false;
+      const rc = afRect();
+      const ix = Math.floor((x - rc.x) / rc.w * afNW);
+      const iy = Math.floor((y - rc.y) / rc.h * afNH);
+      if (ix < 0 || iy < 0 || ix >= afNW || iy >= afNH) return false;
+      return afMask[(iy * afNW + ix) * 4 + 3] > 40;
+    };
+
+    const N = 78;
+    type Node = { x: number; y: number; vx: number; vy: number; r: number; hub: boolean };
+    const nodes: Node[] = [];
+    for (let i = 0; i < N; i++) {
+      const bias = Math.random() < 0.55;
+      nodes.push({
+        x: bias ? W * (0.45 + Math.random() * 0.5) : Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.16,
+        vy: (Math.random() - 0.5) * 0.16,
+        r: Math.random() * 1.5 + 0.8,
+        hub: Math.random() < 0.13,
+      });
+    }
+    const pulses: { a: number; b: number; p: number; sp: number }[] = [];
+
+    function frame(move: boolean) {
+      t++;
+      ctx.clearRect(0, 0, W, H);
+
+      const rc = afReady ? afRect() : null;
+      const gcx = rc ? rc.x + rc.w * 0.5 : W * 0.7;
+      const gcy = rc ? rc.y + rc.h * 0.5 : H * 0.5;
+      const ag = ctx.createRadialGradient(gcx, gcy, 20, gcx, gcy, H * 0.5);
+      ag.addColorStop(0, 'rgba(247,147,60,0.07)');
+      ag.addColorStop(1, 'rgba(247,147,60,0)');
+      ctx.fillStyle = ag;
+      ctx.beginPath(); ctx.arc(gcx, gcy, H * 0.5, 0, Math.PI * 2); ctx.fill();
+
+      if (rc) {
+        ctx.save(); ctx.globalAlpha = 0.12;
+        ctx.drawImage(afImg, rc.x, rc.y, rc.w, rc.h);
+        ctx.restore();
+      }
+
+      const ringBase = Math.min(W, H) * 0.3;
+      for (let k = 0; k < 2; k++) {
+        const rr = ringBase + k * 80 + Math.sin(t * 0.012 + k) * 6;
+        ctx.beginPath(); ctx.arc(gcx, gcy, rr, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(247,147,60,' + (0.05 - k * 0.018) + ')';
+        ctx.lineWidth = 1; ctx.stroke();
+      }
+
+      if (move) {
+        for (const n of nodes) {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > W) n.vx *= -1;
+          if (n.y < 0 || n.y > H) n.vy *= -1;
+        }
+      }
+      for (let i = 0; i < N; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < N; j++) {
+          const b = nodes[j];
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < 138) {
+            ctx.strokeStyle = 'rgba(45,212,191,' + (1 - d / 138) * 0.2 + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      for (const n of nodes) {
+        const onAf = pip(n.x, n.y);
+        if (n.hub) {
+          const g = 4 + Math.sin(t * 0.05 + n.x * 0.05) * 2;
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 2 + g, 0, Math.PI * 2);
+          ctx.strokeStyle = onAf ? 'rgba(247,160,90,0.16)' : 'rgba(94,234,212,0.12)';
+          ctx.lineWidth = 1; ctx.stroke();
+        }
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.hub ? n.r + 1.6 : n.r, 0, Math.PI * 2);
+        ctx.fillStyle = onAf
+          ? (n.hub ? 'rgba(248,170,100,0.95)' : 'rgba(244,156,84,0.62)')
+          : (n.hub ? 'rgba(94,234,212,0.95)' : 'rgba(125,211,205,0.5)');
+        ctx.fill();
+      }
+
+      if (move) {
+        if (pulses.length < 7 && Math.random() < 0.05) {
+          const ai = (Math.random() * N) | 0, a = nodes[ai];
+          let best = -1, bd = 1e9;
+          for (let j = 0; j < N; j++) {
+            if (j === ai) continue;
+            const d = Math.hypot(a.x - nodes[j].x, a.y - nodes[j].y);
+            if (d < 138 && d < bd) { bd = d; best = j; }
+          }
+          if (best >= 0) pulses.push({ a: ai, b: best, p: 0, sp: 0.012 + Math.random() * 0.013 });
+        }
+        ctx.save();
+        for (let i = pulses.length - 1; i >= 0; i--) {
+          const pl = pulses[i];
+          pl.p += pl.sp;
+          if (pl.p >= 1) { pulses.splice(i, 1); continue; }
+          const a = nodes[pl.a], b = nodes[pl.b];
+          const x = a.x + (b.x - a.x) * pl.p, y = a.y + (b.y - a.y) * pl.p;
+          ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(94,234,212,0.9)';
+          ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(180,255,245,0.95)'; ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    const loop = () => { frame(true); raf = requestAnimationFrame(loop); };
+    const start = () => { if (!running) { running = true; loop(); } };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    window.addEventListener('resize', () => { resize(); if (!running) frame(false); }, { passive: true });
+
+    // Wait for the silhouette so the first frame already tints nodes correctly.
+    const begin = () => {
+      if (reduce) { frame(false); return; }              // single static frame
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => (e.isIntersecting ? start() : stop()));
+      }, { threshold: 0 });
+      io.observe(canvas);
+    };
+    if (afReady) begin(); else afImg.addEventListener('load', begin, { once: true });
+    // Fallback: if the image fails, still animate (nodes just stay teal).
+    afImg.addEventListener('error', begin, { once: true });
+  }
+</script>
