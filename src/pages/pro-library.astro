@@ -258,6 +258,75 @@ const inDevelopment = [
     </div>
   </section>
 
+  <!-- FosaFinanceCalc -->
+  <section class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl">
+      <p class="font-mono text-[10px] text-teal-400/45 uppercase tracking-widest mb-6">// available_now</p>
+      <div data-reveal
+           class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-emerald-500/25 overflow-hidden mt-6"
+           style="background: linear-gradient(145deg, rgba(16,185,129,0.10) 0%, rgba(10,13,18,0.92) 55%, rgba(16,185,129,0.04) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -10px rgba(16,185,129,0.22), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
+        <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(16,185,129,0.55), transparent);"></div>
+        <div class="p-8">
+          <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="font-mono px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                      style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.32); color: rgba(110,231,183,0.9);">[ LIVE ]</span>
+                <span class="font-mono px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                      style="background: rgba(16,185,129,0.10); border: 1px solid rgba(16,185,129,0.25); color: rgba(110,231,183,0.7);">[ FREE ]</span>
+                <span class="font-mono text-white/30 text-[10px]">v2.2 · Windows Desktop App · Offline</span>
+              </div>
+              <h2 class="font-display font-bold text-2xl text-white mb-3">FosaFinanceCalc v2.2</h2>
+              <p class="text-white/60 text-sm leading-relaxed mb-5">
+                Standalone Windows desktop application for financial management of Category 3–5 health facilities
+                in Cameroon. Automates the 6-step Recettes Propres calculation, decade-by-decade Treasury deposits,
+                6-way IGF triangulation audit, and generates print-ready reports — fully offline, no browser required.
+                Built and tested in Mamfe District. Compliant with Décret 2016/6447/PM and RGCP.
+              </p>
+              <ul class="space-y-2 mb-6">
+                {[
+                  'Full desktop app — no browser, no internet, no installation (portable version)',
+                  '10 modules: Dashboard, Registers, Cash Journal, Treasury, Solidarity, Pharmacy, Expenditures, QP, Triangulation, Report',
+                  '6-way triangulation audit replicating IGF inspection — runs in seconds',
+                  'Decade-aware Treasury and Solidarity calculations (not monthly average)',
+                  'CSV / Excel export on every module',
+                  'French interface · Bilingual user guide (FR / EN)',
+                ].map(item => (
+                  <li class="flex items-start gap-2.5 text-sm text-white/65">
+                    <svg class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="https://github.com/hnzozone91/fosafinancecalc/releases/download/v2.0.0/FosaFinanceCalc-Setup-2.0.0.exe"
+                  class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(16,185,129,0.4)]"
+                >
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  Download Installer (135 MB) →
+                </a>
+                <a
+                  href="https://github.com/hnzozone91/fosafinancecalc/releases/download/v2.0.0/FosaFinanceCalc-Portable-2.0.0.exe"
+                  class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-emerald-500/30 hover:bg-white/15 text-white font-bold text-sm transition-all duration-200"
+                >
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  Portable (72 MB, no install)
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-t px-8 py-4 flex flex-wrap gap-4 font-mono text-[10px] text-white/30" style="border-color: rgba(16,185,129,0.10);">
+          <span>[ windows ] Windows 10/11 · x64 &amp; ia32</span>
+          <span>[ offline ] Fully offline · No internet required</span>
+          <span>[ compliant ] Décret 2016/6447/PM · RGCP</span>
+          <span>[ free ] No payment · No login · Direct download</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- In development -->
   <section class="py-8 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-4xl">
