@@ -101,6 +101,7 @@ const QLAB=["Standard precautions — who","Chain of infection — not a link","
 const $=(id)=>document.getElementById(id);
 let DATA=[];
 const EP_KEY='ipc_dash_endpoint';
+const DEFAULT_EP='https://script.google.com/macros/s/AKfycbzoTFRvEbEvlFiIai__QAr1Gnqp3Uun57Y_SjjD_qUy6r3prqgruVwVnPMHOKcWBKLZeA/exec';
 
 function setSrcLabel(t){$('srcLabel').textContent=t;}
 
@@ -215,7 +216,7 @@ $('csvBtn').addEventListener('click',()=>{
 });
 
 // boot
-(function(){const u=localStorage.getItem(EP_KEY);if(u){setSrcLabel('Loading…');loadFromEndpoint(u).catch(e=>{setSrcLabel('Could not load saved source — check Data source…');tryLocal();});}else{tryLocal();}})();
+(function(){const u=localStorage.getItem(EP_KEY)||DEFAULT_EP;if(u){if(!localStorage.getItem(EP_KEY))localStorage.setItem(EP_KEY,u);setSrcLabel('Loading…');loadFromEndpoint(u).catch(e=>{setSrcLabel('Could not load — check Data source…');tryLocal();});}else{tryLocal();}})();
 </script>
 </body>
 </html>

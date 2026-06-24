@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -236,7 +236,7 @@ function showResult(score){
   // optional central submit
   window._rec=rec;
   if(RESULTS_ENDPOINT){
-    fetch(RESULTS_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)})
+    fetch(RESULTS_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(rec)})
       .then(()=>{$('savenote').innerHTML='\u2713 Your result was submitted and saved on this device.';})
       .catch(()=>{$('savenote').innerHTML='Saved on this device. (Could not reach the results server — please show this screen to the facilitator.)';});
   }else{
