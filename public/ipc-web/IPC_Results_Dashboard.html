@@ -67,6 +67,15 @@ table.t tr:nth-child(even){background:var(--wash);}
 .modal .btn{flex:1;font-family:var(--head);font-weight:700;font-size:14px;border:none;border-radius:9px;padding:11px;cursor:pointer;}
 .modal .btn.go{background:var(--seafoam);color:#fff;}.modal .btn.x{background:#eef2f3;color:var(--ink);}
 @media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}}
+.qpcts{display:flex;gap:8px;font-size:11px;margin-top:3px;flex-wrap:wrap;color:#5a7178;}
+.band-row{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center;padding:9px 0;border-top:1px solid #eef5f6;}
+.band-row:first-child{border-top:none;}
+.gain-row{display:grid;grid-template-columns:52px 1fr 70px;gap:10px;align-items:center;padding:6px 0;border-top:1px solid #eef5f6;font-size:12px;}
+.gain-row:first-child{border-top:none;}
+.gain-wrap{height:16px;background:#eef5f6;border-radius:8px;overflow:hidden;position:relative;}
+.gain-bar{position:absolute;top:0;height:100%;border-radius:8px;transition:width .6s ease;}
+.role-row{display:grid;grid-template-columns:130px 1fr 80px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #eef5f6;}
+.role-row:first-child{border-top:none;}
 </style>
 </head>
 <body>
@@ -157,53 +166,161 @@ function render(){
   const gains=paired.filter(p=>p.pre!=null&&p.post!=null).map(p=>p.post-p.pre);
   const avgGain=gains.length?gains.reduce((s,x)=>s+x,0)/gains.length:0;
   const compPost=post.filter(r=>+r.score>=11).length;
+  const compPct=post.length?Math.round(compPost/post.length*100):0;
+
+  const compEmoji=compPct>=80?'🏆':compPct>=60?'✅':'⚠️';
+  const gainEmoji=avgGain>=4?'🚀':avgGain>=2?'📈':avgGain>=0?'👍':'⚠️';
+  const postEmoji=postAvg/total>=0.8?'🌟':postAvg/total>=0.6?'✅':'🔄';
+  const compCol=compPct>=80?'var(--green)':compPct>=60?'var(--amber)':'var(--red)';
 
   let h='';
-  // KPIs
+
+  // ── KPIs ──
   h+='<div class="kpis">';
-  h+=kpi('Participants',codes.length,pre.length+' pre · '+post.length+' post');
-  h+=kpi('Pre-test average',preAvg.toFixed(1)+'/'+total,Math.round(preAvg/total*100)+'%');
-  h+=kpi('Post-test average',postAvg.toFixed(1)+'/'+total,Math.round(postAvg/total*100)+'%','up');
-  h+=kpi('Average gain',(avgGain>=0?'+':'')+avgGain.toFixed(1),'marks per participant','up');
+  h+=kpi('👥 Participants',codes.length,pre.length+' pre · '+post.length+' post');
+  h+=kpi('📋 Pre-test avg',preAvg.toFixed(1)+'/'+total,Math.round(preAvg/total*100)+'%');
+  h+=kpi(postEmoji+' Post-test avg',postAvg.toFixed(1)+'/'+total,Math.round(postAvg/total*100)+'%','up');
+  h+=kpi(gainEmoji+' Avg gain',(avgGain>=0?'+':'')+avgGain.toFixed(1),'marks per participant','up');
   h+='</div>';
 
-  // comparison + competency
-  h+='<div class="grid2">';
+  // ── Row 1: Cohort bar + Competency ──
   const preH=Math.max(8,Math.round(preAvg/total*170)), postH=Math.max(8,Math.round(postAvg/total*170));
+  h+='<div class="grid2" style="margin-top:14px;">';
   h+='<div class="panel"><h2>Cohort average — pre vs post</h2><div class="cmp">'
     +'<div class="barcol"><div class="bx pre" style="height:'+preH+'px;">'+preAvg.toFixed(1)+'</div><div class="cl">Pre-test</div><div class="cs">'+Math.round(preAvg/total*100)+'%</div></div>'
     +'<div class="barcol"><div class="bx post" style="height:'+postH+'px;">'+postAvg.toFixed(1)+'</div><div class="cl">Post-test</div><div class="cs">'+Math.round(postAvg/total*100)+'%</div></div>'
     +'</div></div>';
-  const compPct=post.length?Math.round(compPost/post.length*100):0;
-  h+='<div class="panel"><h2>Competency at post-test (≥11/15)</h2>'
+  h+='<div class="panel"><h2>'+compEmoji+' Competency at post-test (≥11/15)</h2>'
     +'<div style="display:flex;align-items:center;gap:22px;padding:14px 0;">'
-    +'<div style="font-family:var(--head);font-weight:700;font-size:54px;color:var(--green);line-height:1;">'+compPct+'%</div>'
+    +'<div style="font-family:var(--head);font-weight:700;font-size:54px;color:'+compCol+';line-height:1;">'+compPct+'%</div>'
     +'<div style="font-size:13px;color:#3c5a61;line-height:1.5;"><b>'+compPost+' of '+post.length+'</b> participants reached the competency threshold at post-test.<br><span style="color:#5a7178;">Pass mark: 11/15 (≈73%).</span></div></div>'
-    +'<div class="track" style="height:22px;"><div class="post" style="width:'+compPct+'%;"></div></div></div>';
+    +'<div class="track" style="height:22px;"><div class="post" style="width:'+compPct+'%;background:'+compCol+'"></div></div></div>';
   h+='</div>';
 
-  // per-question difficulty (only if answers present)
+  // ── Row 2: Score band distribution + Individual gains ──
+  const bands=[
+    {label:'🔴 Needs coaching',range:'≤7/15',min:0,max:7,col:'var(--red)'},
+    {label:'🟡 Developing',range:'8–10/15',min:8,max:10,col:'var(--amber)'},
+    {label:'🟢 Competent',range:'≥11/15',min:11,max:15,col:'var(--green)'}
+  ];
+  const bCount=(arr,mn,mx)=>arr.filter(r=>+r.score>=mn&&+r.score<=mx).length;
+  const maxPre=Math.max(1,...bands.map(b=>bCount(pre,b.min,b.max)));
+  const maxPost=Math.max(1,...bands.map(b=>bCount(post,b.min,b.max)));
+  h+='<div class="grid2" style="margin-top:14px;">';
+  h+='<div class="panel"><h2>📊 Score band distribution</h2>'
+    +'<div class="legend" style="margin-bottom:12px;"><span><span class="sw" style="background:rgba(19,132,150,.45);"></span>Pre-test</span><span><span class="sw" style="background:var(--seafoam);"></span>Post-test</span></div>';
+  bands.forEach(b=>{
+    const np=bCount(pre,b.min,b.max), no=bCount(post,b.min,b.max);
+    const wp=pre.length?Math.round(np/pre.length*100):0, wo=post.length?Math.round(no/post.length*100):0;
+    const bwp=Math.round(np/maxPre*100), bwo=Math.round(no/maxPost*100);
+    h+='<div class="band-row">'
+      +'<div><div style="font-family:var(--head);font-weight:700;font-size:12px;">'+b.label+'</div><div style="font-size:11px;color:#5a7178;">'+b.range+'</div></div>'
+      +'<div style="display:flex;flex-direction:column;gap:4px;">'
+      +'<div style="display:flex;align-items:center;gap:6px;"><div style="width:'+bwp+'%;height:14px;background:rgba(19,132,150,.45);border-radius:4px;min-width:4px;"></div><span style="font-size:11px;color:#5a7178;white-space:nowrap;">'+np+' ('+wp+'%)</span></div>'
+      +'<div style="display:flex;align-items:center;gap:6px;"><div style="width:'+bwo+'%;height:14px;background:'+b.col+';border-radius:4px;min-width:4px;opacity:.85;"></div><span style="font-size:11px;font-weight:700;white-space:nowrap;">'+no+' ('+wo+'%)</span></div>'
+      +'</div></div>';
+  });
+  h+='</div>';
+
+  const pairGains=paired.filter(p=>p.pre!=null&&p.post!=null).sort((a,b)=>(b.post-b.pre)-(a.post-a.pre));
+  const maxG=pairGains.length?Math.max(...pairGains.map(p=>Math.abs(p.post-p.pre)),1):1;
+  h+='<div class="panel"><h2>'+gainEmoji+' Individual gains (pre → post)</h2>';
+  if(pairGains.length){
+    pairGains.forEach(p=>{
+      const g=p.post-p.pre;
+      const bw=Math.round(Math.abs(g)/maxG*90);
+      const col=g>0?'var(--green)':g<0?'var(--red)':'var(--amber)';
+      const ge=g>=5?'🚀':g>=3?'📈':g>=1?'👍':g===0?'➡️':'⚠️';
+      h+='<div class="gain-row">'
+        +'<div style="font-family:var(--head);font-weight:700;font-size:12px;color:var(--teal-dark);">'+p.c+'</div>'
+        +'<div><div class="gain-wrap"><div class="gain-bar" style="width:'+bw+'%;background:'+col+';"></div></div>'
+        +'<div style="font-size:10px;color:#5a7178;margin-top:1px;">'+(p.role||'')+'</div></div>'
+        +'<div style="text-align:right;font-family:var(--head);font-weight:700;font-size:13px;color:'+col+';">'+ge+' '+(g>0?'+':'')+g+'</div>'
+        +'</div>';
+    });
+  } else {
+    h+='<p style="color:#5a7178;font-size:13px;padding:16px 0;text-align:center;">Both pre and post scores needed to show gains.</p>';
+  }
+  h+='</div>';
+  h+='</div>';
+
+  // ── Per-question chart (enhanced) ──
   const haveAns=DATA.some(r=>Array.isArray(r.answers)&&r.answers.length);
   if(haveAns){
     const KEY=['B','C','B','C','C','A','B','C','C','B','B','A','B','A','C'];
     const rate=(arr,qi)=>{const a=arr.filter(r=>Array.isArray(r.answers)&&r.answers.length>qi);if(!a.length)return null;return a.filter(r=>r.answers[qi]===KEY[qi]).length/a.length*100;};
-    h+='<div class="panel" style="margin-top:14px;"><h2>Correct answers by question</h2>'
+    const qScores=QLAB.map((lab,qi)=>({qi,lab,post:rate(post,qi),pre:rate(pre,qi)})).filter(q=>q.post!=null).sort((a,b)=>a.post-b.post);
+
+    if(qScores.length>=3){
+      h+='<div class="panel" style="margin-top:14px;background:linear-gradient(135deg,#fff8f0 0%,#fff 60%);">'
+        +'<h2>⚠️ Topics needing reinforcement</h2>';
+      qScores.slice(0,3).forEach((q,i)=>{
+        const col=q.post>=80?'var(--green)':q.post>=60?'var(--amber)':'var(--red)';
+        h+='<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:'+(i>0?'1px solid #eef5f6':'none')+'">'
+          +'<div style="font-size:22px;">'+['❶','❷','❸'][i]+'</div>'
+          +'<div style="flex:1;"><div style="font-family:var(--head);font-weight:700;font-size:13px;">Q'+(q.qi+1)+' — '+q.lab+'</div>'
+          +'<div style="font-size:11.5px;color:#5a7178;margin-top:3px;">Pre: '+(q.pre!=null?Math.round(q.pre)+'%':'—')+' → Post: <b style="color:'+col+';">'+Math.round(q.post)+'%</b></div></div>'
+          +'<div style="font-family:var(--head);font-weight:700;font-size:22px;color:'+col+';">'+Math.round(q.post)+'%</div>'
+          +'</div>';
+      });
+      h+='</div>';
+    }
+
+    h+='<div class="panel" style="margin-top:14px;"><h2>✅ Correct answers by question</h2>'
       +'<div class="legend"><span><span class="sw" style="background:rgba(19,132,150,.45);"></span>Pre-test</span><span><span class="sw" style="background:var(--seafoam);"></span>Post-test</span></div>';
     for(let qi=0;qi<QLAB.length;qi++){
       const rp=rate(pre,qi), ro=rate(post,qi);
-      h+='<div class="qrow"><div class="qn">'+(qi+1)+'</div><div><div style="margin-bottom:3px;">'+QLAB[qi]+'</div>'
-        +'<div class="track"><div class="pre" style="width:'+(rp||0)+'%;"></div><div class="post" style="width:'+(ro||0)+'%;"></div></div></div>'
-        +'<div class="qpct">'+(ro!=null?Math.round(ro)+'%':'—')+'</div></div>';
+      const qe=ro==null?'—':ro>=80?'✅':ro>=60?'🟡':'🔴';
+      const qc=ro==null?'var(--ink)':ro>=80?'var(--green)':ro>=60?'var(--amber)':'var(--red)';
+      h+='<div class="qrow" style="grid-template-columns:26px 1fr auto;">'
+        +'<div class="qn">'+(qi+1)+'</div>'
+        +'<div><div style="margin-bottom:3px;">'+QLAB[qi]+'</div>'
+        +'<div class="track"><div class="pre" style="width:'+(rp||0)+'%;"></div><div class="post" style="width:'+(ro||0)+'%;"></div></div>'
+        +'<div class="qpcts">'
+        +'Pre: '+(rp!=null?Math.round(rp)+'%':'—')
+        +' → <b style="color:'+qc+';">Post: '+(ro!=null?Math.round(ro)+'%':'—')+'</b>'
+        +(rp!=null&&ro!=null?' <span style="color:#9fb3b8;">('+( ro-rp>=0?'+':'')+Math.round(ro-rp)+'pp)</span>':'')
+        +'</div></div>'
+        +'<div style="font-size:18px;padding-left:6px;">'+qe+'</div>'
+        +'</div>';
     }
     h+='</div>';
   }
 
-  // participant table
-  h+='<div class="panel" style="margin-top:14px;"><h2>Per-participant results</h2><div style="overflow:auto;max-height:420px;"><table class="t"><thead><tr><th>Code</th><th>Role / ward</th><th>Pre</th><th>Post</th><th>Gain</th></tr></thead><tbody>';
+  // ── Role breakdown ──
+  const roles=[...new Set(DATA.map(r=>r.role||'').filter(Boolean))];
+  if(roles.length>1){
+    const roleData=roles.map(role=>{
+      const rPre=pre.filter(r=>r.role===role), rPost=post.filter(r=>r.role===role);
+      return {role,preAvg:avg(rPre),postAvg:avg(rPost),n:new Set([...rPre,...rPost].map(r=>r.code)).size};
+    }).sort((a,b)=>b.postAvg-a.postAvg);
+    const mxR=Math.max(...roleData.map(r=>r.postAvg),1);
+    h+='<div class="panel" style="margin-top:14px;"><h2>👤 Results by role</h2>';
+    roleData.forEach(r=>{
+      const col=r.postAvg/total>=0.8?'var(--green)':r.postAvg/total>=0.6?'var(--amber)':'var(--red)';
+      h+='<div class="role-row">'
+        +'<div><div style="font-family:var(--head);font-weight:700;font-size:12.5px;">'+r.role+'</div><div style="font-size:11px;color:#5a7178;">n='+r.n+'</div></div>'
+        +'<div style="display:flex;flex-direction:column;gap:4px;">'
+        +'<div style="display:flex;align-items:center;gap:6px;"><div style="width:'+Math.round(r.preAvg/mxR*100)+'%;height:14px;background:rgba(19,132,150,.4);border-radius:4px;min-width:4px;"></div><span style="font-size:11px;color:#5a7178;white-space:nowrap;">Pre: '+r.preAvg.toFixed(1)+'</span></div>'
+        +'<div style="display:flex;align-items:center;gap:6px;"><div style="width:'+Math.round(r.postAvg/mxR*100)+'%;height:14px;background:'+col+';border-radius:4px;min-width:4px;opacity:.85;"></div><span style="font-size:11px;font-weight:700;color:'+col+';white-space:nowrap;">Post: '+r.postAvg.toFixed(1)+'</span></div>'
+        +'</div>'
+        +'<div style="text-align:right;font-family:var(--head);font-weight:700;font-size:14px;color:'+col+';">'+Math.round(r.postAvg/total*100)+'%</div>'
+        +'</div>';
+    });
+    h+='</div>';
+  }
+
+  // ── Participant table ──
+  h+='<div class="panel" style="margin-top:14px;"><h2>📋 Per-participant results</h2><div style="overflow:auto;max-height:420px;"><table class="t"><thead><tr><th>Code</th><th>Role / ward</th><th>Pre</th><th>Post</th><th>Gain</th></tr></thead><tbody>';
   paired.sort((a,b)=>String(a.c||'').localeCompare(String(b.c||''))).forEach(p=>{
-    let g='',pill='';
-    if(p.pre!=null&&p.post!=null){const d=p.post-p.pre;pill='<span class="pill '+(d>0?'up':(d<0?'dn':'fl'))+'">'+(d>0?'+':'')+d+'</span>';}
-    h+='<tr><td><b>'+p.c+'</b></td><td>'+(p.role||'—')+'</td><td>'+(p.pre!=null?p.pre+'/'+total:'—')+'</td><td>'+(p.post!=null?p.post+'/'+total:'—')+'</td><td>'+pill+'</td></tr>';
+    let pill='';
+    if(p.pre!=null&&p.post!=null){
+      const d=p.post-p.pre;
+      const ge=d>=5?'🚀':d>=3?'📈':d>=1?'👍':d===0?'➡️':'⚠️';
+      pill='<span class="pill '+(d>0?'up':(d<0?'dn':'fl'))+'">'+(d>0?'+':'')+d+'</span> '+ge;
+    }
+    const pc=p.post!=null?(p.post>=11?'color:var(--green);font-weight:700;':p.post>=8?'color:var(--amber);font-weight:700;':'color:var(--red);font-weight:700;'):'';
+    h+='<tr><td><b>'+p.c+'</b></td><td>'+(p.role||'—')+'</td><td>'+(p.pre!=null?p.pre+'/'+total:'—')+'</td><td style="'+pc+'">'+(p.post!=null?p.post+'/'+total:'—')+'</td><td>'+pill+'</td></tr>';
   });
   h+='</tbody></table></div></div>';
   dash.innerHTML=h;
