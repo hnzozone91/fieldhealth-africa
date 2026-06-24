@@ -54,7 +54,6 @@
       "shortcutName": "FosaFinanceCalc",
       "artifactName": "FosaFinanceCalc-Setup-${version}.exe",
       "license": "assets/LICENSE.txt",
-      "installerLanguages": ["French", "English"],
       "language": "1036"
     },
     "portable": {
