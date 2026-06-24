@@ -151,7 +151,8 @@ function render(){
   const avg=a=>a.length?a.reduce((s,r)=>s+(+r.score),0)/a.length:0;
   const preAvg=avg(pre), postAvg=avg(post);
   const total=(DATA[0]&&DATA[0].total)||15;
-  const codes=[...new Set(DATA.map(r=>r.code))];
+  DATA.forEach(r=>{r.code=String(r.code||'');});
+  const codes=[...new Set(DATA.map(r=>r.code))].filter(Boolean);
   const paired=codes.map(c=>{const pr=pre.find(r=>r.code===c),po=post.find(r=>r.code===c);return {c,role:(po||pr||{}).role||'',pre:pr?+pr.score:null,post:po?+po.score:null};});
   const gains=paired.filter(p=>p.pre!=null&&p.post!=null).map(p=>p.post-p.pre);
   const avgGain=gains.length?gains.reduce((s,x)=>s+x,0)/gains.length:0;
@@ -199,7 +200,7 @@ function render(){
 
   // participant table
   h+='<div class="panel" style="margin-top:14px;"><h2>Per-participant results</h2><div style="overflow:auto;max-height:420px;"><table class="t"><thead><tr><th>Code</th><th>Role / ward</th><th>Pre</th><th>Post</th><th>Gain</th></tr></thead><tbody>';
-  paired.sort((a,b)=>a.c.localeCompare(b.c)).forEach(p=>{
+  paired.sort((a,b)=>String(a.c||'').localeCompare(String(b.c||''))).forEach(p=>{
     let g='',pill='';
     if(p.pre!=null&&p.post!=null){const d=p.post-p.pre;pill='<span class="pill '+(d>0?'up':(d<0?'dn':'fl'))+'">'+(d>0?'+':'')+d+'</span>';}
     h+='<tr><td><b>'+p.c+'</b></td><td>'+(p.role||'—')+'</td><td>'+(p.pre!=null?p.pre+'/'+total:'—')+'</td><td>'+(p.post!=null?p.post+'/'+total:'—')+'</td><td>'+pill+'</td></tr>';
