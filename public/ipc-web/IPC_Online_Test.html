@@ -97,6 +97,14 @@ h1.k{font-family:var(--head);font-weight:700;font-size:22px;color:var(--teal-dar
     <div class="err hide" id="startErr">Please enter a code and choose pre- or post-test.</div>
   </section>
 
+  <section id="resend" class="card hide" style="margin-top:18px;background:#0E5A6B;border:2px solid #A3E4D7;">
+    <h2 style="font-family:'Trebuchet MS',sans-serif;font-weight:700;font-size:18px;margin-bottom:8px;">Already completed the test?</h2>
+    <p style="font-size:14px;color:#A3E4D7;margin-bottom:14px;">Your results are saved on this device. Tap below to send them to the facilitator — no need to retake the test.</p>
+    <div id="resendList" style="margin-bottom:12px;font-size:13px;line-height:1.8;"></div>
+    <button class="btn" id="resendBtn" style="width:100%;">↑ Send my saved results now</button>
+    <div id="resendNote" style="margin-top:10px;font-size:13px;color:#A3E4D7;min-height:18px;"></div>
+  </section>
+
   <!-- QUESTIONS -->
   <form id="quiz" class="hide">
     <div class="card" id="qcard"></div>
@@ -136,6 +144,37 @@ const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzoTFRvEbEvlFi
 
 let phase='', answers=Array(Q.length).fill(-1), submitted=false;
 const $=(id)=>document.getElementById(id);
+
+// Show resend panel if saved results exist on this device
+(function(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('ipc_results')||'[]');
+    if(!saved.length)return;
+    const list=$('resendList');
+    list.innerHTML=saved.map(r=>'<b>'+r.code+'</b> — '+r.phase+' — '+r.score+'/'+r.total).join('<br>');
+    $('resend').classList.remove('hide');
+  }catch(e){}
+})();
+
+$('resendBtn').addEventListener('click',function(){
+  if(!RESULTS_ENDPOINT){$('resendNote').textContent='No endpoint configured.';return;}
+  try{
+    const saved=JSON.parse(localStorage.getItem('ipc_results')||'[]');
+    if(!saved.length){$('resendNote').textContent='No saved results found on this device.';return;}
+    $('resendBtn').disabled=true;
+    $('resendNote').textContent='Sending…';
+    let sent=0,failed=0;
+    const done=()=>{
+      $('resendNote').textContent=sent+' result(s) sent successfully'+(failed?' · '+failed+' failed — please show screen to facilitator':'')+'.'
+      $('resendBtn').disabled=false;
+    };
+    saved.forEach(rec=>{
+      fetch(RESULTS_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(rec)})
+        .then(r=>r.json()).then(j=>{if(j&&j.ok)sent++;else failed++;if(sent+failed===saved.length)done();})
+        .catch(()=>{failed++;if(sent+failed===saved.length)done();});
+    });
+  }catch(e){$('resendNote').textContent='Error reading saved data.';}
+});
 
 // segmented control
 document.querySelectorAll('#seg label').forEach(l=>{
