@@ -1,0 +1,55 @@
+FOSAFINANCECALC
+Outil de Gestion Financière des Recettes Propres
+Version 2.0.0
+
+Copyright © 2026 Dr. Nzozone Henry Fomukong
+District Medical Officer, Mamfe Health District
+South West Region, Republic of Cameroon
+
+Contact : hnzozone91.nh@gmail.com
+Publication : https://hnzozone91.substack.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LICENCE D'UTILISATION / TERMS OF USE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FosaFinanceCalc a été conçu et développé par Dr. Nzozone Henry Fomukong
+pour son usage personnel en tant que Médecin de District.
+
+Il est distribué gratuitement pour usage dans les formations sanitaires
+de Catégories 3, 4 et 5 au Cameroun.
+
+FosaFinanceCalc N'EST PAS un produit officiel du gouvernement ou du
+MINSANTE. Il est conçu pour être conforme aux textes réglementaires en
+vigueur (Décret 2016/6447/PM, Décret 2018/366, RGCP Art.68 & 71,
+Circulaire MINSANTE), mais l'utilisateur demeure seul responsable de
+vérifier l'exactitude des calculs et leur conformité aux directives
+locales en vigueur.
+
+UTILISATION AUTORISÉE :
+  • Usage interne dans toute formation sanitaire
+  • Distribution gratuite sans modification
+  • Citation avec mention de l'auteur
+
+UTILISATION INTERDITE :
+  • Revente ou commercialisation
+  • Suppression du nom de l'auteur
+  • Distribution d'une version modifiée sans mention des changements
+
+CLAUSE DE NON-RESPONSABILITÉ :
+Ce logiciel est fourni "tel quel", sans garantie d'aucune sorte.
+L'auteur ne saurait être tenu responsable d'erreurs financières
+résultant de l'utilisation de cet outil.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FosaFinanceCalc was designed by Dr. Nzozone Henry Fomukong for his own
+use as District Medical Officer and is distributed freely. It is not an
+official government or MINSANTE product. The user is solely responsible
+for verifying all outputs against applicable regulatory requirements.
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+THE AUTHOR SHALL NOT BE LIABLE FOR ANY FINANCIAL DECISIONS MADE ON
+THE BASIS OF THIS TOOL.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
