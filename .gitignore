@@ -37,6 +37,10 @@ founder.jpeg
 # (negation overrides the *.pdf / *.docx rules above)
 !public/downloads/**
 
+# Electron build artifacts and node_modules inside downloads — too large for GitHub (>100MB)
+public/downloads/**/dist/
+public/downloads/**/node_modules/
+
 # Tool source files (sold products — not for public repo)
 TOOL PRODUCTION PROJECT FOR DHA/
 
