@@ -106,7 +106,8 @@ function setSrcLabel(t){$('srcLabel').textContent=t;}
 
 async function loadFromEndpoint(url){
   setSrcLabel('Loading…');
-  const res=await fetch(url,{method:'GET'});
+  const bust=url+(url.includes('?')?'&':'?')+'_t='+Date.now();
+  const res=await fetch(bust,{method:'GET',cache:'no-store'});
   const j=await res.json();
   DATA=Array.isArray(j)?j:(j.results||j.data||[]);
   const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSrcLabel('Source: Google Sheet · '+DATA.length+' submissions · updated '+t);
