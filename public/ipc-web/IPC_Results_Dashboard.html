@@ -108,13 +108,15 @@ function setSrcLabel(t){$('srcLabel').textContent=t;}
 async function loadFromEndpoint(url){
   setSrcLabel('Loading…');
   const bust=url+(url.includes('?')?'&':'?')+'_t='+Date.now();
-  const res=await fetch(bust,{method:'GET',cache:'no-store'});
+  const res=await fetch(bust);
+  if(!res.ok)throw new Error('HTTP '+res.status);
   const j=await res.json();
   DATA=Array.isArray(j)?j:(j.results||j.data||[]);
-  const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});setSrcLabel('Source: Google Sheet · '+DATA.length+' submissions · updated '+t);
+  const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  setSrcLabel('Source: Google Sheet · '+DATA.length+' submissions · updated '+t);
   render();
 }
-function doRefresh(){const u=localStorage.getItem(EP_KEY);if(u)loadFromEndpoint(u).catch(e=>setSrcLabel('Could not load — check the URL/permissions'));else{tryLocal();}}
+function doRefresh(){const u=localStorage.getItem(EP_KEY);if(u)loadFromEndpoint(u).catch(e=>setSrcLabel('Error: '+e.message+' — check Data source…'));else{tryLocal();}}
 $('refresh').addEventListener('click',doRefresh);
 // Auto-refresh every 30 seconds when an endpoint is set
 setInterval(()=>{if(localStorage.getItem(EP_KEY))doRefresh();},30000);
