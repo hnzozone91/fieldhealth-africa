@@ -140,7 +140,9 @@ function render(){
     dash.innerHTML='<div class="empty"><h2>No results yet</h2><p>Connect your Google Sheet endpoint (<b>Data source…</b>), or tap <b>Load sample data</b> to preview the layout. Once participants submit the online test, their scores will appear here automatically.</p></div>';
     return;
   }
-  const pre=DATA.filter(r=>r.phase==='Pre-test'), post=DATA.filter(r=>r.phase==='Post-test');
+  // Deduplicate: keep only the latest record per participant per phase
+  const dedup=arr=>{const m=new Map();arr.forEach(r=>{const ex=m.get(r.code);if(!ex||String(r.ts||'')>=String(ex.ts||''))m.set(r.code,r);});return[...m.values()];};
+  const pre=dedup(DATA.filter(r=>r.phase==='Pre-test')), post=dedup(DATA.filter(r=>r.phase==='Post-test'));
   const avg=a=>a.length?a.reduce((s,r)=>s+(+r.score),0)/a.length:0;
   const preAvg=avg(pre), postAvg=avg(post);
   const total=(DATA[0]&&DATA[0].total)||15;
