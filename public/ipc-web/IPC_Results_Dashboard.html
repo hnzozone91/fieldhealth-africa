@@ -67,6 +67,7 @@ table.t tr:nth-child(even){background:var(--wash);}
 .modal .btn{flex:1;font-family:var(--head);font-weight:700;font-size:14px;border:none;border-radius:9px;padding:11px;cursor:pointer;}
 .modal .btn.go{background:var(--seafoam);color:#fff;}.modal .btn.x{background:#eef2f3;color:var(--ink);}
 @media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}}
+@media print{.toolbar,.modal{display:none!important;}header.bar{position:static;}body{background:#fff;}.wrap{padding:0 0 20px;}.panel,.kpi{box-shadow:none;border:1px solid #e0e8ea;}.kpis{break-inside:avoid;}.panel{break-inside:avoid;}}
 .qpcts{display:flex;gap:8px;font-size:11px;margin-top:3px;flex-wrap:wrap;color:#5a7178;}
 .band-row{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center;padding:9px 0;border-top:1px solid #eef5f6;}
 .band-row:first-child{border-top:none;}
@@ -89,6 +90,7 @@ table.t tr:nth-child(even){background:var(--wash);}
     <button class="btn ghost" id="cfgBtn">Data source…</button>
     <button class="btn ghost" id="csvBtn">Export CSV</button>
     <button class="btn ghost" id="demoBtn">Load sample data</button>
+    <button class="btn ghost" onclick="window.print()">🖨 Print</button>
     <span class="src" id="srcLabel">No data source set</span>
   </div>
   <div id="dash"></div>
@@ -289,11 +291,13 @@ function render(){
     h+='</div>';
   }
 
-  // ── Role breakdown ──
-  const roles=[...new Set(DATA.map(r=>r.role||'').filter(Boolean))];
-  if(roles.length>1){
-    const roleData=roles.map(role=>{
-      const rPre=pre.filter(r=>r.role===role), rPost=post.filter(r=>r.role===role);
+  // ── Role breakdown — case-insensitive, built from deduplicated records ──
+  const roleKeys=[...new Set([...pre,...post].map(r=>(r.role||'').trim().toLowerCase()).filter(Boolean))];
+  if(roleKeys.length>1){
+    const roleData=roleKeys.map(rk=>{
+      const rPre=pre.filter(r=>(r.role||'').trim().toLowerCase()===rk);
+      const rPost=post.filter(r=>(r.role||'').trim().toLowerCase()===rk);
+      const role=rk.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
       return {role,preAvg:avg(rPre),postAvg:avg(rPost),n:new Set([...rPre,...rPost].map(r=>r.code)).size};
     }).sort((a,b)=>b.postAvg-a.postAvg);
     const mxR=Math.max(...roleData.map(r=>r.postAvg),1);
