@@ -156,14 +156,14 @@ function render(){
     dash.innerHTML='<div class="empty"><h2>No results yet</h2><p>Connect your Google Sheet endpoint (<b>Data source…</b>), or tap <b>Load sample data</b> to preview the layout. Once participants submit the online test, their scores will appear here automatically.</p></div>';
     return;
   }
-  // Normalise codes (trim+uppercase) and phases (trim), then keep only the latest record per participant per phase
-  const norm=DATA.map(r=>Object.assign({},r,{code:(String(r.code||'')).trim().toUpperCase(),phase:(r.phase||'').trim()}));
-  const dedup=arr=>{const m=new Map();arr.forEach(r=>{const ex=m.get(r.code);if(!ex||String(r.ts||'')>=String(ex.ts||''))m.set(r.code,r);});return[...m.values()];};
-  const pre=dedup(norm.filter(r=>r.phase==='Pre-test')), post=dedup(norm.filter(r=>r.phase==='Post-test'));
+  // One record per participant per phase: trim code, case-insensitive phase match, last row wins (sheet is append-only so last = latest)
+  const dedup=arr=>{const m=new Map();arr.forEach(r=>{const k=String(r.code||'').trim();if(k)m.set(k,Object.assign({},r,{code:k}));});return[...m.values()];};
+  const pre=dedup(DATA.filter(r=>(r.phase||'').trim().toLowerCase()==='pre-test'));
+  const post=dedup(DATA.filter(r=>(r.phase||'').trim().toLowerCase()==='post-test'));
   const avg=a=>a.length?a.reduce((s,r)=>s+(+r.score),0)/a.length:0;
   const preAvg=avg(pre), postAvg=avg(post);
   const total=(DATA[0]&&DATA[0].total)||15;
-  const codes=[...new Set(norm.map(r=>r.code))].filter(Boolean);
+  const codes=[...new Set([...pre,...post].map(r=>r.code))].filter(Boolean);
   const paired=codes.map(c=>{const pr=pre.find(r=>r.code===c),po=post.find(r=>r.code===c);return {c,role:(po||pr||{}).role||'',pre:pr?+pr.score:null,post:po?+po.score:null};});
   const gains=paired.filter(p=>p.pre!=null&&p.post!=null).map(p=>p.post-p.pre);
   const avgGain=gains.length?gains.reduce((s,x)=>s+x,0)/gains.length:0;
