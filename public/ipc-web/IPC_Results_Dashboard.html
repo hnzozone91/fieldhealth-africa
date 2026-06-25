@@ -313,7 +313,7 @@ function render(){
   }
 
   // ── Participant table ──
-  h+='<div class="panel" style="margin-top:14px;"><h2>📋 Per-participant results</h2><div style="overflow:auto;max-height:420px;"><table class="t"><thead><tr><th>Code</th><th>Role / ward</th><th>Pre</th><th>Post</th><th>Gain</th></tr></thead><tbody>';
+  h+='<div class="panel" style="margin-top:14px;"><h2>📋 Per-participant results</h2><div><table class="t"><thead><tr><th>Code</th><th>Role / ward</th><th>Pre</th><th>Post</th><th>Gain</th></tr></thead><tbody>';
   paired.sort((a,b)=>String(a.c||'').localeCompare(String(b.c||''))).forEach(p=>{
     let pill='';
     if(p.pre!=null&&p.post!=null){
