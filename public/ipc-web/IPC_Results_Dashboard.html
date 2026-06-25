@@ -156,8 +156,8 @@ function render(){
     dash.innerHTML='<div class="empty"><h2>No results yet</h2><p>Connect your Google Sheet endpoint (<b>Data source…</b>), or tap <b>Load sample data</b> to preview the layout. Once participants submit the online test, their scores will appear here automatically.</p></div>';
     return;
   }
-  // One record per participant per phase: trim code, case-insensitive phase match, last row wins (sheet is append-only so last = latest)
-  const dedup=arr=>{const m=new Map();arr.forEach(r=>{const k=String(r.code||'').trim();if(k)m.set(k,Object.assign({},r,{code:k}));});return[...m.values()];};
+  // One record per participant per phase — code matched case-insensitively, last row wins (sheet is append-only so last = latest)
+  const dedup=arr=>{const m=new Map();arr.forEach(r=>{const k=String(r.code||'').trim().toLowerCase();if(k)m.set(k,Object.assign({},r,{code:k}));});return[...m.values()];};
   const pre=dedup(DATA.filter(r=>(r.phase||'').trim().toLowerCase()==='pre-test'));
   const post=dedup(DATA.filter(r=>(r.phase||'').trim().toLowerCase()==='post-test'));
   const avg=a=>a.length?a.reduce((s,r)=>s+(+r.score),0)/a.length:0;
