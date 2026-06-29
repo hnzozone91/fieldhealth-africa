@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "typecheck": "astro check",
-    "deploy": "node -e \"console.error('This site auto-deploys on Netlify on push to main. To publish, run: git push origin main'); process.exit(1)\""
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12",
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/tailwind": "^5.1.4",
     "@fontsource/inter": "^5.1.1",
@@ -23,6 +25,7 @@
     "@astrojs/check": "^0.9.4",
     "@types/node": "^22.15.21",
     "typescript": "^5.7.0",
+    "wrangler": "^4.105.0",
     "ws": "^8.21.0"
   }
 }
