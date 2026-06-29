@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /tools/minsante-v3/download.html
 
 Sitemap: https://fieldhealthafrica.org/sitemap-index.xml

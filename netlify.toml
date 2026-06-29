@@ -1,15 +1,24 @@
-# Block direct access to paid content in public/downloads/.
+# Block paid and private content in public/.
 # Proper long-term solution: move paid files to private storage (e.g. R2) and
 # serve via short-lived signed URLs only after server-side payment verification.
 
+# Wildcard covers all MINSANTE v3 variants under /downloads/ (replaces two per-file rules)
 [[redirects]]
-  from = "/downloads/MINSANTE_v3_GestionFinanciere.html"
+  from = "/downloads/MINSANTE_v3*"
   to = "/404"
   status = 404
   force = true
 
+# Block paid user guide exposed at public root (CRITICAL-2)
 [[redirects]]
-  from = "/downloads/MINSANTE_v3_UserGuide_FR_EN.pdf"
+  from = "/MINSANTE_v3_UserGuide_FR_EN.docx"
+  to = "/404"
+  status = 404
+  force = true
+
+# Block accidentally-deployed Electron development artifact (HIGH-1, HIGH-2)
+[[redirects]]
+  from = "/downloads/FosaFinanceCalc_v2.2_ElectronPackage_clean/*"
   to = "/404"
   status = 404
   force = true

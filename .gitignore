@@ -41,6 +41,9 @@ founder.jpeg
 public/downloads/**/dist/
 public/downloads/**/node_modules/
 
+# Development artifact accidentally committed — blocked by netlify.toml force-404 rules
+public/downloads/FosaFinanceCalc_v2.2_ElectronPackage_clean/
+
 # Tool source files (sold products — not for public repo)
 TOOL PRODUCTION PROJECT FOR DHA/
 

@@ -98,9 +98,11 @@ import Base from '../layouts/Base.astro';
     // Require a Paystack ?reference= param to reveal the success card.
     // Without this guard, anyone can share the /checkout-success URL as fake proof of purchase.
     const ref = new URLSearchParams(location.search).get('reference');
+    // Require reference to match Paystack's format — filters obvious fakes like ?reference=1
+    const validRef = ref && /^[A-Za-z0-9_-]{8,64}$/.test(ref);
     const successCard = document.getElementById('payment-success-card');
     const errorCard   = document.getElementById('payment-error-card');
-    if (ref) {
+    if (validRef) {
       successCard?.classList.remove('hidden');
     } else {
       errorCard?.classList.remove('hidden');
