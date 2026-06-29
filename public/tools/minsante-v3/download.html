@@ -103,48 +103,100 @@
 
   .card-body { padding: 32px; }
 
-  .email-icon {
+  /* State sections — JS shows exactly one */
+  .state { display: none; }
+
+  /* Loading */
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.88rem;
+  }
+
+  /* Verified */
+  .verified-icon {
     width: 64px; height: 64px;
     background: var(--green-light);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 16px;
     font-size: 1.8rem;
+    color: var(--green);
+    font-weight: 700;
   }
-
-  .delivery-title {
-    font-size: 1.15rem;
+  .verified-title {
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--blue);
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
+  .verified-sub {
+    font-size: 0.82rem;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .btn-download {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--green-light);
+    border: 1.5px solid #b8ddc8;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--green-dark);
+    font-weight: 600;
+    font-size: 0.87rem;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn-download:hover {
+    background: #d0ecda;
+    border-color: var(--green);
+  }
+  .btn-download .dl-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .btn-download .dl-info { text-align: left; }
+  .btn-download .dl-name { display: block; font-weight: 700; }
+  .btn-download .dl-type { display: block; font-size: 0.73rem; color: var(--gray); font-weight: 400; margin-top: 2px; }
 
-  .delivery-msg {
-    font-size: 0.85rem;
+  /* Failed / No-ref */
+  .error-icon {
+    width: 64px; height: 64px;
+    background: #fef2f2;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 1.8rem;
+  }
+  .error-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #991b1b;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .error-msg {
+    font-size: 0.83rem;
     color: var(--gray);
     text-align: center;
     line-height: 1.65;
-    margin-bottom: 24px;
-  }
-
-  .steps {
-    background: #f9fafb;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px 18px;
-    margin-bottom: 24px;
-  }
-  .steps ol {
-    padding-left: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .steps li {
-    font-size: 0.82rem;
-    color: #374151;
-    line-height: 1.5;
+    margin-bottom: 20px;
   }
 
   .contact-block {
@@ -170,7 +222,6 @@
     font-size: 0.73rem;
     color: var(--gray);
     line-height: 1.55;
-    margin-top: 20px;
     text-align: center;
   }
 
@@ -214,46 +265,94 @@
     <div class="card-header">
       <div class="badge">MINSANTE v3 — TÉLÉCHARGEMENT / DOWNLOAD</div>
       <h1>Outil de Gestion Financière<br><span style="font-weight:400;font-size:0.9em">Financial Management Tool</span></h1>
-      <p>Livraison par email · Delivered by email</p>
+      <p>Portail acheteur sécurisé · Secure buyer portal</p>
     </div>
 
     <div class="card-body">
 
-      <div class="email-icon">📧</div>
-
-      <div class="delivery-title">
-        Vos fichiers ont été envoyés par email.<br>
-        <span style="font-weight:400;font-size:0.9em">Your files were sent to your email.</span>
+      <!-- Loading state -->
+      <div id="state-loading" class="state">
+        <div class="spinner"></div>
+        <p class="loading-text">
+          Vérification du paiement…<br>
+          <span style="font-size:0.8em;color:#9ca3af">Verifying your payment…</span>
+        </p>
       </div>
 
-      <div class="delivery-msg">
-        Après confirmation du paiement, un email de <strong>hello@fieldhealthafrica.org</strong>
-        vous a été envoyé avec vos liens de téléchargement.<br><br>
-        After payment confirmation, an email from <strong>hello@fieldhealthafrica.org</strong>
-        was sent to you with your download links.
+      <!-- Verified — show download links -->
+      <div id="state-verified" class="state">
+        <div class="verified-icon">✓</div>
+        <div class="verified-title">
+          Paiement confirmé · Payment confirmed
+        </div>
+        <div class="verified-sub">
+          Cliquez sur un fichier pour le télécharger.<br>
+          Click a file to download it.
+        </div>
+        <div class="download-list">
+          <a href="/downloads/MINSANTE_v3_GestionFinanciere.html"
+             class="btn-download" target="_blank" rel="noopener noreferrer">
+            <span class="dl-icon">📊</span>
+            <span class="dl-info">
+              <span class="dl-name">MINSANTE v3 — Outil de Gestion</span>
+              <span class="dl-type">Application web · HTML · Ouvrir dans le navigateur</span>
+            </span>
+          </a>
+          <a href="/downloads/MINSANTE_v3_UserGuide_FR_EN.pdf"
+             class="btn-download" download>
+            <span class="dl-icon">📄</span>
+            <span class="dl-info">
+              <span class="dl-name">Guide Utilisateur / User Guide</span>
+              <span class="dl-type">FR + EN · PDF</span>
+            </span>
+          </a>
+        </div>
+        <div class="terms-note">
+          Ces fichiers sont réservés à votre usage personnel et professionnel. Redistribution interdite.<br>
+          For your personal and professional use only. Redistribution prohibited.<br>
+          © 2026 Dr. Nzozone Henry Fomukong · FieldHealth Africa
+        </div>
       </div>
 
-      <div class="steps">
-        <ol>
-          <li>Vérifiez votre boîte de réception (et les spams). / Check your inbox (and spam folder).</li>
-          <li>L'email provient de <strong>hello@fieldhealthafrica.org</strong>.</li>
-          <li>Utilisez les liens dans cet email pour télécharger vos fichiers. / Use the links in that email to download your files.</li>
-        </ol>
+      <!-- Payment not verified or API error -->
+      <div id="state-failed" class="state">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">Paiement non trouvé / Payment not found</div>
+        <div class="error-msg">
+          Nous n'avons pas pu confirmer ce paiement.<br>
+          We could not confirm this payment.<br><br>
+          Si vous venez de payer, attendez quelques secondes et rechargez la page.<br>
+          If you just paid, wait a few seconds and reload the page.
+        </div>
+        <div class="contact-block">
+          Toujours un problème? / Still having issues?<br>
+          <a href="https://wa.me/+237656066428?text=MINSANTE%20v3%20-%20probl%C3%A8me%20t%C3%A9l%C3%A9chargement"
+             target="_blank" rel="noopener noreferrer">
+            WhatsApp →
+          </a>
+          &nbsp;·&nbsp;
+          <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a>
+        </div>
       </div>
 
-      <div class="contact-block">
-        Pas d'email après 30 minutes? / No email after 30 minutes?<br>
-        <a href="https://wa.me/+237656066428?text=MINSANTE%20v3%20-%20email%20non%20re%C3%A7u" target="_blank" rel="noopener noreferrer">
-          Contactez-nous via WhatsApp / Contact us on WhatsApp →
-        </a>
-        <br>ou / or&nbsp;
-        <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a>
-      </div>
-
-      <div class="terms-note">
-        Ces fichiers sont réservés à votre usage personnel et professionnel. Redistribution interdite.<br>
-        These files are for your personal and professional use only. Redistribution prohibited.<br>
-        © 2026 Dr. Nzozone Henry Fomukong · FieldHealth Africa
+      <!-- No reference in URL (page visited without payment) -->
+      <div id="state-no-ref" class="state">
+        <div class="error-icon">🔒</div>
+        <div class="error-title">Accès réservé aux acheteurs / Buyers only</div>
+        <div class="error-msg">
+          Cette page n'est accessible qu'après un achat.<br>
+          This page is only accessible after purchase.<br><br>
+          Si vous avez déjà payé, utilisez le lien dans votre email de confirmation Paystack.<br>
+          If you've already paid, use the link in your Paystack confirmation email.
+        </div>
+        <div class="contact-block">
+          <a href="https://fieldhealthafrica.org/pro-library">
+            Voir le catalogue / View the catalogue →
+          </a>
+          <br><br>
+          Questions? &nbsp;
+          <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a>
+        </div>
       </div>
 
     </div>
@@ -263,9 +362,37 @@
 <footer>
   <a href="https://fieldhealthafrica.org" target="_blank" rel="noopener noreferrer">fieldhealthafrica.org</a> ·
   Dr. Nzozone Henry Fomukong, District Medical Officer, Mamfe, Cameroon ·
-  <a href="https://fieldhealthafrica.org/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a> ·
-  <a href="https://fieldhealthafrica.org/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+  <a href="https://fieldhealthafrica.org/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
 </footer>
+
+<script>
+(function () {
+  function show(id) {
+    ['state-loading', 'state-verified', 'state-failed', 'state-no-ref'].forEach(function (s) {
+      var el = document.getElementById(s);
+      if (el) el.style.display = s === id ? '' : 'none';
+    });
+  }
+
+  var ref = new URLSearchParams(location.search).get('reference');
+
+  if (!ref || !/^[A-Za-z0-9_-]{8,64}$/.test(ref)) {
+    show('state-no-ref');
+    return;
+  }
+
+  show('state-loading');
+
+  fetch('/api/verify-payment?reference=' + encodeURIComponent(ref))
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      show(data.verified ? 'state-verified' : 'state-failed');
+    })
+    .catch(function () {
+      show('state-failed');
+    });
+})();
+</script>
 
 </body>
 </html>
