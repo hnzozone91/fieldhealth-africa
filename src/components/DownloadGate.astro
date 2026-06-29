@@ -2,6 +2,12 @@
 /**
  * DownloadGate.astro — email-gated download flow.
  *
+ * SECURITY NOTE: This component is an email-capture gate ONLY.
+ * Download URLs and files are publicly accessible static assets.
+ * NEVER use DownloadGate to "protect" paid content — all file hrefs
+ * are present in the page source. Paid content requires server-side
+ * signed URLs served from a private store after payment verification.
+ *
  * Renders a "Download (free)" button that opens an accessible <dialog>
  * with a Formspree form. On success, swaps to a thank-you state
  * showing the real download links.
@@ -273,12 +279,14 @@ const roles = [
 </dialog>
 
 <script define:vars={{ id, formEndpoint }}>
-  const dialog  = document.getElementById(id);
+  const dialog  = /** @type {HTMLDialogElement|null} */ (document.getElementById(id));
   const form    = document.getElementById(`${id}-form`);
   const submit  = document.getElementById(`${id}-submit`);
   const errEl   = document.getElementById(`${id}-error`);
   const thanks  = document.getElementById(`${id}-thanks`);
   const formState = document.getElementById(`${id}-form-state`);
+
+  if (!dialog) return;
 
   // Open
   document.querySelectorAll(`[data-gate-open="${id}"]`).forEach((btn) => {
@@ -299,9 +307,8 @@ const roles = [
   if (form && formEndpoint && !formEndpoint.startsWith('[')) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      submit.disabled = true;
-      submit.textContent = 'Sending…';
-      errEl.classList.add('hidden');
+      if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
+      if (errEl) errEl.classList.add('hidden');
 
       try {
         const res = await fetch(formEndpoint, {
@@ -310,24 +317,27 @@ const roles = [
           headers: { Accept: 'application/json' },
         });
         if (res.ok) {
-          formState.classList.add('hidden');
-          thanks.classList.remove('hidden');
+          formState?.classList.add('hidden');
+          thanks?.classList.remove('hidden');
         } else {
           throw new Error('Submission failed');
         }
       } catch {
-        errEl.textContent = 'Something went wrong. Please try again or email hello@fieldhealthafrica.org.';
-        errEl.classList.remove('hidden');
-        submit.disabled = false;
-        submit.textContent = 'Get download links →';
+        if (errEl) {
+          errEl.textContent = 'Something went wrong. Please try again or email hello@fieldhealthafrica.org.';
+          errEl.classList.remove('hidden');
+        }
+        if (submit) { submit.disabled = false; submit.textContent = 'Get download links →'; }
       }
     });
   } else if (form) {
     // Formspree endpoint not yet set — show dev warning
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      errEl.textContent = '[DEV] Formspree endpoint not configured yet. Set formEndpoint prop.';
-      errEl.classList.remove('hidden');
+      if (errEl) {
+        errEl.textContent = '[DEV] Formspree endpoint not configured yet. Set formEndpoint prop.';
+        errEl.classList.remove('hidden');
+      }
     });
   }
 </script>

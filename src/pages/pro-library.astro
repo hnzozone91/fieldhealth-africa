@@ -83,14 +83,14 @@ const inDevelopment = [
               </ul>
               <div class="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="https://github.com/hnzozone91/fosafinancecalc/releases/download/v2.0.0/FosaFinanceCalc-Setup-2.0.0.exe"
+                  href="https://github.com/hnzozone91/fosafinancecalc/releases/download/v2.2.0/FosaFinanceCalc-Setup-2.2.0.exe"
                   class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(16,185,129,0.4)]"
                 >
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                   Download Installer (135 MB) →
                 </a>
                 <a
-                  href="https://github.com/hnzozone91/fosafinancecalc/releases/download/v2.0.0/FosaFinanceCalc-Portable-2.0.0.exe"
+                  href="https://github.com/hnzozone91/fosafinancecalc/releases/download/v2.2.0/FosaFinanceCalc-Portable-2.2.0.exe"
                   class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-emerald-500/30 hover:bg-white/15 text-white font-bold text-sm transition-all duration-200"
                 >
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
@@ -170,8 +170,8 @@ const inDevelopment = [
                       <div class="block w-full py-3.5 rounded-full bg-white/10 border border-white/15 text-white/40 font-bold text-sm text-center cursor-not-allowed mb-2">
                         Buy now
                       </div>
-                      <p class="font-mono text-amber-400/70 text-[10px] text-center leading-tight">
-                        TODO: paste real Paystack link<br/>[PAYSTACK_LINK_DRUG_STOCKOUT]
+                      <p class="font-mono text-white/30 text-[10px] text-center leading-tight">
+                        Coming soon
                       </p>
                     </div>
                   )}
@@ -400,8 +400,12 @@ const inDevelopment = [
     if (!action.startsWith('[')) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const res = await fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-        if (res.ok) { form.classList.add('hidden'); thanks.classList.remove('hidden'); }
+        try {
+          const res = await fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+          if (res.ok) { form.classList.add('hidden'); thanks?.classList.remove('hidden'); }
+        } catch {
+          // Network error — silently absorb; user can retry
+        }
       });
     }
   }

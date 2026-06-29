@@ -1,0 +1,15 @@
+# Block direct access to paid content in public/downloads/.
+# Proper long-term solution: move paid files to private storage (e.g. R2) and
+# serve via short-lived signed URLs only after server-side payment verification.
+
+[[redirects]]
+  from = "/downloads/MINSANTE_v3_GestionFinanciere.html"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/downloads/MINSANTE_v3_UserGuide_FR_EN.pdf"
+  to = "/404"
+  status = 404
+  force = true

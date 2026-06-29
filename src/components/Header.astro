@@ -41,7 +41,8 @@ const { pathname } = Astro.url;
           <script>
             const img = document.querySelector('header img[alt="FieldHealth Africa"]');
             if (img) img.addEventListener('error', () => {
-              document.getElementById('wordmark-fallback').style.display = 'flex';
+              const fallback = document.getElementById('wordmark-fallback');
+              if (fallback) fallback.style.display = 'flex';
             });
           </script>
         </a>
@@ -98,7 +99,6 @@ const { pathname } = Astro.url;
   <div
     id="mobile-menu"
     class="md:hidden hidden mx-4 mt-1 rounded-2xl bg-[#0b1117]/95 backdrop-blur-lg border border-white/10 shadow-xl overflow-hidden"
-    role="dialog"
     aria-label="Navigation menu"
   >
     <ul class="flex flex-col py-3 px-4 gap-1" role="list">

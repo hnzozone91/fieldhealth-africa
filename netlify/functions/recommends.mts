@@ -28,6 +28,17 @@ export default async (
     return Response.redirect(PICKS_FALLBACK, 302);
   }
 
+  // Reject non-https destinations to prevent open redirect to javascript:/data: URIs.
+  let destUrl: URL;
+  try {
+    destUrl = new URL(destination);
+  } catch {
+    return Response.redirect(PICKS_FALLBACK, 302);
+  }
+  if (destUrl.protocol !== 'https:') {
+    return Response.redirect(PICKS_FALLBACK, 302);
+  }
+
   return new Response(null, {
     status: 302,
     headers: {

@@ -21,8 +21,22 @@ import Base from '../layouts/Base.astro';
   <div class="min-h-[80vh] flex items-center justify-center px-4 py-20">
     <div class="max-w-lg w-full text-center">
 
-      <!-- Clay card -->
-      <div class="relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/25 overflow-hidden p-10"
+      <!-- No-reference fallback — shown when page is visited without a Paystack ?reference= param -->
+      <div id="payment-error-card" class="hidden relative rounded-3xl [backdrop-filter:blur(22px)] border border-white/10 overflow-hidden p-10"
+           style="background: rgba(10,13,18,0.93); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62);">
+        <p class="font-mono text-[9px] text-white/30 uppercase tracking-widest mb-6">[ NO_REFERENCE ]</p>
+        <h1 class="font-display font-bold text-2xl text-white mb-3">No payment reference found</h1>
+        <p class="text-white/60 text-sm leading-relaxed mb-6">
+          This page is only accessible after completing a purchase. If you've just paid,
+          please use the link in your Paystack confirmation email to return here.
+        </p>
+        <a href="/pro-library" class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 text-black font-bold text-sm">
+          Go to Pro Library
+        </a>
+      </div>
+
+      <!-- Success card — hidden by default, revealed by script only when ?reference= is present -->
+      <div id="payment-success-card" class="hidden relative rounded-3xl [backdrop-filter:blur(22px)] border border-teal-500/25 overflow-hidden p-10"
            style="background: linear-gradient(145deg, rgba(20,184,166,0.12) 0%, rgba(10,13,18,0.93) 55%, rgba(20,184,166,0.05) 100%); box-shadow: 0 22px 56px -8px rgba(0,0,0,0.62), 0 0 52px -10px rgba(20,184,166,0.28), inset 0 1.5px 0 rgba(255,255,255,0.11), inset 0 -2px 8px rgba(0,0,0,0.30);">
         <div aria-hidden="true" class="absolute top-0 left-10 right-10 h-px" style="background: linear-gradient(90deg, transparent, rgba(20,184,166,0.55), transparent);"></div>
 
@@ -76,6 +90,20 @@ import Base from '../layouts/Base.astro';
         </div>
 
       </div>
+
     </div>
   </div>
+
+  <script>
+    // Require a Paystack ?reference= param to reveal the success card.
+    // Without this guard, anyone can share the /checkout-success URL as fake proof of purchase.
+    const ref = new URLSearchParams(location.search).get('reference');
+    const successCard = document.getElementById('payment-success-card');
+    const errorCard   = document.getElementById('payment-error-card');
+    if (ref) {
+      successCard?.classList.remove('hidden');
+    } else {
+      errorCard?.classList.remove('hidden');
+    }
+  </script>
 </Base>
