@@ -1,10 +1,4 @@
-# Block private / sensitive content.
-
-# MINSANTE v3 paid files (/downloads/MINSANTE_v3_*.html and *.pdf) are intentionally
-# PUBLIC on Netlify's CDN. Access is gated at the portal level: download.html calls
-# /api/verify-payment, which checks Paystack, before revealing the download links.
-# Direct URL access is possible once someone has the link — this is acceptable for a
-# digital product (same as any download link). The gate prevents anonymous discovery.
+# Block private / sensitive content in public/.
 
 # Block the old DOCX user guide that was briefly exposed at the site root.
 [[redirects]]
@@ -13,7 +7,7 @@
   status = 404
   force = true
 
-# Block accidentally-deployed Electron development artifact (HIGH-1, HIGH-2)
+# Block accidentally-deployed Electron development artifact
 [[redirects]]
   from = "/downloads/FosaFinanceCalc_v2.2_ElectronPackage_clean/*"
   to = "/404"

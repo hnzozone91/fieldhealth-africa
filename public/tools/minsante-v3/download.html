@@ -13,8 +13,11 @@
     --green-dark: #004d26;
     --green-light: #e8f5ee;
     --blue: #1A3A6B;
+    --blue-light: #eef2f9;
     --gray: #6b7280;
     --border: #e5e7eb;
+    --red: #dc2626;
+    --red-light: #fef2f2;
   }
 
   body {
@@ -26,6 +29,7 @@
     flex-direction: column;
   }
 
+  /* ─── TOPBAR ─── */
   .topbar {
     background: var(--green-dark);
     color: #fff;
@@ -35,6 +39,7 @@
     padding: 6px 16px;
   }
 
+  /* ─── HEADER ─── */
   header {
     background: #fff;
     border-bottom: 2px solid var(--green);
@@ -55,6 +60,7 @@
   .logo-text span { color: var(--green); }
   .logo-sub { font-size: 0.7rem; color: var(--gray); font-weight: 400; }
 
+  /* ─── MAIN ─── */
   main {
     flex: 1;
     display: flex;
@@ -103,116 +109,175 @@
 
   .card-body { padding: 32px; }
 
-  /* State sections — JS shows exactly one */
-  .state { display: none; }
+  /* ─── PASSWORD SECTION ─── */
+  #password-section {}
 
-  /* Loading */
-  .spinner {
-    width: 40px; height: 40px;
-    border: 3px solid var(--border);
-    border-top-color: var(--blue);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text {
-    text-align: center;
-    color: var(--gray);
-    font-size: 0.88rem;
-  }
-
-  /* Verified */
-  .verified-icon {
-    width: 64px; height: 64px;
-    background: var(--green-light);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-    font-size: 1.8rem;
-    color: var(--green);
-    font-weight: 700;
-  }
-  .verified-title {
-    font-size: 1.1rem;
+  .field-label {
+    display: block;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--blue);
-    text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
-  .verified-sub {
-    font-size: 0.82rem;
-    color: var(--gray);
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .download-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  .btn-download {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    background: var(--green-light);
-    border: 1.5px solid #b8ddc8;
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--green-dark);
-    font-weight: 600;
-    font-size: 0.87rem;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .btn-download:hover {
-    background: #d0ecda;
-    border-color: var(--green);
-  }
-  .btn-download .dl-icon { font-size: 1.3rem; flex-shrink: 0; }
-  .btn-download .dl-info { text-align: left; }
-  .btn-download .dl-name { display: block; font-weight: 700; }
-  .btn-download .dl-type { display: block; font-size: 0.73rem; color: var(--gray); font-weight: 400; margin-top: 2px; }
 
-  /* Failed / No-ref */
-  .error-icon {
-    width: 64px; height: 64px;
-    background: #fef2f2;
+  .input-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .input-wrap input[type="password"],
+  .input-wrap input[type="text"] {
+    width: 100%;
+    padding: 12px 44px 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.15em;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-wrap input:focus { border-color: var(--green); }
+  .toggle-pw {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none; border: none;
+    color: var(--gray);
+    font-size: 0.85rem;
+    padding: 2px;
+    line-height: 1;
+  }
+  .toggle-pw:hover { color: var(--blue); }
+
+  .error-msg {
+    display: none;
+    background: var(--red-light);
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: var(--red);
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .error-msg.visible { display: block; }
+
+  .btn-unlock {
+    width: 100%;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-unlock:hover { background: var(--green-dark); }
+
+  .hint {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.75rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .hint a { color: var(--blue); text-decoration: none; }
+  .hint a:hover { text-decoration: underline; }
+
+  /* ─── DOWNLOAD SECTION ─── */
+  #download-section { display: none; }
+
+  .thank-you {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .thank-you .icon {
+    width: 56px; height: 56px;
+    background: var(--green-light);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-    font-size: 1.8rem;
+    margin: 0 auto 14px;
+    font-size: 1.6rem;
   }
-  .error-title {
-    font-size: 1.1rem;
+  .thank-you h2 {
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #991b1b;
-    text-align: center;
+    color: var(--blue);
     margin-bottom: 8px;
   }
-  .error-msg {
-    font-size: 0.83rem;
-    color: var(--gray);
-    text-align: center;
-    line-height: 1.65;
-    margin-bottom: 20px;
-  }
-
-  .contact-block {
-    text-align: center;
-    font-size: 0.78rem;
+  .thank-you p {
+    font-size: 0.82rem;
     color: var(--gray);
     line-height: 1.6;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
   }
-  .contact-block a {
-    color: var(--blue);
-    font-weight: 600;
+
+  .download-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+  .dl-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
     text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
   }
-  .contact-block a:hover { text-decoration: underline; }
+  .dl-item:hover {
+    border-color: var(--green);
+    background: var(--green-light);
+    box-shadow: 0 2px 10px rgba(0,102,51,0.08);
+  }
+  .dl-icon {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .dl-icon.html-icon { background: #fff7ed; color: #ea580c; }
+  .dl-icon.docx-icon { background: #eff6ff; color: #2563eb; }
+
+  .dl-meta { flex: 1; min-width: 0; }
+  .dl-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .dl-desc { font-size: 0.74rem; color: var(--gray); line-height: 1.4; }
+
+  .dl-arrow {
+    color: var(--green);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-align: center;
+  }
+  .back-link a { color: var(--blue); text-decoration: none; font-weight: 600; }
+  .back-link a:hover { text-decoration: underline; }
 
   .terms-note {
     background: #f9fafb;
@@ -222,9 +287,11 @@
     font-size: 0.73rem;
     color: var(--gray);
     line-height: 1.55;
+    margin-top: 20px;
     text-align: center;
   }
 
+  /* ─── FOOTER ─── */
   footer {
     background: #fff;
     border-top: 1px solid var(--border);
@@ -237,17 +304,19 @@
   footer a { color: var(--green); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
+  /* ─── RESPONSIVE ─── */
   @media (max-width: 520px) {
     .card-header { padding: 22px 20px 20px; }
     .card-header h1 { font-size: 1.15rem; }
     .card-body { padding: 24px 20px; }
+    .dl-name { font-size: 0.8rem; }
   }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  FieldHealth Africa — Espace Acheteur / Buyer Portal
+  FieldHealth Africa — Espace Acheteur Sécurisé / Secure Buyer Portal
 </div>
 
 <header>
@@ -265,134 +334,159 @@
     <div class="card-header">
       <div class="badge">MINSANTE v3 — TÉLÉCHARGEMENT / DOWNLOAD</div>
       <h1>Outil de Gestion Financière<br><span style="font-weight:400;font-size:0.9em">Financial Management Tool</span></h1>
-      <p>Portail acheteur sécurisé · Secure buyer portal</p>
+      <p>Accès réservé aux acheteurs · Buyer access only</p>
     </div>
 
     <div class="card-body">
 
-      <!-- Loading state -->
-      <div id="state-loading" class="state">
-        <div class="spinner"></div>
-        <p class="loading-text">
-          Vérification du paiement…<br>
-          <span style="font-size:0.8em;color:#9ca3af">Verifying your payment…</span>
+      <!-- PASSWORD GATE -->
+      <div id="password-section">
+        <label class="field-label" for="pw-input">Mot de passe d'accès / Access password</label>
+
+        <div class="input-wrap">
+          <input type="password" id="pw-input" placeholder="Entrez votre mot de passe…" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" />
+          <button class="toggle-pw" id="toggle-pw-btn" type="button" title="Afficher/masquer" aria-label="Toggle password visibility">
+            👁
+          </button>
+        </div>
+
+        <div class="error-msg" id="error-msg">
+          ❌ Mot de passe incorrect. / Incorrect password.<br>
+          Veuillez vérifier votre mot de passe d'achat. Please check your purchase password.
+        </div>
+
+        <button class="btn-unlock" id="unlock-btn" type="button">
+          🔓 Déverrouiller les téléchargements / Unlock Downloads
+        </button>
+
+        <p class="hint">
+          Votre mot de passe vous a été envoyé via WhatsApp après confirmation du paiement.<br>
+          Your password was sent via WhatsApp after payment confirmation.<br><br>
+          Problème? / Problem? <a href="https://wa.me/+237656066428?text=MINSANTE%20v3%20-%20probl%C3%A8me%20de%20t%C3%A9l%C3%A9chargement" target="_blank" rel="noopener noreferrer">Contactez-nous / Contact us →</a>
         </p>
       </div>
 
-      <!-- Verified — show download links -->
-      <div id="state-verified" class="state">
-        <div class="verified-icon">✓</div>
-        <div class="verified-title">
-          Paiement confirmé · Payment confirmed
+      <!-- DOWNLOAD SECTION (hidden until password correct) -->
+      <div id="download-section">
+
+        <div class="thank-you">
+          <div class="icon">✅</div>
+          <h2>Accès accordé / Access granted</h2>
+          <p>
+            Merci pour votre achat. Vos fichiers sont prêts.<br>
+            Thank you for your purchase. Your files are ready below.
+          </p>
         </div>
-        <div class="verified-sub">
-          Cliquez sur un fichier pour le télécharger.<br>
-          Click a file to download it.
-        </div>
+
         <div class="download-list">
-          <a href="/downloads/MINSANTE_v3_GestionFinanciere.html"
-             class="btn-download" target="_blank" rel="noopener noreferrer">
-            <span class="dl-icon">📊</span>
-            <span class="dl-info">
-              <span class="dl-name">MINSANTE v3 — Outil de Gestion</span>
-              <span class="dl-type">Application web · HTML · Ouvrir dans le navigateur</span>
-            </span>
+          <a class="dl-item" href="/downloads/MINSANTE_v3_GestionFinanciere.html" download>
+            <div class="dl-icon html-icon">📄</div>
+            <div class="dl-meta">
+              <div class="dl-name">MINSANTE_v3_GestionFinanciere.html</div>
+              <div class="dl-desc">Outil complet — fichier HTML autonome (hors-ligne)<br>Complete tool — standalone offline HTML file</div>
+            </div>
+            <div class="dl-arrow">⬇</div>
           </a>
-          <a href="/downloads/MINSANTE_v3_UserGuide_FR_EN.pdf"
-             class="btn-download" download>
-            <span class="dl-icon">📄</span>
-            <span class="dl-info">
-              <span class="dl-name">Guide Utilisateur / User Guide</span>
-              <span class="dl-type">FR + EN · PDF</span>
-            </span>
+
+          <a class="dl-item" href="/downloads/MINSANTE_v3_UserGuide_FR_EN.pdf" download>
+            <div class="dl-icon html-icon" style="background:#fef2f2;color:#dc2626;">📄</div>
+            <div class="dl-meta">
+              <div class="dl-name">MINSANTE_v3_UserGuide_FR_EN.pdf</div>
+              <div class="dl-desc">Guide d'utilisation bilingue FR/EN — PDF<br>Bilingual user guide FR/EN — PDF format</div>
+            </div>
+            <div class="dl-arrow">⬇</div>
           </a>
         </div>
+
         <div class="terms-note">
           Ces fichiers sont réservés à votre usage personnel et professionnel. Redistribution interdite.<br>
-          For your personal and professional use only. Redistribution prohibited.<br>
+          These files are for your personal and professional use only. Redistribution prohibited.<br>
           © 2026 Dr. Nzozone Henry Fomukong · FieldHealth Africa
         </div>
-      </div>
 
-      <!-- Payment not verified or API error -->
-      <div id="state-failed" class="state">
-        <div class="error-icon">⚠️</div>
-        <div class="error-title">Paiement non trouvé / Payment not found</div>
-        <div class="error-msg">
-          Nous n'avons pas pu confirmer ce paiement.<br>
-          We could not confirm this payment.<br><br>
-          Si vous venez de payer, attendez quelques secondes et rechargez la page.<br>
-          If you just paid, wait a few seconds and reload the page.
-        </div>
-        <div class="contact-block">
-          Toujours un problème? / Still having issues?<br>
-          <a href="https://wa.me/+237656066428?text=MINSANTE%20v3%20-%20probl%C3%A8me%20t%C3%A9l%C3%A9chargement"
-             target="_blank" rel="noopener noreferrer">
-            WhatsApp →
-          </a>
-          &nbsp;·&nbsp;
-          <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a>
-        </div>
-      </div>
+        <hr class="divider">
 
-      <!-- No reference in URL (page visited without payment) -->
-      <div id="state-no-ref" class="state">
-        <div class="error-icon">🔒</div>
-        <div class="error-title">Accès réservé aux acheteurs / Buyers only</div>
-        <div class="error-msg">
-          Cette page n'est accessible qu'après un achat.<br>
-          This page is only accessible after purchase.<br><br>
-          Si vous avez déjà payé, utilisez le lien dans votre email de confirmation Paystack.<br>
-          If you've already paid, use the link in your Paystack confirmation email.
+        <div class="back-link">
+          ← <a href="https://fieldhealthafrica.org" target="_blank" rel="noopener noreferrer">Retour à fieldhealthafrica.org / Back to fieldhealthafrica.org</a>
         </div>
-        <div class="contact-block">
-          <a href="https://fieldhealthafrica.org/pro-library">
-            Voir le catalogue / View the catalogue →
-          </a>
-          <br><br>
-          Questions? &nbsp;
-          <a href="mailto:hello@fieldhealthafrica.org">hello@fieldhealthafrica.org</a>
-        </div>
+
       </div>
+      <!-- end download-section -->
 
     </div>
+    <!-- end card-body -->
   </div>
 </main>
 
 <footer>
   <a href="https://fieldhealthafrica.org" target="_blank" rel="noopener noreferrer">fieldhealthafrica.org</a> ·
   Dr. Nzozone Henry Fomukong, District Medical Officer, Mamfe, Cameroon ·
-  <a href="https://fieldhealthafrica.org/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+  <a href="https://fieldhealthafrica.org/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a> ·
+  <a href="https://fieldhealthafrica.org/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
 </footer>
 
 <script>
-(function () {
-  function show(id) {
-    ['state-loading', 'state-verified', 'state-failed', 'state-no-ref'].forEach(function (s) {
-      var el = document.getElementById(s);
-      if (el) el.style.display = s === id ? '' : 'none';
+  (function () {
+    var CORRECT = 'MINSANTE2025';
+
+    var input    = document.getElementById('pw-input');
+    var errorMsg = document.getElementById('error-msg');
+    var toggleBtn= document.getElementById('toggle-pw-btn');
+    var unlockBtn= document.getElementById('unlock-btn');
+    var pwSection= document.getElementById('password-section');
+    var dlSection= document.getElementById('download-section');
+
+    /* Toggle show/hide password */
+    toggleBtn.addEventListener('click', function () {
+      if (input.type === 'password') {
+        input.type = 'text';
+        toggleBtn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        toggleBtn.textContent = '👁';
+      }
+      input.focus();
     });
-  }
 
-  var ref = new URLSearchParams(location.search).get('reference');
-
-  if (!ref || !/^[A-Za-z0-9_-]{8,64}$/.test(ref)) {
-    show('state-no-ref');
-    return;
-  }
-
-  show('state-loading');
-
-  fetch('/api/verify-payment?reference=' + encodeURIComponent(ref))
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      show(data.verified ? 'state-verified' : 'state-failed');
-    })
-    .catch(function () {
-      show('state-failed');
+    /* Allow Enter key to submit */
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { checkPassword(); }
     });
-})();
+
+    /* Clear error on typing */
+    input.addEventListener('input', function () {
+      errorMsg.classList.remove('visible');
+    });
+
+    unlockBtn.addEventListener('click', checkPassword);
+
+    function checkPassword() {
+      var val = input.value.trim().toUpperCase();
+      if (val === CORRECT) {
+        pwSection.style.display = 'none';
+        dlSection.style.display = 'block';
+      } else {
+        errorMsg.classList.add('visible');
+        input.value = '';
+        input.focus();
+        /* Shake animation */
+        input.style.animation = 'none';
+        input.offsetHeight; /* reflow */
+        input.style.animation = 'shake 0.35s ease';
+      }
+    }
+  })();
 </script>
 
+<style>
+  @keyframes shake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-7px); }
+    40%  { transform: translateX(7px); }
+    60%  { transform: translateX(-5px); }
+    80%  { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+</style>
 </body>
 </html>

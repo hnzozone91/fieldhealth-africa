@@ -7,15 +7,13 @@
  *   https://fieldhealthafrica.org/checkout-success
  *
  * Paystack appends ?reference=TXN_REF to this URL.
- * The script passes that reference to the download portal so buyers can
- * download immediately — no email wait, no password.
  */
 import Base from '../layouts/Base.astro';
 ---
 
 <Base
   title="Payment Successful"
-  description="Thank you for your purchase — click the button below to download your files."
+  description="Thank you for your purchase — your download instructions are on their way."
   noIndex={true}
 >
   <div class="min-h-[80vh] flex items-center justify-center px-4 py-20">
@@ -53,27 +51,18 @@ import Base from '../layouts/Base.astro';
         <h1 class="font-display font-bold text-3xl text-white mb-3">Payment received!</h1>
         <p class="text-white/65 text-base leading-relaxed mb-8">
           Thank you for purchasing from FieldHealth Africa.
-          Click the button below to download your files right now.
+          <strong class="text-white">Check your email</strong> — your download link and receipt will arrive within a few minutes.
         </p>
 
-        <!-- Primary download CTA — href set by script below -->
-        <a id="download-btn" href="#"
-           class="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-black font-bold text-base transition-all hover:shadow-[0_0_28px_rgba(20,184,166,0.40)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-300 mb-8">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-          </svg>
-          Download your files now
-        </a>
-
         <!-- Steps card -->
-        <div class="rounded-2xl border border-white/[0.07] p-5 text-left mb-6"
+        <div class="rounded-2xl border border-white/[0.07] p-5 text-left mb-8"
              style="background: rgba(255,255,255,0.03);">
           <p class="font-mono text-[9px] text-teal-400/50 uppercase tracking-widest mb-3">[ NEXT_STEPS ]</p>
           <ol class="space-y-2.5">
             {[
-              'Click "Download your files now" above — your Paystack reference unlocks your downloads instantly.',
-              'Check your email for a Paystack payment receipt (save it — it contains your download link for re-downloads).',
-              'Need help? Contact hello@fieldhealthafrica.org or WhatsApp +237 656 066 428.',
+              'Check the email you used at checkout for a receipt from Paystack.',
+              'A separate email from hello@fieldhealthafrica.org will follow within a few minutes with your download link.',
+              'Download and open the tool. If you run into anything, reply to that email.',
             ].map((step, i) => (
               <li class="flex items-start gap-3 text-sm text-white/60">
                 <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-teal-300 text-[11px] font-bold font-mono"
@@ -84,11 +73,16 @@ import Base from '../layouts/Base.astro';
           </ol>
         </div>
 
+        <p class="font-mono text-white/30 text-[10px] mb-6 tracking-wide">
+          No email after 10 minutes? Check spam or contact{' '}
+          <a href="mailto:hello@fieldhealthafrica.org" class="text-cyan-400/80 underline underline-offset-2 hover:text-cyan-300 transition-colors">hello@fieldhealthafrica.org</a>.
+        </p>
+
         <div class="flex flex-col sm:flex-row gap-3">
           <a href="/pro-library" class="flex-1 inline-flex items-center justify-center py-2.5 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/25 text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
             Back to Pro Library
           </a>
-          <a href="/" class="flex-1 inline-flex items-center justify-center py-2.5 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/25 text-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
+          <a href="/" class="flex-1 inline-flex items-center justify-center py-2.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-black font-bold text-sm transition-all hover:shadow-[0_0_20px_rgba(20,184,166,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-300">
             Home
           </a>
         </div>
@@ -103,12 +97,7 @@ import Base from '../layouts/Base.astro';
     const validRef = ref && /^[A-Za-z0-9_-]{8,64}$/.test(ref);
     const successCard = document.getElementById('payment-success-card');
     const errorCard   = document.getElementById('payment-error-card');
-    const downloadBtn = document.getElementById('download-btn') as HTMLAnchorElement | null;
-
-    if (validRef && ref) {
-      if (downloadBtn) {
-        downloadBtn.href = '/tools/minsante-v3/download.html?reference=' + encodeURIComponent(ref);
-      }
+    if (validRef) {
       successCard?.classList.remove('hidden');
     } else {
       errorCard?.classList.remove('hidden');
